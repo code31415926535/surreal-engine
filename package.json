@@ -8,7 +8,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/three": "^0.139.0",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"
+  },
+  "dependencies": {
+    "ecsy": "^0.4.2",
+    "three": "^0.139.2"
   }
 }
