@@ -11,7 +11,6 @@ export default class PhysicsRendererSyncSystem extends System {
       const transform: AmmoType.btTransform = new window.Ammo.btTransform();
       body.obj.getMotionState().getWorldTransform(transform);
 
-      console.log(transform.getOrigin().x(), transform.getOrigin().y(), transform.getOrigin().z());
       const model = entity.getComponent(Model)! as any as ModelSchema;
       model.obj.position.set(
         transform.getOrigin().x(),

@@ -26,6 +26,7 @@ export interface BoxOptions {
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
   mass?: number;
+  restitution?: number;
   material?: Material;
 
   rigid?: boolean;
@@ -46,6 +47,7 @@ export const createBox = (world: World, opts: BoxOptions): Entity => {
       pos: opts.pos || { x: 0, y: 0, z: 0 },
       quat: opts.quat || { x: 0, y: 0, z: 0, w: 1 },
       mass: opts.mass,
+      restitution: opts.restitution,
     });
   };
 

@@ -6,10 +6,11 @@ export interface RigidBodyOptions {
   quat: { x: number; y: number; z: number; w: number };
   size: { x: number; y: number; z: number };
   mass?: number;
+  restitution?: number;
 }
 
 export const createRigidBox = (opts: RigidBodyOptions): AmmoType.btRigidBody => {
-  const { pos, quat, size, mass } = opts;
+  const { pos, quat, size, mass, restitution } = opts;
   const transform = new window.Ammo.btTransform();
   transform.setIdentity();
   transform.setOrigin(new window.Ammo.btVector3(pos.x, pos.y, pos.z));
@@ -19,7 +20,7 @@ export const createRigidBox = (opts: RigidBodyOptions): AmmoType.btRigidBody => 
   const btSize = new window.Ammo.btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5);
   // TODO: Maybe reusable
   const shape = new window.Ammo.btBoxShape(btSize);
-  shape.setMargin(0.05)
+  shape.setMargin(0.05);
 
   const inertia = new window.Ammo.btVector3(0, 0, 0);
   if (mass && mass > 0) {
@@ -27,7 +28,8 @@ export const createRigidBox = (opts: RigidBodyOptions): AmmoType.btRigidBody => 
   }
 
   const info = new window.Ammo.btRigidBodyConstructionInfo(mass || 0, motionState, shape, inertia);
-  const body = new window.Ammo.btRigidBody(info);
+  const body: AmmoType.btRigidBody = new window.Ammo.btRigidBody(info);
+  body.setRestitution(restitution || 0);
 
   window.Ammo.destroy(btSize);
 
