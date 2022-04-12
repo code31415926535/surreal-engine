@@ -13,6 +13,7 @@
     "vite": "^2.9.0"
   },
   "dependencies": {
+    "ammojs-typed": "^1.0.6",
     "ecsy": "^0.4.2",
     "three": "^0.139.2"
   }

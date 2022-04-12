@@ -48,8 +48,8 @@ export default class RenderSystem extends System {
 
   execute(): void {
     const added = this.queries.model.added!;
-    for (const newModel of added) {
-      const model = newModel.getComponent(Model)! as any as ModelSchema;
+    for (const entity of added) {
+      const model = entity.getComponent(Model)! as any as ModelSchema;
       this.scene.add(model.obj);
     }
 

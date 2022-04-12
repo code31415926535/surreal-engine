@@ -3,26 +3,41 @@ import {
   WebGLRenderer,
 } from 'three';
 import Model from './components/model';
-import { createRigidBox } from './entities/rigidBody';
+import Body from './components/body';
+import EntityCreator from './entities';
 import RenderSystem from './systems/renderSystem';
+import PhysicsSystem from './systems/physicsSystem';
+import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
 
-// TODO: Entity creator
+declare global {
+  interface Window {
+    Ammo: any;
+    ammo: any;
+  }
+}
+
 export default class Engine {
   private previousTime: number = 0;
-  private world: World;
+  private world!: World;
+  public creator!: EntityCreator;
 
-  constructor(canvas: string) {
+  constructor(private canvas: string) {
     if (! WebGLRenderer) {
       throw new Error('WebGL is not supported');
     }
+  }
 
+  public async init() {
+    window.ammo = await window.Ammo();
     this.world = new World({
       entityPoolSize: 1000,
     });
     this.world.registerComponent(Model);
-    this.world.registerSystem(RenderSystem, { canvas });
-
-    createRigidBox(this.world, { width: 1, height: 1, depth: 1});
+    this.world.registerComponent(Body);
+    this.world.registerSystem(RenderSystem, { canvas: this.canvas });
+    this.world.registerSystem(PhysicsSystem, {})
+    this.world.registerSystem(PhysicsRendererSyncSystem, {})
+    this.creator = new EntityCreator(this.world);
   }
 
   public start() {
