@@ -23,5 +23,12 @@ engine.creator.box({
   restitution: 0.3,
   material: new MeshBasicMaterial({ color: 0x00ffcc }),
   rigid: true,
+}).sphere({
+  radius: 1,
+  pos: {x: 0, y: 20, z: 0},
+  mass: 1,
+  restitution: 0.3,
+  material: new MeshBasicMaterial({ color: 0xccff00 }),
+  rigid: true,
 });
 engine.start();

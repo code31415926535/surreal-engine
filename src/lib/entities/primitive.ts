@@ -3,7 +3,7 @@ import { Entity, World } from "ecsy";
 import { Material, Object3D } from "three";
 import Model from "../components/model";
 import Body from "../components/body";
-import { createBoxModel, createRigidBox } from "./util";
+import { createModel, createRigidBody } from "./util";
 
 interface PrimitiveOptions {
   obj: Object3D;
@@ -21,7 +21,8 @@ const createPrimitive = (world: World, opts: PrimitiveOptions): Entity => {
   return entity;
 }
 
-export interface BoxOptions {
+export interface ShapeOptions {
+  type: 'box' | 'sphere' | 'cylinder';
   size: { x: number, y: number, z: number };
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
@@ -32,8 +33,9 @@ export interface BoxOptions {
   rigid?: boolean;
 }
 
-export const createBox = (world: World, opts: BoxOptions): Entity => {
-  const obj = createBoxModel({
+export const createShape = (world: World, opts: ShapeOptions): Entity => {
+  const obj = createModel({
+    type: opts.type,
     size: opts.size,
     pos: opts.pos || { x: 0, y: 0, z: 0 },
     quat: opts.quat || { x: 0, y: 0, z: 0, w: 1 },
@@ -42,7 +44,8 @@ export const createBox = (world: World, opts: BoxOptions): Entity => {
   let body = undefined;
   
   if (opts.rigid) {
-    body = createRigidBox({
+    body = createRigidBody({
+      type: opts.type,
       size: opts.size,
       pos: opts.pos || { x: 0, y: 0, z: 0 },
       quat: opts.quat || { x: 0, y: 0, z: 0, w: 1 },

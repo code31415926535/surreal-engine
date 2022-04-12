@@ -3,9 +3,10 @@
 ## Dev Progress
 
 - [x] Rendering
-- [ ] Physics
+- [x] Physics
+- [x] Spheres
 - [ ] Debug
-- [ ] Spheres
+- [x] Cylinder
 - [ ] Lighting
 - [ ] Shadow
 - [ ] Skybox
