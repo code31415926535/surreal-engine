@@ -2,26 +2,29 @@
 
 ## Dev Progress
 
-### v1
-
 - [x] Rendering
 - [x] Physics
 - [x] Spheres
 - [x] Lighting and Shadows
-- [ ] Camera Debug
+- [x] Camera Debug
 
-### v2
-
-- [ ] Advanced lighting
-- [ ] Update physics
-- [ ] Postprocessing
+- [x] Keyboard Input Manager
 - [ ] Static Motion System
-- [ ] Input Manager
-- [ ] Movement System
+- [ ] Rigid Body Movement System
+- [ ] Advanced lighting
 
-### v3
+- [ ] 3RD person Camera
+- [ ] First Person Camera
+- [ ] Isometric Camera
 
-- [ ] Skybox
-- [ ] Cylinder
 - [ ] Fog
-- [ ] Animations
+- [ ] Postprocessing
+- [ ] Skybox
+- [ ] Additional physics properties
+- [ ] More shapes
+
+- [ ] 3D Models
+- [ ] Animation System
+- [ ] Textures
+
+- [ ] Triggers
