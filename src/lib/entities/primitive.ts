@@ -1,16 +1,16 @@
 import AmmoType from "ammojs-typed";
 import { Entity, World } from "ecsy";
-import { Material, Object3D } from "three";
+import { Object3D } from "three";
 import Model from "../components/model";
 import Body from "../components/body";
-import { createModel, createRigidBody } from "./util";
+import { createModel, createRigidBody, ModelOptions, RigidBodyOptions } from "./util";
 
 interface PrimitiveOptions {
   obj: Object3D;
   body?: AmmoType.btRigidBody;
 }
 
-const createPrimitive = (world: World, opts: PrimitiveOptions): Entity => {
+export const createPrimitive = (world: World, opts: PrimitiveOptions): Entity => {
   const entity = world.createEntity()
     .addComponent(Model, { obj: opts.obj });
   
@@ -21,37 +21,17 @@ const createPrimitive = (world: World, opts: PrimitiveOptions): Entity => {
   return entity;
 }
 
-export interface ShapeOptions {
-  type: 'box' | 'sphere' | 'cylinder';
-  size: { x: number, y: number, z: number };
-  pos?: { x: number; y: number; z: number };
-  quat?: { x: number; y: number; z: number; w: number };
-  mass?: number;
-  restitution?: number;
-  material?: Material;
 
+export interface ShapeOptions extends ModelOptions, RigidBodyOptions {
   rigid?: boolean;
 }
 
 export const createShape = (world: World, opts: ShapeOptions): Entity => {
-  const obj = createModel({
-    type: opts.type,
-    size: opts.size,
-    pos: opts.pos || { x: 0, y: 0, z: 0 },
-    quat: opts.quat || { x: 0, y: 0, z: 0, w: 1 },
-    material: opts.material,
-  });
+  const obj = createModel(opts);
   let body = undefined;
   
   if (opts.rigid) {
-    body = createRigidBody({
-      type: opts.type,
-      size: opts.size,
-      pos: opts.pos || { x: 0, y: 0, z: 0 },
-      quat: opts.quat || { x: 0, y: 0, z: 0, w: 1 },
-      mass: opts.mass,
-      restitution: opts.restitution,
-    });
+    body = createRigidBody(opts);
   };
 
   return createPrimitive(world, { obj, body });

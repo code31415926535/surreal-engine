@@ -2,14 +2,26 @@
 
 ## Dev Progress
 
+### v1
+
 - [x] Rendering
 - [x] Physics
 - [x] Spheres
-- [ ] Debug
-- [x] Cylinder
-- [ ] Lighting
-- [ ] Shadow
+- [x] Lighting and Shadows
+- [ ] Camera Debug
+
+### v2
+
+- [ ] Advanced lighting
+- [ ] Update physics
+- [ ] Postprocessing
+- [ ] Static Motion System
+- [ ] Input Manager
+- [ ] Movement System
+
+### v3
+
 - [ ] Skybox
-- [ ] Character
-- [ ] Camera
-- [ ] Fix physics
+- [ ] Cylinder
+- [ ] Fog
+- [ ] Animations

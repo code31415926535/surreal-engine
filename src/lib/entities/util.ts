@@ -1,10 +1,10 @@
-import { BoxGeometry, BufferGeometry, CylinderGeometry, Material, Mesh, MeshBasicMaterial, SphereGeometry } from "three";
+import { BoxGeometry, BufferGeometry, CylinderGeometry, Material, Mesh, MeshPhongMaterial, SphereGeometry } from "three";
 import AmmoType from "ammojs-typed";
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
-  pos: { x: number; y: number; z: number };
-  quat: { x: number; y: number; z: number; w: number };
+  pos?: { x: number; y: number; z: number };
+  quat?: { x: number; y: number; z: number; w: number };
   size: { x: number; y: number; z: number };
   mass?: number;
   restitution?: number;
@@ -28,8 +28,8 @@ export const createRigidBody = (opts: RigidBodyOptions): AmmoType.btRigidBody =>
   const { pos, quat, mass, restitution } = opts;
   const transform = new window.Ammo.btTransform();
   transform.setIdentity();
-  transform.setOrigin(new window.Ammo.btVector3(pos.x, pos.y, pos.z));
-  transform.setRotation(new window.Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+  transform.setOrigin(new window.Ammo.btVector3(pos?.x || 0, pos?.y || 0, pos?.z || 0));
+  transform.setRotation(new window.Ammo.btQuaternion(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1));
   const motionState = new window.Ammo.btDefaultMotionState(transform);
 
   const shape = buildShape(opts);
@@ -50,9 +50,11 @@ export const createRigidBody = (opts: RigidBodyOptions): AmmoType.btRigidBody =>
 export interface ModelOptions {
   type: 'box' | 'sphere' | 'cylinder';
   size: { x: number; y: number; z: number };
-  pos: { x: number; y: number; z: number };
-  quat: { x: number; y: number; z: number; w: number };
+  pos?: { x: number; y: number; z: number };
+  quat?: { x: number; y: number; z: number; w: number };
   material?: Material;
+  castShadow?: boolean;
+  receiveShadow?: boolean;
 }
 
 const buildGeometry = (opts: ModelOptions): BufferGeometry => {
@@ -70,10 +72,13 @@ const buildGeometry = (opts: ModelOptions): BufferGeometry => {
 
 export const createModel = (opts: ModelOptions) => {
   const geometry = buildGeometry(opts);
-  const material = opts.material || new MeshBasicMaterial({ color: 0xffffff });
+  const material = opts.material || new MeshPhongMaterial({ color: 0xffffff });
   const mesh = new Mesh(geometry, material);
-  mesh.position.set(opts.pos.x, opts.pos.y, opts.pos.z);
-  mesh.quaternion.set(opts.quat.x, opts.quat.y, opts.quat.z, opts.quat.w);
+  mesh.castShadow = opts.castShadow || false;
+  mesh.receiveShadow = opts.receiveShadow || false;
+  
+  mesh.position.set(opts.pos?.x || 0, opts.pos?.y || 0, opts.pos?.z || 0);
+  mesh.quaternion.set(opts.quat?.x || 0, opts.quat?.y || 0, opts.quat?.z || 0, opts.quat?.w || 1);
 
   return mesh;
 }

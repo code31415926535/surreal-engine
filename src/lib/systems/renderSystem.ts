@@ -4,8 +4,11 @@ import {
   PCFSoftShadowMap,
   PerspectiveCamera,
   Scene,
-  WebGLRenderer
+  WebGLRenderer,
+  GridHelper,
+  AxesHelper,
 } from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Model, { ModelSchema } from "../components/model";
 
 export default class RenderSystem extends System {
@@ -13,7 +16,7 @@ export default class RenderSystem extends System {
   private scene!: Scene;
   private camera!: Camera;
 
-  init(attributes: Attributes){
+  init(attributes: Attributes) {
     this.renderer = new WebGLRenderer({
       canvas: document.querySelector(attributes.canvas)!,
     });
@@ -32,6 +35,13 @@ export default class RenderSystem extends System {
     );
     this.camera.position.set(10, 10, 10);
     this.camera.lookAt(0, 0, 0);
+
+    if (attributes.debug) {
+      this.scene.add(new GridHelper(100, 10));
+      this.scene.add(new AxesHelper(100));
+
+      new OrbitControls(this.camera, this.renderer.domElement);
+    }
 
     window.addEventListener('resize', () => {
       this.onResize();
