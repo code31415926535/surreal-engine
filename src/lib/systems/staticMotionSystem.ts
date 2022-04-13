@@ -12,7 +12,7 @@ export default class StaticMotionSystem extends System {
 
     const up = new Vector3(0, 1, 0);
     const axis = new Vector3();
-    model.obj.position.copy(position);
+    model.obj.position.copy(staticMotion.pos.clone().add(position));
     axis.crossVectors(up, tangent).normalize();
     model.obj.quaternion.setFromAxisAngle(axis, Math.acos(up.dot(tangent)));
   }
@@ -36,6 +36,13 @@ export default class StaticMotionSystem extends System {
   }
 
   execute(delta: number): void {
+    const added = this.queries.staticMotion.added!;
+    for (const entity of added) {
+      const model = entity.getComponent(Model)! as any as ModelSchema;
+      const staticMotion = entity.getMutableComponent(StaticMotion)! as any as StaticMotionSchema;
+      staticMotion.pos = model.obj.position.clone();
+    }
+
     for (const entity of this.queries.staticMotion.results) {
       this.executeEntity(entity, delta);
     }
@@ -49,5 +56,8 @@ StaticMotionSystem.queries = {
       Model,
       Not(Body),
     ],
+    listen: {
+      added: true,
+    },
   },
 };

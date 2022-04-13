@@ -25,23 +25,21 @@ engine.creator.box({
   castShadow: true,
 });
 
-// TODO: Debug this
 const curve: CurvePath<Vector3> = new CurvePath();
-curve.add(new LineCurve3(new Vector3(0, 0, 0), new Vector3(0, 0, 12.5)));
-curve.add(new LineCurve3(new Vector3(0, 0, 12.5), new Vector3(12.5, 0, 12.5)));
-curve.add(new LineCurve3(new Vector3(12.5, 0, 12.5), new Vector3(12.5, 0, 0)));
-curve.add(new LineCurve3(new Vector3(12.5, 0, 0), new Vector3(0, 0, 0)));
+curve.add(new LineCurve3(new Vector3(0, 0, 0), new Vector3(0, 0, 25)));
+curve.add(new LineCurve3(new Vector3(0, 0, 25), new Vector3(25, 0, 25)));
+curve.add(new LineCurve3(new Vector3(25, 0, 25), new Vector3(25, 0, 0)));
+curve.add(new LineCurve3(new Vector3(25, 0, 0), new Vector3(0, 0, 0)));
 
 engine.creator.directionalLight({
   color: '0xffffff',
   intensity: 1,
-  pos: { x: 10, y: 10, z: 0 },
+  pos: { x: -12.5, y: 10, z: -12.5 },
   target: { x: 0, y: 0, z: 0 },
   castShadow: true,
 }).withStaticMotion({
   path: curve,
   duration: 5000,
-  loop: false,
 });
 
 engine.start();

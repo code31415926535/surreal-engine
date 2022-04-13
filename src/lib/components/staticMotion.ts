@@ -6,6 +6,7 @@ export interface StaticMotionSchema {
   duration: number;
   current: number;
   loop: boolean;
+  pos: Vector3;
   // reverse: boolean;
   // pingpong: boolean;
 }
