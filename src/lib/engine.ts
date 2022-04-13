@@ -63,7 +63,7 @@ export default class Engine {
       this.world.registerSystem(PhysicsSystem, { gravity: this.gravity });
       this.world.registerSystem(PhysicsRendererSyncSystem, {});
     }
-    this.creator = new EntityCreator(this.world);
+    this.creator = new EntityCreator(this.world, this.debug);
   }
 
   public start() {

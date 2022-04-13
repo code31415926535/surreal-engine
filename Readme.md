@@ -10,28 +10,32 @@
 
 - [x] Keyboard Input Manager
 - [x] World Configuration
+- [ ] Advanced Lighting (Ambient, Directional, Point)
+- [x] Create Entity Builder
+- [x] Better creator
+
 - [ ] Static Motion System
 - [ ] Keyboard Movement System
-- [ ] Advanced Lighting
-- [x] Create Entity Builder
-
 - [ ] 3RD person Camera
 - [ ] First Person Camera
 - [ ] Isometric Camera
 
+- [ ] Triggers
+- [ ] Scriptability
+
+- [ ] Pool example
+
+### v1.1
+
 - [ ] Fog
 - [ ] Skybox
 - [ ] Postprocessing
-- [ ] Additional physics properties
+- [ ] All physical properties
+- [ ] Spotlight
+- [ ] RectAreaLight
+-
 
 - [ ] 3D Models
 - [ ] Animation System
 - [ ] Textures
-
-- [ ] More shapes
-- [ ] Better creator
-
-- [ ] Triggers
-- [ ] Scriptability
-
-- [ ] First release
+- [ ] Material configuration in builder
