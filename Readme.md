@@ -9,8 +9,9 @@
 - [x] Camera Debug
 
 - [x] Keyboard Input Manager
+- [x] World Configuration
 - [ ] Static Motion System
-- [ ] Rigid Body Movement System
+- [ ] Keyboard Movement System
 - [ ] Advanced lighting
 
 - [ ] 3RD person Camera
@@ -18,13 +19,16 @@
 - [ ] Isometric Camera
 
 - [ ] Fog
-- [ ] Postprocessing
 - [ ] Skybox
+- [ ] Postprocessing
 - [ ] Additional physics properties
-- [ ] More shapes
 
 - [ ] 3D Models
 - [ ] Animation System
 - [ ] Textures
 
 - [ ] Triggers
+- [ ] Scriptability
+- [ ] More shapes
+- [ ] Custom shapes
+- [ ] First release

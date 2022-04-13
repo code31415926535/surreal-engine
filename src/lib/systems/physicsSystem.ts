@@ -1,4 +1,4 @@
-import { System } from "ecsy";
+import { Attributes, System } from "ecsy";
 import Body, { BodySchema } from "../components/body";
 import AmmoType from "ammojs-typed";
 
@@ -9,14 +9,14 @@ export default class PhysicsSystem extends System {
   private solver!: AmmoType.btSequentialImpulseConstraintSolver;
   private physicsWorld!: AmmoType.btDiscreteDynamicsWorld;
 
-  init() {
+  init(attributes: Attributes) {
     this.collisionConfiguration = new window.Ammo.btDefaultCollisionConfiguration();
     this.dispatcher = new window.Ammo.btCollisionDispatcher(this.collisionConfiguration);
     this.broadphase = new window.Ammo.btDbvtBroadphase();
     this.solver = new window.Ammo.btSequentialImpulseConstraintSolver();
     this.physicsWorld = new window.Ammo.btDiscreteDynamicsWorld(
         this.dispatcher, this.broadphase, this.solver, this.collisionConfiguration);
-    this.physicsWorld.setGravity(new window.Ammo.btVector3(0, -0.98, 0));
+    this.physicsWorld.setGravity(new window.Ammo.btVector3(attributes.gravity.x, attributes.gravity.y, attributes.gravity.z));
   }
 
   execute(delta: number): void {

@@ -16,7 +16,7 @@ const buildShape = (opts: RigidBodyOptions): any => {
     case 'box':
       return new window.Ammo.btBoxShape(btSize);
     case 'sphere':
-      return new window.Ammo.btSphereShape(opts.size.x / 2);
+      return new window.Ammo.btSphereShape(opts.size.x * 0.5);
     case 'cylinder':
       return new window.Ammo.btCylinderShape(btSize);
     default:

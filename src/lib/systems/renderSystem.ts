@@ -18,6 +18,7 @@ export default class RenderSystem extends System {
 
   init(attributes: Attributes) {
     this.renderer = new WebGLRenderer({
+      antialias: attributes.antialias,
       canvas: document.querySelector(attributes.canvas)!,
     });
     this.renderer.setPixelRatio(window.devicePixelRatio);

@@ -2,7 +2,9 @@ import './style.css';
 import Engine from "./lib/engine";
 import { DirectionalLight, DirectionalLightHelper, MeshPhongMaterial, Vector3 } from 'three';
 
-const engine = new Engine('#demo', { debug : true });
+const engine = new Engine('#demo', {
+  debug: true,
+});
 await engine.init();
 
 const light = new DirectionalLight(0xffffff);
