@@ -10,11 +10,11 @@
 
 - [x] Keyboard Input Manager
 - [x] World Configuration
-- [ ] Advanced Lighting (Ambient, Directional, Point)
+- [x] Advanced Lighting (Ambient, Directional, Point)
 - [x] Create Entity Builder
 - [x] Better creator
 
-- [ ] Static Motion System
+- [x] Static Motion System
 - [ ] Keyboard Movement System
 - [ ] 3RD person Camera
 - [ ] First Person Camera
@@ -31,11 +31,14 @@
 - [ ] Skybox
 - [ ] Postprocessing
 - [ ] All physical properties
-- [ ] Spotlight
-- [ ] RectAreaLight
--
 
 - [ ] 3D Models
 - [ ] Animation System
 - [ ] Textures
 - [ ] Material configuration in builder
+
+- [ ] Spotlight
+- [ ] RectAreaLight
+- [ ] HemisphericalLight
+- [ ] Predefined curves
+- [ ] All curve properties

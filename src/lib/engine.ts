@@ -7,7 +7,9 @@ import Body from './components/body';
 import EntityCreator from './entities';
 import RenderSystem from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
+import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
+import StaticMotion from './components/staticMotion';
 
 declare global {
   interface Window {
@@ -54,6 +56,7 @@ export default class Engine {
     });
     this.world.registerComponent(Model);
     this.world.registerComponent(Body);
+    this.world.registerComponent(StaticMotion);
     this.world.registerSystem(RenderSystem, {
       canvas: this.canvas,
       debug: this.debug,
@@ -63,6 +66,7 @@ export default class Engine {
       this.world.registerSystem(PhysicsSystem, { gravity: this.gravity });
       this.world.registerSystem(PhysicsRendererSyncSystem, {});
     }
+    this.world.registerSystem(StaticMotionSystem, {});
     this.creator = new EntityCreator(this.world, this.debug);
   }
 
@@ -77,7 +81,7 @@ export default class Engine {
       }
 
       this.execute();
-      this.world.execute(t, t - this.previousTime);
+      this.world.execute(t - this.previousTime, t);
       this.previousTime = t;
     });
   }

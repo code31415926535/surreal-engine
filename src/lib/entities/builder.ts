@@ -6,12 +6,15 @@ import {
   Mesh,
   MeshPhongMaterial,
   Object3D,
+  CurvePath,
   SphereGeometry,
+  Vector3,
 } from "three";
 import AmmoType from "ammojs-typed";
 import { Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
+import StaticMotion from "../components/staticMotion";
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -36,6 +39,12 @@ export interface Object3DOptions {
   obj: Object3D;
 }
 
+export interface StaticMoitonOptions {
+  path: CurvePath<Vector3>;
+  duration?: number;
+  loop?: boolean;
+}
+
 export default class EntityBuilder {
   entity: Entity;
 
@@ -55,6 +64,15 @@ export default class EntityBuilder {
 
   public withShapeModel = (opts: ShapeModelOptions): EntityBuilder => {
     this.entity.addComponent(Model, { obj: this.buildShapeModel(opts) });
+    return this;
+  }
+
+  public withStaticMotion = (opts: StaticMoitonOptions): EntityBuilder => {
+    this.entity.addComponent(StaticMotion, {
+      path: opts.path,
+      duration: opts.duration || 1000,
+      loop: opts.loop !== undefined ? opts.loop : true,
+    });
     return this;
   }
 
