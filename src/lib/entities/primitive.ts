@@ -21,7 +21,6 @@ export const createPrimitive = (world: World, opts: PrimitiveOptions): Entity =>
   return entity;
 }
 
-
 export interface ShapeOptions extends ModelOptions, RigidBodyOptions {
   rigid?: boolean;
 }

@@ -12,7 +12,8 @@
 - [x] World Configuration
 - [ ] Static Motion System
 - [ ] Keyboard Movement System
-- [ ] Advanced lighting
+- [ ] Advanced Lighting
+- [x] Create Entity Builder
 
 - [ ] 3RD person Camera
 - [ ] First Person Camera
@@ -27,8 +28,10 @@
 - [ ] Animation System
 - [ ] Textures
 
+- [ ] More shapes
+- [ ] Better creator
+
 - [ ] Triggers
 - [ ] Scriptability
-- [ ] More shapes
-- [ ] Custom shapes
+
 - [ ] First release

@@ -1,6 +1,10 @@
 import { World } from "ecsy";
 import { Object3D } from "three";
-import { createPrimitive, createShape, ShapeOptions } from "./primitive";
+import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions } from "./builder";
+
+interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
+  rigid?: boolean;
+}
 
 export interface BoxOptions extends Omit<ShapeOptions, "type"> {}
 
@@ -17,22 +21,33 @@ export interface EtherealOptions {
 export default class EntityCreator {
   constructor(private world: World) {}
 
-  ethereal(opts: EtherealOptions): EntityCreator {
-    createPrimitive(this.world, { obj: opts.obj });
-    return this;
+  empty(): EntityBuilder {
+    return new EntityBuilder(this.world);
   }
 
-  box(opts: BoxOptions): EntityCreator {
-    createShape(this.world, { ...opts, type: 'box' });
-    return this;
+  ethereal(opts: Object3DOptions): EntityBuilder {
+    return new EntityBuilder(this.world).withObject3D({ obj: opts.obj });
   }
 
-  sphere(opts: SphereOptions): EntityCreator {
-    createShape(this.world, { ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
-    return this;
+  box(opts: BoxOptions): EntityBuilder {
+    const builder = new EntityBuilder(this.world)
+      .withShapeModel({ ...opts, type: 'box' });
+    
+    if (opts.rigid) {
+      builder.withRigidBody({ ...opts, type: 'box' });
+    }
+
+    return builder;
   }
 
-  cylinder(opts: CylinderOptions): EntityCreator {
-    throw new Error("Not working");
+  sphere(opts: SphereOptions): EntityBuilder {
+    const builder = new EntityBuilder(this.world)
+      .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
+    
+    if (opts.rigid) {
+      builder.withRigidBody({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
+    }
+
+    return builder;
   }
 }

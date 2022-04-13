@@ -26,7 +26,8 @@ const drh = new DirectionalLightHelper(light, 10);
 
 engine.creator.ethereal({
   obj: light,
-}).ethereal({ obj: drh });
+});
+engine.creator.ethereal({ obj: drh });
 
 engine.creator.box({
   size: { x: 25, y: 1, z: 25 },
@@ -34,7 +35,8 @@ engine.creator.box({
   restitution: 0.3,
   rigid: true,
   receiveShadow: true,
-}).box({
+});
+engine.creator.box({
   size: { x: 1, y: 1, z: 1 },
   pos: { x: 0, y: 10, z: 0 },
   mass: 0.5,
@@ -42,7 +44,8 @@ engine.creator.box({
   material: new MeshPhongMaterial({ color: 0xffcc00 }),
   rigid: true,
   castShadow: true,
-}).box({
+});
+engine.creator.box({
   size: { x: 1, y: 1, z: 1 },
   pos: {x: 0.5, y: 15, z: 0},
   mass: 1,
@@ -50,7 +53,8 @@ engine.creator.box({
   material: new MeshPhongMaterial({ color: 0x00ffcc }),
   rigid: true,
   castShadow: true,
-}).sphere({
+});
+engine.creator.sphere({
   radius: 1,
   pos: {x: 0, y: 20, z: 0},
   mass: 1,
