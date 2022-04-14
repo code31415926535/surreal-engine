@@ -11,10 +11,11 @@ engine.setPerspectiveCamera({
   position: { x: 10, y: 10, z: 10 },
 });
 
+const size = 12;
 for (let i = 0; i < 10; i++) {
   engine.creator.box({
-    pos: { x: -16 - i * (6 + i), y: i + 2, z: -i * 4 },
-    size: { x: 4, y: 1, z: 4 },
+    pos: { x: -10 - size / 2 - i * (size + 3), y: i + 2, z: 0 },
+    size: { x: size, y: 1, z: size },
     mass: 0,
     restitution: 0.3,
     material: new MeshPhongMaterial({ color: 0xcc0000 }),
@@ -24,7 +25,17 @@ for (let i = 0; i < 10; i++) {
 }
 
 engine.creator.box({
-  size: { x: 20, y: 1, z: 20 },
+  size: { x: 50, y: 1, z: 50 },
+  pos: { x: -10 - size / 2 - 10 * (size + 3), y: -100, z: 0 },
+  mass: 0,
+  restitution: 0.9,
+  material: new MeshPhongMaterial({ color: 0x0000cc }),
+  rigid: true,
+  receiveShadow: true,
+});
+
+engine.creator.box({
+  size: { x: 20, y: 1, z: 80 },
   mass: 0,
   restitution: 0.3,
   material: new MeshPhongMaterial({ color: 0xcc0000 }),
@@ -36,7 +47,7 @@ engine.creator.box({
   size: { x: 1, y: 1, z: 1 },
   pos: { x: 0, y: 10, z: 0 },
   mass: 0.5,
-  restitution: 0.3,
+  restitution: 0.1,
   material: new MeshPhongMaterial({ color: 0xffcc00 }),
   rigid: true,
   castShadow: true,
@@ -50,6 +61,11 @@ engine.creator.directionalLight({
   castShadow: true,
   shadowAreaHeight: 20,
   shadowAreaWidth: 20,
+});
+
+engine.creator.ambientLight({
+  color: '0xffffff',
+  intensity: 0.25,
 });
 
 engine.start();

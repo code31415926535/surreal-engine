@@ -19,10 +19,11 @@
 - [x] Static Motion System
 - [x] Keyboard Movement System
 - [x] Isometric Camera
-- [ ] Follow Camera
+- [x] Follow Camera
 - [x] Camera config
 
-- [ ] Jump & Run & Speed Factor
+- [x] Jump
+- [ ] Speed Factor
 - [ ] All physical properties
 
 ### v0.1
@@ -49,3 +50,4 @@
 - [ ] All curve properties
 - [ ] 3RD person Camera
 - [ ] First person Camera
+- [ ] Follow Directional Light

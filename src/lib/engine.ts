@@ -74,7 +74,9 @@ export default class Engine {
     }
     this.world.registerSystem(StaticMotionSystem, {});
     this.world.registerSystem(KeyboardMovementSystem, {});
-    this.world.registerSystem(FollowCameraSystem, {});
+    if (!this.debug) {
+      this.world.registerSystem(FollowCameraSystem, {});
+    }
     this.creator = new EntityCreator(this.world, this.debug);
   }
 

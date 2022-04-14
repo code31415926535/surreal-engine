@@ -1,4 +1,4 @@
-import { Attributes, Entity, System } from "ecsy";
+import { Entity, System } from "ecsy";
 import { Vector3 } from "three";
 import Body, { BodySchema } from "../components/body";
 import FollowCamera from "../components/followCamera";
@@ -8,11 +8,6 @@ import RenderSystem from "./renderSystem";
 export default class FollowCameraSystem extends System {
   private currentPosition!: Vector3;
   private currentLookAt!: Vector3;
-  private debug: boolean = false;
-
-  init(attributes: Attributes) {
-    this.debug = attributes.debug;
-  }
 
   private setupCamera(entity: Entity) {
     const rendererSystem = this.world.getSystem(RenderSystem);
@@ -36,21 +31,19 @@ export default class FollowCameraSystem extends System {
   }
 
   private updateCamera(entity: Entity) {
-    if (!this.debug) {
-      const rendererSystem = this.world.getSystem(RenderSystem);
-      const body = entity.getComponent(Body)! as any as BodySchema;
-      const worldTransform = body.obj.getWorldTransform();
-      const target = new Vector3(
-        worldTransform.getOrigin().x(),
-        worldTransform.getOrigin().y(),
-        worldTransform.getOrigin().z(),
-      );
-      const delta = target.sub(this.currentLookAt);
-      this.currentLookAt.add(delta);
-      this.currentPosition.add(delta);
-      rendererSystem.camera.position.copy(this.currentPosition);
-      rendererSystem.camera.lookAt(this.currentLookAt);
-    }
+    const rendererSystem = this.world.getSystem(RenderSystem);
+    const body = entity.getComponent(Body)! as any as BodySchema;
+    const worldTransform = body.obj.getWorldTransform();
+    const target = new Vector3(
+      worldTransform.getOrigin().x(),
+      worldTransform.getOrigin().y(),
+      worldTransform.getOrigin().z(),
+    );
+    const delta = target.sub(this.currentLookAt);
+    this.currentLookAt.add(delta);
+    this.currentPosition.add(delta);
+    rendererSystem.camera.position.copy(this.currentPosition);
+    rendererSystem.camera.lookAt(this.currentLookAt);
   }
 
   execute(): void {
