@@ -17,6 +17,7 @@ import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
 import KeyboardInputManager from "../input/keyboardInputManager";
 import KeyboardInput from "../components/keyboardInput";
+import FollowCamera from "../components/followCamera";
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -71,6 +72,11 @@ export default class EntityBuilder {
 
   public withKeyboardInput = (): EntityBuilder => {
     this.entity.addComponent(KeyboardInput, { value:  new KeyboardInputManager() });
+    return this;
+  }
+
+  public withFollowCamera = (): EntityBuilder => {
+    this.entity.addComponent(FollowCamera, {});
     return this;
   }
 

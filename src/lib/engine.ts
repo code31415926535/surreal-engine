@@ -5,13 +5,15 @@ import {
 import Model from './components/model';
 import Body from './components/body';
 import EntityCreator from './entities';
-import RenderSystem from './systems/renderSystem';
+import RenderSystem, { OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
 import StaticMotion from './components/staticMotion';
 import KeyboardInput from './components/keyboardInput';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
+import FollowCamera from './components/followCamera';
+import FollowCameraSystem from './systems/followCameraSystem';
 
 declare global {
   interface Window {
@@ -60,6 +62,7 @@ export default class Engine {
     this.world.registerComponent(Body);
     this.world.registerComponent(StaticMotion);
     this.world.registerComponent(KeyboardInput);
+    this.world.registerComponent(FollowCamera);
     this.world.registerSystem(RenderSystem, {
       canvas: this.canvas,
       debug: this.debug,
@@ -71,7 +74,16 @@ export default class Engine {
     }
     this.world.registerSystem(StaticMotionSystem, {});
     this.world.registerSystem(KeyboardMovementSystem, {});
+    this.world.registerSystem(FollowCameraSystem, {});
     this.creator = new EntityCreator(this.world, this.debug);
+  }
+
+  public setPerspectiveCamera(opts: PerspectiveCameraOptions) {
+    this.world.getSystem(RenderSystem).setPerspectiveCamera(opts);
+  }
+
+  public setOrthographicCamera(opts: OrthographicCameraOptions) {
+    this.world.getSystem(RenderSystem).setOrthographicCamera(opts);
   }
 
   public start() {

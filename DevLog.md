@@ -2,6 +2,8 @@
 
 ## Dev Progress
 
+### v0.0
+
 - [x] Rendering
 - [x] Physics
 - [x] Spheres
@@ -16,28 +18,34 @@
 
 - [x] Static Motion System
 - [x] Keyboard Movement System
-- [ ] Camera config & isometric Camera
+- [x] Isometric Camera
 - [ ] Follow Camera
+- [x] Camera config
 
 - [ ] Jump & Run & Speed Factor
-- [ ] 3RD person Camera
 - [ ] All physical properties
-- [ ] Triggers
-- [ ] Scriptability
 
-### v1.1
+### v0.1
 
 - [ ] Fog
 - [ ] Skybox
 - [ ] Postprocessing
+
+- [ ] Triggers
+- [ ] Scriptability
+- [ ] Support for removing components
 
 - [ ] 3D Models
 - [ ] Animation System
 - [ ] Textures
 - [ ] Material configuration in builder
 
+### v0.2
+
 - [ ] Spotlight
 - [ ] RectAreaLight
 - [ ] HemisphericalLight
 - [ ] Predefined curves
 - [ ] All curve properties
+- [ ] 3RD person Camera
+- [ ] First person Camera
