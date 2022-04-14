@@ -10,6 +10,8 @@ import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
 import StaticMotion from './components/staticMotion';
+import KeyboardInput from './components/keyboardInput';
+import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 
 declare global {
   interface Window {
@@ -57,6 +59,7 @@ export default class Engine {
     this.world.registerComponent(Model);
     this.world.registerComponent(Body);
     this.world.registerComponent(StaticMotion);
+    this.world.registerComponent(KeyboardInput);
     this.world.registerSystem(RenderSystem, {
       canvas: this.canvas,
       debug: this.debug,
@@ -67,6 +70,7 @@ export default class Engine {
       this.world.registerSystem(PhysicsRendererSyncSystem, {});
     }
     this.world.registerSystem(StaticMotionSystem, {});
+    this.world.registerSystem(KeyboardMovementSystem, {});
     this.creator = new EntityCreator(this.world, this.debug);
   }
 

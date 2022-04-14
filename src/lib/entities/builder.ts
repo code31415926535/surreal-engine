@@ -15,6 +15,8 @@ import { Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
+import KeyboardInputManager from "../input/keyboardInputManager";
+import KeyboardInput from "../components/keyboardInput";
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -64,6 +66,11 @@ export default class EntityBuilder {
 
   public withShapeModel = (opts: ShapeModelOptions): EntityBuilder => {
     this.entity.addComponent(Model, { obj: this.buildShapeModel(opts) });
+    return this;
+  }
+
+  public withKeyboardInput = (): EntityBuilder => {
+    this.entity.addComponent(KeyboardInput, { value:  new KeyboardInputManager() });
     return this;
   }
 

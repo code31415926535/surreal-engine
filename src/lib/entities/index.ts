@@ -107,7 +107,6 @@ export default class EntityCreator {
 
     if (opts.castShadow) {
       light.castShadow = true;
-      console.log(light.shadow.camera)
       light.shadow.camera.near = opts.near || 0.5;
       light.shadow.camera.far = opts.far || 500;
       light.shadow.camera.left = opts.shadowAreaWidth ? -opts.shadowAreaWidth : -5;

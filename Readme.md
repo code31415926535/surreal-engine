@@ -15,22 +15,21 @@
 - [x] Better creator
 
 - [x] Static Motion System
-- [ ] Keyboard Movement System
-- [ ] 3RD person Camera
-- [ ] First Person Camera
-- [ ] Isometric Camera
+- [x] Keyboard Movement System
+- [ ] Camera config & isometric Camera
+- [ ] Follow Camera
 
+- [ ] Jump & Run & Speed Factor
+- [ ] 3RD person Camera
+- [ ] All physical properties
 - [ ] Triggers
 - [ ] Scriptability
-
-- [ ] Pool example
 
 ### v1.1
 
 - [ ] Fog
 - [ ] Skybox
 - [ ] Postprocessing
-- [ ] All physical properties
 
 - [ ] 3D Models
 - [ ] Animation System

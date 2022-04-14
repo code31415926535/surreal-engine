@@ -9,6 +9,20 @@ export default class PhysicsSystem extends System {
   private solver!: AmmoType.btSequentialImpulseConstraintSolver;
   private physicsWorld!: AmmoType.btDiscreteDynamicsWorld;
 
+  moveBody(body: AmmoType.btRigidBody, x: number, y: number, z: number): void {
+    const velocity = new window.Ammo.btVector3(x, y, z);
+    body.activate();
+    body.setLinearVelocity(velocity);
+    window.Ammo.destroy(velocity);
+  }
+
+  rotateBody(body: AmmoType.btRigidBody, x: number, y: number, z: number): void {
+    const rotation = new window.Ammo.btVector3(x, y, z);
+    body.activate();
+    body.setAngularVelocity(rotation);
+    window.Ammo.destroy(rotation);
+  }
+
   init(attributes: Attributes) {
     this.collisionConfiguration = new window.Ammo.btDefaultCollisionConfiguration();
     this.dispatcher = new window.Ammo.btCollisionDispatcher(this.collisionConfiguration);
