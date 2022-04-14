@@ -32,22 +32,30 @@
 - [ ] Skybox
 - [ ] Postprocessing
 
-- [ ] Triggers
 - [ ] Scriptability
+  - [ ] Register Custom System with it's associated Component
+  - [ ] Create Groups of Entities
+  - [ ] Expose existing systems with a nice interface
 - [ ] Support for removing components
+- [ ] Trigger Box
 
 - [ ] 3D Models
 - [ ] Animation System
 - [ ] Textures
 - [ ] Material configuration in builder
+- [ ] 3RD person Camera
 
 ### v0.2
+
+- [ ] Plane geometry
+- [ ] Kinetic object for collision purpouse
+- [ ] Better debugging
+
+- [ ] First person Camera
+- [ ] Follow Directional Light
 
 - [ ] Spotlight
 - [ ] RectAreaLight
 - [ ] HemisphericalLight
 - [ ] Predefined curves
 - [ ] All curve properties
-- [ ] 3RD person Camera
-- [ ] First person Camera
-- [ ] Follow Directional Light
