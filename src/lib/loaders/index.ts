@@ -21,6 +21,10 @@ export default class Assets {
     path: string;
     opts?: AddTextureOptions;
   }[] = [];
+  private cubeTexturesToLoad: {
+    name: string;
+    paths: string[];
+  }[] = [];
 
   private textures: { [name: string]: Texture } = {};
 
@@ -32,6 +36,10 @@ export default class Assets {
 
   public setBasePath(path: string): void {
     this.basePath = path;
+  }
+
+  public addCubeTexture(name: string, paths: string[]): void {
+    this.cubeTexturesToLoad.push({ name, paths: paths.map(path => this.basePath + path) });
   }
 
   public addTexture(name: string, path: string, opts?: AddTextureOptions): void {
@@ -48,6 +56,7 @@ export default class Assets {
     this.loadingManager.onProgress = (_, loaded, total) => {
       onProgress(loaded / total);
     }
+
     const promises = this.texturesToLoad.map(async (texture) => {
       const result = await this.textureLoader.load(texture.path);
       result.wrapS = texture.opts?.wrapS || RepeatWrapping;
@@ -56,7 +65,11 @@ export default class Assets {
       result.repeat.y = texture.opts?.repeat?.y || 1;
       this.textures[texture.name] = result;
     });
+    const promisesCube = this.cubeTexturesToLoad.map(async (texture) => {
+      const result = await this.textureLoader.loadCube(texture.paths);
+      this.textures[texture.name] = result;
+    });
 
-    await Promise.all(promises);
+    await Promise.all([...promises, ...promisesCube]);
   }
 }

@@ -133,6 +133,11 @@ export default class Engine {
     this.world.getSystem(RenderSystem).setOrthographicCamera(opts);
   }
 
+  /**
+   * Sets the background of the game. See {@link BackgroundOptions} for more info.
+   * 
+   * @param opts The options for the background.
+   */
   public setBackground(opts: BackgroundOptions) {
     this.world.getSystem(RenderSystem).setBackground(opts);
   }

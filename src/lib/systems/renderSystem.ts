@@ -9,6 +9,7 @@ import {
   OrthographicCamera,
   FogExp2,
   Color,
+  Texture,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Model, { ModelSchema } from "../components/model";
@@ -33,6 +34,7 @@ export interface BackgroundOptions {
     color: string;
     density: number;
   }
+  skybox?: Texture;
 }
 
 export default class RenderSystem extends System {
@@ -75,8 +77,13 @@ export default class RenderSystem extends System {
 
   public setBackground(opts: BackgroundOptions) {
     this.scene.background = new Color(opts.color || "#000000");
+
     if (opts.fog) {
       this.scene.fog = new FogExp2(opts.fog.color, opts.fog.density);
+    }
+
+    if (opts.skybox) {
+      this.scene.background = opts.skybox;
     }
   }
 

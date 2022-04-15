@@ -30,8 +30,9 @@
 
 - [x] Fog
 - [x] Textures
-- [ ] Skybox
+- [x] Skybox
 - [ ] Bump Map
+- [ ] Loading indicator
 - [ ] Figure out how physics works
 - [ ] Readme and examples
 

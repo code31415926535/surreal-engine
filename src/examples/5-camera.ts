@@ -11,6 +11,14 @@ engine.setPerspectiveCamera({
   position: { x: 10, y: 10, z: 10 },
 });
 
+engine.setBackground({
+  color: "#252525",
+  fog: {
+    color: "#000000",
+    density: 0.1,
+  }
+});
+
 const size = 12;
 for (let i = 0; i < 10; i++) {
   engine.creator.box({

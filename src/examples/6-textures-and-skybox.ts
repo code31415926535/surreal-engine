@@ -6,13 +6,25 @@ await engine.init();
 
 engine.assets.setBasePath("src/examples/");
 engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
+engine.assets.addCubeTexture("skybox", [
+  "textures/vz_techno_back.png",
+  "textures/vz_techno_down.png",
+  "textures/vz_techno_front.png",
+  "textures/vz_techno_left.png",
+  "textures/vz_techno_right.png",
+  "textures/vz_techno_up.png",
+]);
 await engine.assets.load((progress) => {
   console.log(`Loading: ${progress * 100}%`);
 });
 
+engine.setBackground({
+  skybox: engine.assets.getTexture("skybox"),
+});
+
 // Lighting
 engine.creator.directionalLight({
-  color: '0xffffff',
+  color: '#ffffff',
   intensity: 1,
   pos: { x: -12.5, y: 10, z: -12.5 },
   target: { x: 0, y: 0, z: 0 },
@@ -20,7 +32,7 @@ engine.creator.directionalLight({
   shadowAreaHeight: 20,
   shadowAreaWidth: 20,
 });
-engine.creator.ambientLight({ color: '0xffffff', intensity: 0.5 });
+engine.creator.ambientLight({ color: '#ffffff', intensity: 0.5 });
 
 // Ground
 engine.creator.box({
