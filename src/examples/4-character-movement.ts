@@ -8,10 +8,6 @@ await engine.init();
 
 engine.setBackground({
   color: "#252525",
-  fog: {
-    color: "#000000",
-    density: 0.1,
-  }
 });
 
 engine.creator.box({

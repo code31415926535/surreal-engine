@@ -63,6 +63,7 @@
 - [ ] Fps meter
 - [ ] Performance Optimization
 - [ ] First person Camera
+- [ ] Add multi-texture material support
 
 ### Future
 
