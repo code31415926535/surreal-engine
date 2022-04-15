@@ -26,6 +26,9 @@ export interface RigidBodyOptions {
   size: { x: number; y: number; z: number };
   mass?: number;
   restitution?: number;
+  friction?: number;
+  linearDamping?: number;
+  angularDamping?: number;
 }
 
 export interface ShapeModelOptions {
@@ -117,6 +120,8 @@ export default class EntityBuilder {
     const info = new window.Ammo.btRigidBodyConstructionInfo(mass || 0, motionState, shape, inertia);
     const body: AmmoType.btRigidBody = new window.Ammo.btRigidBody(info);
     body.setRestitution(restitution || 0);
+    body.setFriction(opts.friction || 0.1);
+    body.setDamping(opts.linearDamping || 0.1, opts.angularDamping || 0.1);
   
     return body;
   }

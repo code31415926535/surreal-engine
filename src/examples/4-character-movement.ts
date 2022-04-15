@@ -25,6 +25,33 @@ engine.creator.box({
   castShadow: true,
 }).withKeyboardMotion();
 
+for (let i = 0; i < 4; i++) {
+  for (let j = 0; j < 8; j++) {
+    engine.creator.box({
+      pos: { x: j, y: i, z: -3 },
+      size: { x: 1, y: 1, z: 1 },
+      mass: 0.2,
+      restitution: 0.1,
+      rigid: true,
+      castShadow: true,
+      material: new MeshPhongMaterial({ color: 0x333333 }),
+    });
+  }
+}
+
+engine.creator.sphere({
+  radius: 1,
+  pos: { x: 4, y: 15, z: 5 },
+  mass: 0.2,
+  restitution: 0.6,
+  friction: 0.5,
+  rigid: true,
+  castShadow: true,
+  material: new MeshPhongMaterial({ color: 0x333333 }),
+  linearDamping: 0.2,
+  angularDamping: 0.2,
+});
+
 engine.creator.directionalLight({
   color: '0xffffff',
   intensity: 1,

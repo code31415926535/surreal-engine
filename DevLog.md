@@ -23,14 +23,15 @@
 - [x] Camera config
 
 - [x] Jump
-- [ ] Speed Factor
-- [ ] All physical properties
+- [x] Speed Factor
+- [x] All physical properties
 
 ### v0.1
 
 - [ ] Fog
 - [ ] Skybox
 - [ ] Textures
+- [ ] Figure out how physics works
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component
