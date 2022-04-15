@@ -15,6 +15,10 @@ engine.assets.addCubeTexture("skybox", [
   "textures/vz_techno_right.png",
   "textures/vz_techno_up.png",
 ]);
+engine.assets.addTexture("box@normal", "textures/metal/metalbox_normal.png");
+engine.assets.addTexture("box@bump", "textures/metal/metalbox_bump.png");
+engine.assets.addTexture("box@ao", "textures/metal/metalbox_AO.png");
+engine.assets.addTexture("box@diffuse", "textures/metal/metalbox_diffuse.png");
 await engine.assets.load((progress) => {
   console.log(`Loading: ${progress * 100}%`);
 });
@@ -48,7 +52,6 @@ engine.creator.box({
   receiveShadow: true,
 });
 
-// TODO: Skin this
 // Character
 engine.creator.box({
   size: { x: 1, y: 1, z: 1 },
@@ -60,7 +63,15 @@ engine.creator.box({
   castShadow: true,
 }).withKeyboardMotion().withFollowCamera();
 
-// TODO: Skin these
+const material = new MeshPhongMaterial({
+  map: engine.assets.getTexture("box@diffuse"),
+  normalMap: engine.assets.getTexture("box@normal"),
+  bumpMap: engine.assets.getTexture("box@bump"),
+  aoMap: engine.assets.getTexture("box@ao"),
+  shininess: 50,
+  reflectivity: 0.8,
+});
+
 // Some Boxes
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
@@ -72,7 +83,7 @@ for (let i = 0; i < 3; i++) {
         restitution: 0.1,
         rigid: true,
         castShadow: true,
-        material: new MeshPhongMaterial({ color: 0x333333 }),
+        material,
       });
     }
   }
