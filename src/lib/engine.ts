@@ -14,6 +14,7 @@ import KeyboardMotion from './components/keyboardInput';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 import FollowCamera from './components/followCamera';
 import FollowCameraSystem from './systems/followCameraSystem';
+import Assets from './loaders';
 
 declare global {
   interface Window {
@@ -35,9 +36,30 @@ export interface EngineOpts {
  *  // TODO: More docs.
  */
 export default class Engine {
+  /**
+   * Entity creator helper. You can use this class to create entities.
+   * 
+   * @example
+   * engine.creator.box({
+   *  size: { x: 25, y: 1, z: 25 },
+   *  mass: 0,
+   *  restitution: 0.3,
+   *  rigid: true,
+   *  receiveShadow: true,
+   *  castShadow: true,
+   * });
+   */
+  public creator!: EntityCreator;
+  /**
+   * Asset manager class. Use this to register and manage assets.
+   * 
+   * @example
+   * TODO: Example
+   */
+  public assets!: Assets;
+
   private previousTime: number = 0;
   private world!: World;
-  public creator!: EntityCreator;
 
   private debug: boolean;
   private physics: boolean;
@@ -85,6 +107,8 @@ export default class Engine {
     if (!this.debug) {
       this.world.registerSystem(FollowCameraSystem, {});
     }
+
+    this.assets = new Assets();
     this.creator = new EntityCreator(this.world, this.debug);
   }
 

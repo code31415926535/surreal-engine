@@ -29,10 +29,11 @@
 ### v0.1
 
 - [x] Fog
+- [x] Textures
 - [ ] Skybox
-- [ ] Textures
+- [ ] Bump Map
 - [ ] Figure out how physics works
-- [ ] Readme and some docs
+- [ ] Readme and examples
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component
@@ -43,12 +44,13 @@
 
 - [ ] 3D Models
 - [ ] Animation System
-- [ ] Material configuration in builder
 - [ ] 3RD person Camera
 - [ ] Postprocessing
 
 ### v0.2
 
+- [ ] Material configuration in builder
+- [ ] Use assets directly in entity creator
 - [ ] Plane geometry
 - [ ] Kinetic object for collision purpouse
 - [ ] Better debugging
