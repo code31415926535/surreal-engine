@@ -7,6 +7,8 @@ import {
   GridHelper,
   AxesHelper,
   OrthographicCamera,
+  FogExp2,
+  Color,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Model, { ModelSchema } from "../components/model";
@@ -23,6 +25,14 @@ export interface PerspectiveCameraOptions {
   far?: number;
   position: { x: number; y: number; z: number };
   lookAt?: { x: number; y: number; z: number };
+}
+
+export interface BackgroundOptions {
+  color?: string;
+  fog?: {
+    color: string;
+    density: number;
+  }
 }
 
 export default class RenderSystem extends System {
@@ -60,6 +70,13 @@ export default class RenderSystem extends System {
 
     if (this.debug) {
       new OrbitControls(this.camera, this.renderer.domElement);
+    }
+  }
+
+  public setBackground(opts: BackgroundOptions) {
+    this.scene.background = new Color(opts.color || "#000000");
+    if (opts.fog) {
+      this.scene.fog = new FogExp2(opts.fog.color, opts.fog.density);
     }
   }
 

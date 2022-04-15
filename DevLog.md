@@ -28,10 +28,11 @@
 
 ### v0.1
 
-- [ ] Fog
+- [x] Fog
 - [ ] Skybox
 - [ ] Textures
 - [ ] Figure out how physics works
+- [ ] Readme and some docs
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component

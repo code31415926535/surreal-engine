@@ -1,10 +1,16 @@
 import Engine from "../lib/engine";
 import { MeshPhongMaterial } from 'three';
 
-const engine = new Engine('#demo', {
-  debug: true,
-});
+const engine = new Engine('#demo');
 await engine.init();
+
+engine.setBackground({
+  color: "#252525",
+  fog: {
+    color: "#000000",
+    density: 0.1,
+  }
+});
 
 engine.creator.pointLight({
   color: '#ffffff',

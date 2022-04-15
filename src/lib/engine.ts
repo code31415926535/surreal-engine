@@ -5,7 +5,7 @@ import {
 import Model from './components/model';
 import Body from './components/body';
 import EntityCreator from './entities';
-import RenderSystem, { OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
+import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
@@ -30,6 +30,10 @@ export interface EngineOpts {
   antialias?: boolean;
 }
 
+/**
+ * Surreal Game Engine.
+ *  // TODO: More docs.
+ */
 export default class Engine {
   private previousTime: number = 0;
   private world!: World;
@@ -53,6 +57,10 @@ export default class Engine {
     this.antialias = opts?.antialias ?? true;
   }
 
+  /**
+   * Initialize all the engine components. This must be called once
+   *  before doing any other operations.
+   */
   public async init() {
     window.ammo = await window.Ammo();
     this.world = new World({
@@ -80,14 +88,34 @@ export default class Engine {
     this.creator = new EntityCreator(this.world, this.debug);
   }
 
+  /**
+   * Set the camera to a {@link https://threejs.org/docs/#api/cameras/PerspectiveCamera PerspectiveCamera} A perspective camera is
+   * a projection mode is designed to mimic the way the human eye sees.
+   * 
+   * @param opts The options for the camera.
+   */
   public setPerspectiveCamera(opts: PerspectiveCameraOptions) {
     this.world.getSystem(RenderSystem).setPerspectiveCamera(opts);
   }
 
+  /**
+   * Set the camera to an {@link https://threejs.org/docs/#api/cameras/OrthographicCamera OrthographicCamera} An orthographic camera is
+   * a projection mode where an object's size in the rendered image stays constant regardless of its distance from the camera.
+   * The most common use case is an isometric view.
+   * 
+   * @param opts The options for the camera.
+   */
   public setOrthographicCamera(opts: OrthographicCameraOptions) {
     this.world.getSystem(RenderSystem).setOrthographicCamera(opts);
   }
 
+  public setBackground(opts: BackgroundOptions) {
+    this.world.getSystem(RenderSystem).setBackground(opts);
+  }
+
+  /**
+   * Start the engine.
+   */
   public start() {
     this.execute();
   }
