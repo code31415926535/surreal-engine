@@ -1,7 +1,7 @@
 import { System } from "ecsy";
 import { Quaternion, Vector3 } from "three";
 import Body, { BodySchema } from "../components/body";
-import KeyboardInput, { KeyboardInputSchema } from "../components/keyboardInput";
+import KeyboardMotion, { KeyboardMotionSchema } from "../components/keyboardInput";
 import PhysicsSystem from "./physicsSystem";
 
 export default class KeyboardMovementSystem extends System {
@@ -10,7 +10,7 @@ export default class KeyboardMovementSystem extends System {
 
   execute() {
     for (const entity of this.queries.keyboardInput.results) {
-      const keyboardInput = entity.getComponent(KeyboardInput)! as any as KeyboardInputSchema;
+      const keyboardInput = entity.getComponent(KeyboardMotion)! as any as KeyboardMotionSchema;
       const body = entity.getMutableComponent(Body)! as any as BodySchema;
 
       const input = {
@@ -24,6 +24,7 @@ export default class KeyboardMovementSystem extends System {
           keyboardInput.value.input.a ||
           keyboardInput.value.input.d,
       }
+      const { speed, rotation } = keyboardInput;
 
       const worldTransform = new window.Ammo.btTransform();
       body.obj.getMotionState().getWorldTransform(worldTransform);
@@ -48,19 +49,25 @@ export default class KeyboardMovementSystem extends System {
       const quaternion = new Quaternion();
 
       if (input.forward) {
-        velocity.add(new Vector3(1, 0, 0));
+        velocity.add(new Vector3(speed, 0, 0));
       }
 
       if (input.backward) {
-        velocity.add(new Vector3(-1, 0, 0));
+        velocity.add(new Vector3(-speed, 0, 0));
       }
 
       if (input.left) {
-        quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI / 6));
+        quaternion.multiply(new Quaternion().setFromAxisAngle(
+          new Vector3(0, 1, 0), 
+          Math.PI / 4 * rotation,
+        ));
       }
 
       if (input.right) {
-        quaternion.multiply(new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), -Math.PI / 6));
+        quaternion.multiply(new Quaternion().setFromAxisAngle(
+          new Vector3(0, 1, 0),
+          -Math.PI / 4 * rotation,
+        ));
       }
 
       velocity.applyQuaternion(bodyQuaternion);
@@ -85,7 +92,7 @@ export default class KeyboardMovementSystem extends System {
 KeyboardMovementSystem.queries = {
   keyboardInput: {
     components: [
-      KeyboardInput,
+      KeyboardMotion,
       Body,
     ],
   },

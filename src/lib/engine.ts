@@ -10,7 +10,7 @@ import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
 import StaticMotion from './components/staticMotion';
-import KeyboardInput from './components/keyboardInput';
+import KeyboardMotion from './components/keyboardInput';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 import FollowCamera from './components/followCamera';
 import FollowCameraSystem from './systems/followCameraSystem';
@@ -61,7 +61,7 @@ export default class Engine {
     this.world.registerComponent(Model);
     this.world.registerComponent(Body);
     this.world.registerComponent(StaticMotion);
-    this.world.registerComponent(KeyboardInput);
+    this.world.registerComponent(KeyboardMotion);
     this.world.registerComponent(FollowCamera);
     this.world.registerSystem(RenderSystem, {
       canvas: this.canvas,

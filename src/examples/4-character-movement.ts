@@ -23,7 +23,7 @@ engine.creator.box({
   material: new MeshPhongMaterial({ color: 0xffcc00 }),
   rigid: true,
   castShadow: true,
-}).withKeyboardInput();
+}).withKeyboardMotion();
 
 engine.creator.directionalLight({
   color: '0xffffff',

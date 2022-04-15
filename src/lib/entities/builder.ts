@@ -16,7 +16,7 @@ import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
 import KeyboardInputManager from "../input/keyboardInputManager";
-import KeyboardInput from "../components/keyboardInput";
+import KeyboardMotion from "../components/keyboardInput";
 import FollowCamera from "../components/followCamera";
 
 export interface RigidBodyOptions {
@@ -48,6 +48,11 @@ export interface StaticMoitonOptions {
   loop?: boolean;
 }
 
+export interface KeyboardMotionOptions {
+  speed?: number;
+  rotation?: number;
+}
+
 export default class EntityBuilder {
   entity: Entity;
 
@@ -70,8 +75,12 @@ export default class EntityBuilder {
     return this;
   }
 
-  public withKeyboardInput = (): EntityBuilder => {
-    this.entity.addComponent(KeyboardInput, { value:  new KeyboardInputManager() });
+  public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
+    this.entity.addComponent(KeyboardMotion, {
+      value:  new KeyboardInputManager(),
+      speed: opts?.speed || 1,
+      rotation: opts?.rotation || 1,
+    });
     return this;
   }
 

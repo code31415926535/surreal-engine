@@ -51,7 +51,20 @@ engine.creator.box({
   material: new MeshPhongMaterial({ color: 0xffcc00 }),
   rigid: true,
   castShadow: true,
-}).withKeyboardInput().withFollowCamera();
+}).withKeyboardMotion({
+  speed: 2,
+  rotation: 1.5,
+}).withFollowCamera();
+
+engine.creator.sphere({
+  radius: 1,
+  pos: { x: 5, y: 10, z: 5 },
+  mass: 0.5,
+  restitution: 0.3,
+  material: new MeshPhongMaterial({ color: 0x0000ff }),
+  rigid: true,
+  castShadow: true,
+});
 
 engine.creator.directionalLight({
   color: '0xffffff',

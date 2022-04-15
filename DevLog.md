@@ -30,20 +30,20 @@
 
 - [ ] Fog
 - [ ] Skybox
-- [ ] Postprocessing
+- [ ] Textures
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component
   - [ ] Create Groups of Entities
   - [ ] Expose existing systems with a nice interface
-- [ ] Support for removing components
 - [ ] Trigger Box
+- [ ] Support for removing components
 
 - [ ] 3D Models
 - [ ] Animation System
-- [ ] Textures
 - [ ] Material configuration in builder
 - [ ] 3RD person Camera
+- [ ] Postprocessing
 
 ### v0.2
 
@@ -51,11 +51,15 @@
 - [ ] Kinetic object for collision purpouse
 - [ ] Better debugging
 
+- [ ] Performance Optimization
 - [ ] First person Camera
-- [ ] Follow Directional Light
 
+### Future
+
+- [ ] Follow Directional Light
 - [ ] Spotlight
 - [ ] RectAreaLight
 - [ ] HemisphericalLight
 - [ ] Predefined curves
 - [ ] All curve properties
+- [ ] Static Motion Reverse and PingPong
