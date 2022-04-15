@@ -6,6 +6,7 @@ await engine.init();
 
 engine.assets.setBasePath("src/examples/");
 engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
+engine.assets.addTexture("floor@bump", "textures/floor_bump.png", { repeat: { x: 5, y: 5 } });
 engine.assets.addCubeTexture("skybox", [
   "textures/vz_techno_back.png",
   "textures/vz_techno_down.png",
@@ -41,11 +42,11 @@ engine.creator.box({
   restitution: 0.3,
   material: new MeshPhongMaterial({
     map: engine.assets.getTexture("floor"),
+    bumpMap: engine.assets.getTexture("floor@bump"),
   }),
   rigid: true,
   receiveShadow: true,
 });
-// TODO: Wall
 
 // TODO: Skin this
 // Character
@@ -59,6 +60,7 @@ engine.creator.box({
   castShadow: true,
 }).withKeyboardMotion().withFollowCamera();
 
+// TODO: Skin these
 // Some Boxes
 for (let i = 0; i < 3; i++) {
   for (let j = 0; j < 3; j++) {
