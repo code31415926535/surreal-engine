@@ -8,6 +8,8 @@ export interface AddTextureOptions {
 }
 
 /**
+ * TODO: Move to managers
+ * 
  * Asset manager class. It is responsible to load assets
  *  and store them in a single place.
  */
@@ -51,10 +53,12 @@ export default class Assets {
   }
 
   public async load(
-    onProgress: (progress: number) => void,
+    onProgress?: (progress: number) => void,
   ): Promise<void> {
-    this.loadingManager.onProgress = (_, loaded, total) => {
-      onProgress(loaded / total);
+    if (onProgress) {
+      this.loadingManager.onProgress = (_, loaded, total) => {
+        onProgress(loaded / total);
+      }
     }
 
     const promises = this.texturesToLoad.map(async (texture) => {
@@ -71,5 +75,7 @@ export default class Assets {
     });
 
     await Promise.all([...promises, ...promisesCube]);
+    this.texturesToLoad = [];
+    this.cubeTexturesToLoad = [];
   }
 }

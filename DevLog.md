@@ -31,10 +31,8 @@
 - [x] Fog
 - [x] Textures
 - [x] Skybox
-- [ ] Bump Map
-- [ ] Loading indicator
+- [x] Bump Map
 - [ ] Figure out how physics works
-- [ ] Readme and examples
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component
@@ -48,6 +46,11 @@
 - [ ] 3RD person Camera
 - [ ] Postprocessing
 
+- [ ] Cleanup ammo types
+- [ ] Readme and generate examples
+- [ ] Deploy examples somewhere
+- [ ] Create npm library
+
 ### v0.2
 
 - [ ] Material configuration in builder
@@ -56,6 +59,8 @@
 - [ ] Kinetic object for collision purpouse
 - [ ] Better debugging
 
+- [ ] Loading indicator (using css)
+- [ ] Fps meter
 - [ ] Performance Optimization
 - [ ] First person Camera
 

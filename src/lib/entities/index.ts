@@ -37,17 +37,47 @@ export interface DirectionalLightOptions extends PointLightOptions {
   shadowAreaHeight?: number;
 }
 
+/**
+ * EntityCreator is a helper class that helps you create entities.
+ * Surreal Engine uses the Entity Component System (ECS). ECS is a
+ * pattern that allows you to create entities and add components to
+ * them.
+ * 
+ * Entities are dumb objects that contain components. Components are
+ * small pieces of data that are attached to entities. They do not
+ * contain any logic. Systems are responsible for updating components
+ * and adding logic to entities.
+ * 
+ * @see https://en.wikipedia.org/wiki/Entity_component_system
+ * @see https://ecsy.io/
+ */
 export default class EntityCreator {
   constructor(private world: World, private debug: boolean) {}
 
+  /**
+   * Creates an emtpy entity without any components.
+   */
   empty(): EntityBuilder {
     return new EntityBuilder(this.world);
   }
 
+  /**
+   * Creates an entity that only contains an Object3D.
+   * 
+   * @param opts {@link Object3DOptions} 
+   * @returns {@link EntityBuilder}
+   */
   ethereal(opts: Object3DOptions): EntityBuilder {
     return new EntityBuilder(this.world).withObject3D({ obj: opts.obj });
   }
 
+  /**
+   * Creates a box entity. If rigid is true, the entity will have a
+   * rigid body.
+   * 
+   * @param opts {@link BoxOptions}
+   * @returns {@link EntityBuilder}
+   */
   box(opts: BoxOptions): EntityBuilder {
     const builder = new EntityBuilder(this.world)
       .withShapeModel({ ...opts, type: 'box' });
@@ -59,6 +89,13 @@ export default class EntityCreator {
     return builder;
   }
 
+  /**
+   * Creates a sphere entity. If rigid is true, the entity will have a
+   * rigid body.
+   * 
+   * @param opts {@link SphereOptions}
+   * @returns {@link EntityBuilder}
+   */
   sphere(opts: SphereOptions): EntityBuilder {
     const builder = new EntityBuilder(this.world)
       .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
@@ -70,6 +107,14 @@ export default class EntityCreator {
     return builder;
   }
 
+  /**
+   * Creates an ambient light entity. Ambient lights provide lighting
+   * that is independent of the position of the light.
+   * @see https://threejs.org/docs/#api/lights/AmbientLight
+   * 
+   * @param opts {@link DirectionalLightOptions}
+   * @returns {@link EntityBuilder}
+   */
   ambientLight(opts: AmbientLightOptions): EntityBuilder {
     const light = new AmbientLight(opts.color, opts.intensity);
     return this.ethereal({ obj: light });
@@ -95,6 +140,15 @@ export default class EntityCreator {
     return this.ethereal({ obj: light });
   }
 
+  /**
+   * Creates a directional light entity. Directional lights are
+   * lights that shine in a specific direction. These lights can
+   * cast shadows.
+   * @see https://threejs.org/docs/#api/lights/DirectionalLight
+   * 
+   * @param opts {@link DirectionalLightOptions}
+   * @returns {@link EntityBuilder}
+   */
   directionalLight(opts: DirectionalLightOptions): EntityBuilder {
     const light = new DirectionalLight(opts.color, opts.intensity);
     light.position.set(opts.pos.x, opts.pos.y, opts.pos.z);

@@ -33,7 +33,6 @@ export interface EngineOpts {
 
 /**
  * Surreal Game Engine.
- *  // TODO: More docs.
  */
 export default class Engine {
   /**
@@ -54,7 +53,9 @@ export default class Engine {
    * Asset manager class. Use this to register and manage assets.
    * 
    * @example
-   * TODO: Example
+   * engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
+   * await engine.assets.load();
+   * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
   public assets!: Assets;
 
