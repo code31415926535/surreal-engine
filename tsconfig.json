@@ -18,5 +18,5 @@
   "typeRoots": [
     "src/lib/types",
   ],
-  "include": ["src"]
+  "include": ["src", "examples"]
 }

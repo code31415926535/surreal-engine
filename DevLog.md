@@ -47,7 +47,8 @@
 - [ ] Postprocessing
 
 - [ ] Cleanup ammo types
-- [ ] Readme and generate examples
+- [x] Readme
+- [x] Build examples
 - [ ] Deploy examples somewhere
 - [ ] Create npm library
 
