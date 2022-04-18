@@ -41,7 +41,7 @@
 - [ ] Trigger Box
 - [ ] Support for removing components
 
-- [ ] 3D Models
+- [x] 3D Models
 - [ ] Animation System
 - [ ] 3RD person Camera
 - [ ] Postprocessing
@@ -65,6 +65,9 @@
 - [ ] Performance Optimization
 - [ ] First person Camera
 - [ ] Add multi-texture material support
+
+- [ ] Text on screen and loading
+- [ ] Particles
 
 ### Future
 

@@ -1,4 +1,5 @@
-import { LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
+import { Group, LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
+import ModelLoader, { LoadModelOptions } from "./model";
 import TextureLoader from "./texture";
 
 export interface AddTextureOptions {
@@ -16,6 +17,7 @@ export interface AddTextureOptions {
 export default class Assets {
   private loadingManager: LoadingManager;
   private textureLoader: TextureLoader;
+  private modelLoader: ModelLoader;
 
   private basePath: string;
   private texturesToLoad: {
@@ -27,13 +29,20 @@ export default class Assets {
     name: string;
     paths: string[];
   }[] = [];
+  private modelsToLoad: {
+    name: string;
+    path: string;
+    opts?: LoadModelOptions
+  }[] = [];
 
   private textures: { [name: string]: Texture } = {};
+  private models: { [name: string]: Group } = {};
 
   constructor() {
     this.loadingManager = new LoadingManager();
     this.textureLoader = new TextureLoader(this.loadingManager);
-    this.basePath = "/resources/";
+    this.modelLoader = new ModelLoader(this.loadingManager);
+    this.basePath = "/assets/";
   }
 
   public setBasePath(path: string): void {
@@ -48,8 +57,16 @@ export default class Assets {
     this.texturesToLoad.push({ name, path: this.basePath + path, opts });
   }
 
+  public addModel(name: string, path: string, opts?: LoadModelOptions): void {
+    this.modelsToLoad.push({ name, path: this.basePath + path, opts });
+  }
+
   public getTexture(name: string): Texture {
     return this.textures[name];
+  }
+
+  public getModel(name: string): Group {
+    return this.models[name];
   }
 
   public async load(
@@ -61,7 +78,7 @@ export default class Assets {
       }
     }
 
-    const promises = this.texturesToLoad.map(async (texture) => {
+    const promisesTexture = this.texturesToLoad.map(async (texture) => {
       const result = await this.textureLoader.load(texture.path);
       result.wrapS = texture.opts?.wrapS || RepeatWrapping;
       result.wrapT = texture.opts?.wrapT || RepeatWrapping;
@@ -73,9 +90,14 @@ export default class Assets {
       const result = await this.textureLoader.loadCube(texture.paths);
       this.textures[texture.name] = result;
     });
+    const promisesModel = this.modelsToLoad.map(async (model) => {
+      const result = await this.modelLoader.load(model.path, model.opts);
+      this.models[model.name] = result;
+    });
 
-    await Promise.all([...promises, ...promisesCube]);
+    await Promise.all([...promisesTexture, ...promisesCube, ...promisesModel]);
     this.texturesToLoad = [];
     this.cubeTexturesToLoad = [];
+    this.modelsToLoad = [];
   }
 }
