@@ -122,7 +122,8 @@ export default class EntityBuilder {
     body.setRestitution(restitution || 0);
     body.setFriction(opts.friction || 0.1);
     body.setDamping(opts.linearDamping || 0.1, opts.angularDamping || 0.1);
-  
+    body.setActivationState(4);
+
     return body;
   }
 

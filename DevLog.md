@@ -32,7 +32,7 @@
 - [x] Textures
 - [x] Skybox
 - [x] Bump Map
-- [ ] Figure out how physics works
+- [x] Figure out how physics works
 
 - [ ] Scriptability
   - [ ] Register Custom System with it's associated Component
@@ -46,7 +46,7 @@
 - [ ] 3RD person Camera
 - [ ] Postprocessing
 
-- [ ] Cleanup ammo types
+- [x] Cleanup ammo types
 - [x] Readme
 - [x] Build examples
 - [ ] Deploy examples somewhere
@@ -66,8 +66,9 @@
 - [ ] First person Camera
 - [ ] Add multi-texture material support
 
-- [ ] Text on screen and loading
+- [ ] Text on screen
 - [ ] Particles
+- [ ] More advanced physics
 
 ### Future
 
