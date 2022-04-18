@@ -1,29 +1,29 @@
 import { Attributes, System } from "ecsy";
 import Body, { BodySchema } from "../components/body";
-import AmmoType from "ammojs-typed";
+import Ammo from "ammojs-typed";
 
 export default class PhysicsSystem extends System {
-  private collisionConfiguration!: AmmoType.btDefaultCollisionConfiguration;
-  private dispatcher!: AmmoType.btCollisionDispatcher;
-  private broadphase!: AmmoType.btDbvtBroadphase;
-  private solver!: AmmoType.btSequentialImpulseConstraintSolver;
-  private physicsWorld!: AmmoType.btDiscreteDynamicsWorld;
+  private collisionConfiguration!: Ammo.btDefaultCollisionConfiguration;
+  private dispatcher!: Ammo.btCollisionDispatcher;
+  private broadphase!: Ammo.btDbvtBroadphase;
+  private solver!: Ammo.btSequentialImpulseConstraintSolver;
+  private physicsWorld!: Ammo.btDiscreteDynamicsWorld;
 
-  applyForce(body: AmmoType.btRigidBody, x: number, y: number, z: number): void {
+  applyForce(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const force = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.applyCentralForce(force);
     window.Ammo.destroy(force);
   }
 
-  moveBody(body: AmmoType.btRigidBody, x: number, y: number, z: number): void {
+  moveBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const velocity = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.setLinearVelocity(velocity);
     window.Ammo.destroy(velocity);
   }
 
-  rotateBody(body: AmmoType.btRigidBody, x: number, y: number, z: number): void {
+  rotateBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const rotation = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.setAngularVelocity(rotation);

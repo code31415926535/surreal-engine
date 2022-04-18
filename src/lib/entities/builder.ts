@@ -10,7 +10,7 @@ import {
   SphereGeometry,
   Vector3,
 } from "three";
-import AmmoType from "ammojs-typed";
+import Ammo from "ammojs-typed";
 import { Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
@@ -101,7 +101,7 @@ export default class EntityBuilder {
     return this;
   }
 
-  private buildRigidBody = (opts: RigidBodyOptions): AmmoType.btRigidBody => {
+  private buildRigidBody = (opts: RigidBodyOptions): Ammo.btRigidBody => {
     const { pos, quat, mass, restitution } = opts;
     const transform = new window.Ammo.btTransform();
     transform.setIdentity();
@@ -118,7 +118,7 @@ export default class EntityBuilder {
     }
   
     const info = new window.Ammo.btRigidBodyConstructionInfo(mass || 0, motionState, shape, inertia);
-    const body: AmmoType.btRigidBody = new window.Ammo.btRigidBody(info);
+    const body: Ammo.btRigidBody = new window.Ammo.btRigidBody(info);
     body.setRestitution(restitution || 0);
     body.setFriction(opts.friction || 0.1);
     body.setDamping(opts.linearDamping || 0.1, opts.angularDamping || 0.1);

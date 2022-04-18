@@ -15,11 +15,11 @@ import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 import FollowCamera from './components/followCamera';
 import FollowCameraSystem from './systems/followCameraSystem';
 import Assets from './loaders';
+import AmmoType from 'ammojs-typed';
 
 declare global {
   interface Window {
-    Ammo: any;
-    ammo: any;
+    Ammo: typeof AmmoType;
   }
 }
 
@@ -85,7 +85,7 @@ export default class Engine {
    *  before doing any other operations.
    */
   public async init() {
-    window.ammo = await window.Ammo();
+    window.Ammo = await window.Ammo();
     this.world = new World({
       entityPoolSize: this.entityPoolSize,
     });
