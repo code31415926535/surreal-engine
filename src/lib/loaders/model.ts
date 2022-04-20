@@ -1,4 +1,4 @@
-import { Group, LoadingManager, Mesh, MeshBasicMaterial } from "three";
+import { AnimationClip, Group, LoadingManager, Mesh, MeshBasicMaterial } from "three";
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 
 export interface LoadModelOptions {
@@ -7,6 +7,17 @@ export interface LoadModelOptions {
 
 export default class ModelLoader {
   constructor(private manager: LoadingManager) {}
+
+  public async loadAnimation(path: string, opts?: LoadModelOptions): Promise<AnimationClip> {
+    const extension = path.split(".").pop();
+    switch (extension) {
+      case "fbx":
+        const group = await this.loadFbx(path, opts);
+        return group.animations[0];
+      default:
+        throw new Error(`Unsupported file type: ${extension}`);
+    }
+  }
 
   public async load(path: string, opts?: LoadModelOptions): Promise<Group> {
     const extension = path.split(".").pop();

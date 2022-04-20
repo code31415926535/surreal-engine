@@ -1,4 +1,4 @@
-import { Group, LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
+import { AnimationClip, Group, LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
 import ModelLoader, { LoadModelOptions } from "./model";
 import TextureLoader from "./texture";
 
@@ -34,9 +34,15 @@ export default class Assets {
     path: string;
     opts?: LoadModelOptions
   }[] = [];
+  private animationsToLoad: {
+    name: string;
+    path: string;
+    opts?: LoadModelOptions
+  }[] = [];
 
   private textures: { [name: string]: Texture } = {};
   private models: { [name: string]: Group } = {};
+  private animations: { [name: string]: AnimationClip } = {};
 
   constructor() {
     this.loadingManager = new LoadingManager();
@@ -61,12 +67,20 @@ export default class Assets {
     this.modelsToLoad.push({ name, path: this.basePath + path, opts });
   }
 
+  public addAnimation(name: string, path: string, opts?: LoadModelOptions): void {
+    this.animationsToLoad.push({ name, path: this.basePath + path, opts });
+  }
+
   public getTexture(name: string): Texture {
     return this.textures[name];
   }
 
   public getModel(name: string): Group {
     return this.models[name];
+  }
+
+  public getAnimation(name: string): AnimationClip {
+    return this.animations[name];
   }
 
   public async load(
@@ -94,8 +108,17 @@ export default class Assets {
       const result = await this.modelLoader.load(model.path, model.opts);
       this.models[model.name] = result;
     });
+    const promisesAnimation = this.animationsToLoad.map(async (animation) => {
+      const result = await this.modelLoader.loadAnimation(animation.path, animation.opts);
+      this.animations[animation.name] = result;
+    });
 
-    await Promise.all([...promisesTexture, ...promisesCube, ...promisesModel]);
+    await Promise.all([
+      ...promisesTexture,
+      ...promisesCube,
+      ...promisesModel,
+      ...promisesAnimation,
+    ]);
     this.texturesToLoad = [];
     this.cubeTexturesToLoad = [];
     this.modelsToLoad = [];

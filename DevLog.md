@@ -54,13 +54,13 @@
 
 ### v0.2
 
+- [ ] Refactor project to a cleaner structure
 - [ ] Material configuration in builder
 - [ ] Use assets directly in entity creator
 - [ ] Plane geometry
 - [ ] Kinetic object for collision purpouse
-- [ ] Better debugging
 
-- [ ] Loading indicator (using css)
+- [ ] Better debugging
 - [ ] Fps meter
 - [ ] Performance Optimization
 - [ ] First person Camera
@@ -68,6 +68,7 @@
 
 - [ ] Text on screen
 - [ ] Particles
+- [ ] Loading indicator (using css)
 - [ ] More advanced physics
 
 ### Future

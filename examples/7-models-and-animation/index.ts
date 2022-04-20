@@ -17,7 +17,8 @@ async function main() {
     "textures/vz_techno_right.png",
     "textures/vz_techno_up.png",
   ]);
-  engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.05 });
+  engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.03 });
+  engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
 
   await engine.assets.load((progress) => {
     console.log(`Loading: ${progress * 100}%`);
@@ -55,9 +56,16 @@ async function main() {
   engine.assets.getModel("character").position.set(0, 0.5, 0);
 
   // TODO: Add cretor function for entity with model
-  //  TOOD: Model has to support changing position, rotation and scale
+  // TODO: Model has to support changing position, rotation and scale
+  // TODO: Model has to support collision detection
   engine.creator.empty().withObject3D({
     obj: engine.assets.getModel("character"),
+  }).withRigidBody({
+    size: { x: 0.5, y: 0.5, z: 0.5 },
+    type: 'box',
+    mass: 1,
+    restitution: 0.3,
+    friction: 0.5,
   });
 
   engine.start();
