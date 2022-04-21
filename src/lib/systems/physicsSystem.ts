@@ -9,21 +9,21 @@ export default class PhysicsSystem extends System {
   private solver!: Ammo.btSequentialImpulseConstraintSolver;
   private physicsWorld!: Ammo.btDiscreteDynamicsWorld;
 
-  applyForce(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
+  public applyForce(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const force = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.applyCentralForce(force);
     window.Ammo.destroy(force);
   }
 
-  moveBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
+  public moveBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const velocity = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.setLinearVelocity(velocity);
     window.Ammo.destroy(velocity);
   }
 
-  rotateBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
+  public rotateBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const rotation = new window.Ammo.btVector3(x, y, z);
     body.activate();
     body.setAngularVelocity(rotation);

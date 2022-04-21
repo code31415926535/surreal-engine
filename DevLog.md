@@ -34,16 +34,13 @@
 - [x] Bump Map
 - [x] Figure out how physics works
 
-- [ ] Scriptability
-  - [ ] Register Custom System with it's associated Component
-  - [ ] Create Groups of Entities
-  - [ ] Expose existing systems with a nice interface
+- [ ] Expose existing systems with a nice interface
+- [ ] Register Custom System with it's associated Component
 - [ ] Trigger Box
 - [ ] Support for removing components
 
 - [x] 3D Models
-- [ ] Refactor Systems to be easier to use
-- [ ] Write some entity utilities
+- [x] Write some entity utilities
 - [ ] Animation System
 - [x] 3RD person Camera
 
@@ -55,26 +52,31 @@
 
 ### v0.2
 
+- [ ] Merge cameras into a single system
 - [ ] Refactor project to a cleaner structure
 - [ ] Material configuration in builder
 - [ ] Use assets directly in entity creator
+- [ ] Scriptability x3
+
+### v0.3
+
 - [ ] Plane geometry
 - [ ] Kinetic object for collision purpouse
-
+- [ ] Text on screen
 - [ ] Better debugging
 - [ ] Fps meter
-- [ ] Performance Optimization
+- [ ] Performance Monitoring
 - [ ] First person Camera
-- [ ] Add multi-texture material support
-
-- [ ] Postprocessing
-- [ ] Text on screen
-- [ ] Particles
-- [ ] Loading indicator (using css)
-- [ ] More advanced physics
 
 ### Future
 
+- [ ] Create Groups of Entities
+- [ ] Add multi-texture material support
+- [ ] Loading indicator (using css)
+- [ ] Refactor Systems to be easier to use
+- [ ] Postprocessing
+- [ ] Particles
+- [ ] More advanced physics
 - [ ] Follow Directional Light
 - [ ] Spotlight
 - [ ] RectAreaLight

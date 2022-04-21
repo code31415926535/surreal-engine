@@ -2,6 +2,7 @@ import { Entity } from "ecsy";
 import { Vector3 } from "three";
 import Body from "../../components/body";
 import ThirdPersonCamera from "../../components/thirdPersonCamera";
+import { getPosition, getQuaternion } from "../../entityUtils";
 import CameraSystem from "./cameraSystem";
 
 export default class ThirdPersonCameraSystem extends CameraSystem {
@@ -10,15 +11,15 @@ export default class ThirdPersonCameraSystem extends CameraSystem {
 
   protected calculateIdealOffset(target: Entity): Vector3 {
     const idealOffset = this.idealOffset.clone();
-    idealOffset.applyQuaternion(this.getTargetQuaternion(target));
-    idealOffset.add(this.getTargetPosition(target));
+    idealOffset.applyQuaternion(getQuaternion(target));
+    idealOffset.add(getPosition(target));
     return idealOffset;
   }
 
   protected calculateIdealLookAt(target: Entity): Vector3 {
     const idealLookAt = this.idealLookAt.clone();
-    idealLookAt.applyQuaternion(this.getTargetQuaternion(target));
-    idealLookAt.add(this.getTargetPosition(target));
+    idealLookAt.applyQuaternion(getQuaternion(target));
+    idealLookAt.add(getPosition(target));
     return idealLookAt;
   }
 
