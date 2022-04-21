@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:examples": "tsc && vite --config vite.examples.config.js build"
   },
   "devDependencies": {
     "@types/three": "^0.139.0",

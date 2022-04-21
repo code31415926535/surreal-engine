@@ -59,7 +59,7 @@
 - [ ] Surreal Enity
 - [ ] Add managers to surreal system
 - [ ] Animation system
-- [ ] Trigger Box
+- [ ] Better example page
 
 ### v0.3
 
@@ -70,6 +70,7 @@
 - [ ] Loading indicator (using css)
 - [ ] Better debugging
 - [ ] Performance Monitoring
+- [ ] Trigger Box
 
 ### Future
 
