@@ -4,4 +4,5 @@
 // import '../examples/4-character-movement';
 // import '../examples/5-camera';
 // import '../examples/6-textures-and-skybox';
-import '../examples/7-models-and-animation';
+// import '../examples/7-models-and-animation';
+import '../examples/8-scriptability-and-triggers';

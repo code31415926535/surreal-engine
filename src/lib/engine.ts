@@ -13,9 +13,11 @@ import StaticMotion from './components/staticMotion';
 import KeyboardMotion from './components/keyboardInput';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 import FollowCamera from './components/followCamera';
-import FollowCameraSystem from './systems/followCameraSystem';
+import FollowCameraSystem from './systems/camera/followCameraSystem';
 import Assets from './loaders';
 import AmmoType from 'ammojs-typed';
+import ThirdPersonCameraSystem from './systems/camera/thirdPersonCameraSystem';
+import ThirdPersonCamera from './components/thirdPersonCamera';
 
 declare global {
   interface Window {
@@ -94,6 +96,7 @@ export default class Engine {
     this.world.registerComponent(StaticMotion);
     this.world.registerComponent(KeyboardMotion);
     this.world.registerComponent(FollowCamera);
+    this.world.registerComponent(ThirdPersonCamera);
     this.world.registerSystem(RenderSystem, {
       canvas: this.canvas,
       debug: this.debug,
@@ -107,6 +110,7 @@ export default class Engine {
     this.world.registerSystem(KeyboardMovementSystem, {});
     if (!this.debug) {
       this.world.registerSystem(FollowCameraSystem, {});
+      this.world.registerSystem(ThirdPersonCameraSystem, {});
     }
 
     this.assets = new Assets();

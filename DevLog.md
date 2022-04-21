@@ -42,9 +42,10 @@
 - [ ] Support for removing components
 
 - [x] 3D Models
+- [ ] Refactor Systems to be easier to use
+- [ ] Write some entity utilities
 - [ ] Animation System
-- [ ] 3RD person Camera
-- [ ] Postprocessing
+- [x] 3RD person Camera
 
 - [x] Cleanup ammo types
 - [x] Readme
@@ -66,6 +67,7 @@
 - [ ] First person Camera
 - [ ] Add multi-texture material support
 
+- [ ] Postprocessing
 - [ ] Text on screen
 - [ ] Particles
 - [ ] Loading indicator (using css)
