@@ -38,7 +38,6 @@
 - [ ] Register Custom System
 - [ ] Register Custom Component
 - [ ] Support for removing components
-- [ ] Trigger Box
 
 - [x] 3D Models
 - [x] Write some entity utilities
@@ -57,25 +56,26 @@
 - [ ] Refactor project to a cleaner structure
 - [ ] Material configuration in builder
 - [ ] Use assets directly in entity creator
-- [ ] Scriptability x3
 - [ ] Surreal Enity
+- [ ] Advanced animation system
+- [ ] Trigger Box
 
 ### v0.3
 
-- [ ] Plane geometry
+- [ ] Add multi-texture material support
 - [ ] Kinetic object for collision purpouse
 - [ ] Text on screen
-- [ ] Better debugging
 - [ ] Fps meter
+- [ ] Loading indicator (using css)
+- [ ] Better debugging
 - [ ] Performance Monitoring
-- [ ] First person Camera
 
 ### Future
 
+- [ ] Plane geometry
+- [ ] First person Camera
+- [ ] Event System
 - [ ] Create Groups of Entities
-- [ ] Add multi-texture material support
-- [ ] Loading indicator (using css)
-- [ ] Refactor Systems to be easier to use
 - [ ] Postprocessing
 - [ ] Particles
 - [ ] More advanced physics
@@ -86,3 +86,5 @@
 - [ ] Predefined curves
 - [ ] All curve properties
 - [ ] Static Motion Reverse and PingPong
+- [ ] Heightmaps
+- [ ] Terrain generation
