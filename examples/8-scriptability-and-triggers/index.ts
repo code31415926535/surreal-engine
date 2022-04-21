@@ -1,6 +1,17 @@
 import '../../src/style.css';
 import Engine from "../../src/lib/engine";
 import { MeshPhongMaterial } from 'three';
+import { Component, Types } from 'ecsy';
+
+interface BreakableSchema {
+  breaksIn: number;
+}
+
+class Breakable extends Component<BreakableSchema> {}
+
+Breakable.schema = {
+  breaksIn: { type: Types.Number, default: 1000 },
+}
 
 async function main() {
   const engine = new Engine('#demo');
@@ -27,6 +38,8 @@ async function main() {
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
+
+  engine.registerComponent(Breakable);
 
   // Lighting
   engine.creator.directionalLight({
@@ -66,7 +79,7 @@ async function main() {
     friction: 0.9,
     rigid: true,
     receiveShadow: true,
-  });
+  }).with(Breakable, { breaksIn: 2500 });
 
   // Ground Target
   engine.creator.box({

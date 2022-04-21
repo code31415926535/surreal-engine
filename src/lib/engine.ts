@@ -1,4 +1,4 @@
-import { World } from 'ecsy';
+import { ComponentConstructor, World } from 'ecsy';
 import {
   WebGLRenderer,
 } from 'three';
@@ -145,6 +145,10 @@ export default class Engine {
    */
   public setBackground(opts: BackgroundOptions) {
     this.world.getSystem(RenderSystem).setBackground(opts);
+  }
+
+  public registerComponent(component: ComponentConstructor<any>) {
+    this.world.registerComponent(component);
   }
 
   /**

@@ -68,6 +68,11 @@ export default class PhysicsSystem extends System {
       this.physicsWorld.addRigidBody(bodyComponent.obj);
     }
     this.physicsWorld.stepSimulation(delta, 10);
+    const remvoed = this.queries.body.removed!;
+    for (const body of remvoed) {
+      const bodyComponent = body.getComponent(Body)! as any as BodySchema;
+      this.physicsWorld.removeRigidBody(bodyComponent.obj);
+    }
   }
 }
 
@@ -76,6 +81,7 @@ PhysicsSystem.queries = {
     components: [ Body ],
     listen: {
       added: true,
+      removed: true,
     }
   }
 }

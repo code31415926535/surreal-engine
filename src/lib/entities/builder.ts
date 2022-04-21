@@ -11,7 +11,7 @@ import {
   Vector3,
 } from "three";
 import Ammo from "ammojs-typed";
-import { Entity, World } from "ecsy";
+import { Component, ComponentConstructor, Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
@@ -96,6 +96,14 @@ export default class EntityBuilder {
 
   public withThirdPersonCamera = (): EntityBuilder => {
     this.entity.addComponent(ThirdPersonCamera, {});
+    return this;
+  }
+
+  public with = <C extends Component<any>>(
+    Component: ComponentConstructor<C>,
+    values?: Partial<Omit<C, keyof Component<any>>>
+  ): EntityBuilder => {
+    this.entity.addComponent(Component, values);
     return this;
   }
 

@@ -36,8 +36,8 @@
 
 - [x] Expose existing systems with a nice interface
 - [ ] Register Custom System
-- [ ] Register Custom Component
-- [ ] Support for removing components
+- [x] Register Custom Component
+- [x] Support for removing components
 
 - [x] 3D Models
 - [x] Write some entity utilities
@@ -88,3 +88,4 @@
 - [ ] Static Motion Reverse and PingPong
 - [ ] Heightmaps
 - [ ] Terrain generation
+- [ ] Editor
