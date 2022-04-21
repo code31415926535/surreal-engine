@@ -40,9 +40,19 @@ export interface BackgroundOptions {
 export default class RenderSystem extends System {
   private renderer!: WebGLRenderer;
   private scene!: Scene;
+  /**
+   * Current camera being used by the system.
+   */
   public camera!: PerspectiveCamera | OrthographicCamera;
   private debug: boolean = false;
 
+  /**
+   * Set the camera to an {@link https://threejs.org/docs/#api/cameras/OrthographicCamera OrthographicCamera} An orthographic camera is
+   * a projection mode where an object's size in the rendered image stays constant regardless of its distance from the camera.
+   * The most common use case is an isometric view.
+   * 
+   * @param opts The options for the camera.
+   */
   public setOrthographicCamera(opts: OrthographicCameraOptions) {
     const aspect = window.innerWidth / window.innerHeight
     this.camera = new OrthographicCamera(
@@ -60,6 +70,12 @@ export default class RenderSystem extends System {
     }
   }
 
+  /**
+   * Set the camera to a {@link https://threejs.org/docs/#api/cameras/PerspectiveCamera PerspectiveCamera} A perspective camera is
+   * a projection mode is designed to mimic the way the human eye sees.
+   * 
+   * @param opts The options for the camera.
+   */
   public setPerspectiveCamera(opts: PerspectiveCameraOptions) {
     this.camera = new PerspectiveCamera(
       opts.fov,
@@ -75,6 +91,11 @@ export default class RenderSystem extends System {
     }
   }
 
+  /**
+   * Sets the background of the game. See {@link BackgroundOptions} for more info.
+   * 
+   * @param opts The options for the background.
+   */
   public setBackground(opts: BackgroundOptions) {
     this.scene.background = new Color(opts.color || "#000000");
 

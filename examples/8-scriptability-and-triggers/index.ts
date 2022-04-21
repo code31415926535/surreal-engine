@@ -53,12 +53,42 @@ async function main() {
     receiveShadow: true,
   });
 
+  // TODO: make texture look nice here
+  // Moving block
+  engine.creator.box({
+    size: { x: 5, y: 5, z: 5 },
+    pos: { x: 0, y: -1, z: 29.5 },
+    mass: 0,
+    material: new MeshPhongMaterial({
+      map: engine.assets.getTexture("floor"),
+      bumpMap: engine.assets.getTexture("floor@bump"),
+    }),
+    friction: 0.9,
+    rigid: true,
+    receiveShadow: true,
+  });
+
+  // Ground Target
+  engine.creator.box({
+    size: { x: 50, y: 1, z: 50 },
+    pos: { x: 0, y: 1, z: 127.5 },
+    mass: 0,
+    restitution: 0.3,
+    material: new MeshPhongMaterial({
+      map: engine.assets.getTexture("floor"),
+      bumpMap: engine.assets.getTexture("floor@bump"),
+    }),
+    rigid: true,
+    receiveShadow: true,
+  });
+
   // Character
   engine.creator.box({
     size: { x: 1, y: 1, z: 1 },
     pos: { x: 0, y: 10, z: 0 },
     mass: 0.5,
     restitution: 0.3,
+    friction: 0.9,
     material: new MeshPhongMaterial({ color: 0xffcc00 }),
     rigid: true,
     castShadow: true,

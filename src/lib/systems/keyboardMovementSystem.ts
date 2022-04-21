@@ -1,10 +1,10 @@
-import { System } from "ecsy";
 import { Quaternion, Vector3 } from "three";
 import Body, { BodySchema } from "../components/body";
 import KeyboardMotion, { KeyboardMotionSchema } from "../components/keyboardInput";
-import PhysicsSystem from "./physicsSystem";
+import { getPosition, getQuaternion } from "../entityUtils";
+import SurrealSystem from "./surrealSystem";
 
-export default class KeyboardMovementSystem extends System {
+export default class KeyboardMovementSystem extends SurrealSystem {
   private wasFalling = false;
   private isAirborne: boolean = false;
 
@@ -26,10 +26,10 @@ export default class KeyboardMovementSystem extends System {
       }
       const { speed, rotation } = keyboardInput;
 
-      const worldTransform = new window.Ammo.btTransform();
-      body.obj.getMotionState().getWorldTransform(worldTransform);
+      const bodyPosition = getPosition(entity);
+      const bodyQuaternion = getQuaternion(entity);
 
-      const isFalling = worldTransform.getOrigin().y() < body.prevY;
+      const isFalling = bodyPosition.y < body.prevY;
       if (isFalling) {
         this.isAirborne = true;
       }
@@ -37,13 +37,6 @@ export default class KeyboardMovementSystem extends System {
         this.isAirborne = false;
       }
       this.wasFalling = isFalling;
-
-      const bodyQuaternion = new Quaternion(
-        worldTransform.getRotation().x(),
-        worldTransform.getRotation().y(),
-        worldTransform.getRotation().z(),
-        worldTransform.getRotation().w(),
-      );
 
       const velocity = new Vector3();
       const quaternion = new Quaternion();
@@ -74,17 +67,17 @@ export default class KeyboardMovementSystem extends System {
 
       if (input.jump && !this.isAirborne) {
         this.isAirborne = true;
-        this.world.getSystem(PhysicsSystem).applyForce(body.obj, 0, 10, 0);
+        this.physicsSystem.applyForce(body.obj, 0, 10, 0);
       }
 
       if (input.moved && !input.jump && !this.isAirborne) {
-        this.world.getSystem(PhysicsSystem).moveBody(body.obj, velocity.x, velocity.y, velocity.z);
+        this.physicsSystem.moveBody(body.obj, velocity.x, velocity.y, velocity.z);
       }
 
-      this.world.getSystem(PhysicsSystem).rotateBody(body.obj, quaternion.x, quaternion.y, quaternion.z);
+      this.physicsSystem.rotateBody(body.obj, quaternion.x, quaternion.y, quaternion.z);
 
-      body.obj.getMotionState().getWorldTransform(worldTransform);
-      body.prevY = worldTransform.getOrigin().y();
+      const position = getPosition(entity);
+      body.prevY = position.y;
     }
   }
 }

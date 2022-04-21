@@ -1,8 +1,8 @@
-import { Entity, System } from "ecsy";
+import { Entity } from "ecsy";
 import { Vector3 } from "three";
-import RenderSystem from "../renderSystem";
+import SurrealSystem from "../surrealSystem";
 
-export default abstract class CameraSystem extends System {
+export default abstract class CameraSystem extends SurrealSystem {
   protected currentPosition: Vector3 = new Vector3();
   protected currentLookAt: Vector3 = new Vector3();
 
@@ -12,8 +12,6 @@ export default abstract class CameraSystem extends System {
   protected setupCamera(_: Entity) {}
 
   protected updateCamera(entity: Entity, delta: number) {
-    const rendererSystem = this.world.getSystem(RenderSystem);
-
     const idealPosition = this.calculateIdealOffset(entity);
     const idealLookAt = this.calculateIdealLookAt(entity);
 
@@ -22,8 +20,8 @@ export default abstract class CameraSystem extends System {
     this.currentLookAt.lerp(idealLookAt, t);
     this.currentPosition.lerp(idealPosition, t);
 
-    rendererSystem.camera.position.copy(this.currentPosition);
-    rendererSystem.camera.lookAt(this.currentLookAt);
+    this.renderSystem.camera.position.copy(this.currentPosition);
+    this.renderSystem.camera.lookAt(this.currentLookAt);
   }
 
   execute(delta: number): void {

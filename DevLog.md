@@ -34,10 +34,11 @@
 - [x] Bump Map
 - [x] Figure out how physics works
 
-- [ ] Expose existing systems with a nice interface
-- [ ] Register Custom System with it's associated Component
-- [ ] Trigger Box
+- [x] Expose existing systems with a nice interface
+- [ ] Register Custom System
+- [ ] Register Custom Component
 - [ ] Support for removing components
+- [ ] Trigger Box
 
 - [x] 3D Models
 - [x] Write some entity utilities
@@ -57,6 +58,7 @@
 - [ ] Material configuration in builder
 - [ ] Use assets directly in entity creator
 - [ ] Scriptability x3
+- [ ] Surreal Enity
 
 ### v0.3
 

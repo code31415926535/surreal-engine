@@ -9,6 +9,13 @@ export default class PhysicsSystem extends System {
   private solver!: Ammo.btSequentialImpulseConstraintSolver;
   private physicsWorld!: Ammo.btDiscreteDynamicsWorld;
 
+  /**
+   * Applies a force vector to a body. The force vector is applied at the center of mass.
+   * @param body The body to apply the force to.
+   * @param x The x component of the force vector.
+   * @param y The y component of the force vector.
+   * @param z The z component of the force vector.
+   */
   public applyForce(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const force = new window.Ammo.btVector3(x, y, z);
     body.activate();
@@ -16,6 +23,13 @@ export default class PhysicsSystem extends System {
     window.Ammo.destroy(force);
   }
 
+  /**
+   * Applies a linear velocity to a body. The velocity vector is applied at the center of mass.
+   * @param body The body to apply the velocity to.
+   * @param x The x component of the velocity vector.
+   * @param y The y component of the velocity vector.
+   * @param z The z component of the velocity vector.
+   */
   public moveBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const velocity = new window.Ammo.btVector3(x, y, z);
     body.activate();
@@ -23,6 +37,13 @@ export default class PhysicsSystem extends System {
     window.Ammo.destroy(velocity);
   }
 
+  /**
+   * Rotates a body by a vector.
+   * @param body The body to rotate.
+   * @param x The x component of the rotation vector.
+   * @param y The y component of the rotation vector.
+   * @param z The z component of the rotation vector.
+   */
   public rotateBody(body: Ammo.btRigidBody, x: number, y: number, z: number): void {
     const rotation = new window.Ammo.btVector3(x, y, z);
     body.activate();
