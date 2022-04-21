@@ -2,6 +2,7 @@ import '../../src/style.css';
 import Engine from "../../src/lib/engine";
 import { MeshPhongMaterial } from 'three';
 
+// TODO: Complete example
 async function main() {
   const engine = new Engine('#demo');
   await engine.init();

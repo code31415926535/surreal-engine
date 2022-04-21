@@ -2,6 +2,7 @@ import '../../src/style.css';
 import Engine from "../../src/lib/engine";
 import { MeshPhongMaterial } from 'three';
 import { Component, Types } from 'ecsy';
+import SurrealSystem from '../../src/lib/systems/surrealSystem';
 
 interface BreakableSchema {
   breaksIn: number;
@@ -13,6 +14,26 @@ Breakable.schema = {
   breaksIn: { type: Types.Number, default: 1000 },
 }
 
+// TODO: Improve breakable system by adding a "break" event
+class BreakableSystem extends SurrealSystem {
+  static queries = {
+    breakables: {
+      components: [Breakable],
+    }
+  }
+
+  execute(delta: number) {
+    this.queries.breakables.results.forEach(entity => {
+      const breakable = entity.getMutableComponent(Breakable) as any as BreakableSchema;
+      breakable.breaksIn -= delta;
+      if (breakable.breaksIn <= 0) {
+        entity.removeAllComponents();
+      }
+    });
+  }
+}
+
+// TODO: Complete example
 async function main() {
   const engine = new Engine('#demo');
   await engine.init();
@@ -40,6 +61,7 @@ async function main() {
   });
 
   engine.registerComponent(Breakable);
+  engine.registerSystem(BreakableSystem);
 
   // Lighting
   engine.creator.directionalLight({
@@ -67,7 +89,6 @@ async function main() {
   });
 
   // TODO: make texture look nice here
-  // Moving block
   engine.creator.box({
     size: { x: 5, y: 5, z: 5 },
     pos: { x: 0, y: -1, z: 29.5 },
@@ -79,7 +100,7 @@ async function main() {
     friction: 0.9,
     rigid: true,
     receiveShadow: true,
-  }).with(Breakable, { breaksIn: 2500 });
+  }).with(Breakable, { breaksIn: 6000 });
 
   // Ground Target
   engine.creator.box({

@@ -1,4 +1,4 @@
-import { ComponentConstructor, World } from 'ecsy';
+import { ComponentConstructor, SystemConstructor, World } from 'ecsy';
 import {
   WebGLRenderer,
 } from 'three';
@@ -18,6 +18,7 @@ import Assets from './loaders';
 import AmmoType from 'ammojs-typed';
 import ThirdPersonCameraSystem from './systems/camera/thirdPersonCameraSystem';
 import ThirdPersonCamera from './components/thirdPersonCamera';
+import SurrealSystem from './systems/surrealSystem';
 
 declare global {
   interface Window {
@@ -147,8 +148,20 @@ export default class Engine {
     this.world.getSystem(RenderSystem).setBackground(opts);
   }
 
+  /**
+   * Register a component to the engine.
+   * @param component The component to add.
+   */
   public registerComponent(component: ComponentConstructor<any>) {
     this.world.registerComponent(component);
+  }
+
+  /**
+   * Register a system to the engine.
+   * @param system The system to add.
+   */
+  public registerSystem(system: SystemConstructor<SurrealSystem>) {
+    this.world.registerSystem(system, {});
   }
 
   /**

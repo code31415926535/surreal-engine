@@ -35,13 +35,12 @@
 - [x] Figure out how physics works
 
 - [x] Expose existing systems with a nice interface
-- [ ] Register Custom System
+- [x] Register Custom System
 - [x] Register Custom Component
 - [x] Support for removing components
 
 - [x] 3D Models
 - [x] Write some entity utilities
-- [ ] Animation System
 - [x] 3RD person Camera
 
 - [x] Cleanup ammo types
@@ -56,8 +55,10 @@
 - [ ] Refactor project to a cleaner structure
 - [ ] Material configuration in builder
 - [ ] Use assets directly in entity creator
+- [ ] Better Entity Component System
 - [ ] Surreal Enity
-- [ ] Advanced animation system
+- [ ] Add managers to surreal system
+- [ ] Animation system
 - [ ] Trigger Box
 
 ### v0.3
@@ -89,3 +90,4 @@
 - [ ] Heightmaps
 - [ ] Terrain generation
 - [ ] Editor
+- [ ] UI System

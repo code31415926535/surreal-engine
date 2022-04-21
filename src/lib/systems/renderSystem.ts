@@ -151,12 +151,6 @@ export default class RenderSystem extends System {
     }
 
     this.renderer.render(this.scene, this.camera);
-
-    const removed = this.queries.model.removed!;
-    for (const entity of removed) {
-      const model = entity.getComponent(Model)! as any as ModelSchema;
-      this.scene.remove(model.obj);
-    }
   }
 }
 
