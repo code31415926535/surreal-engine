@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib/engine";
+import Engine from "../../src/lib";
 import { MeshPhongMaterial } from 'three';
 
 async function main() {

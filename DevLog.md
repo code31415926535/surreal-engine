@@ -70,7 +70,7 @@
 - [ ] Loading indicator (using css)
 - [ ] Better debugging
 - [ ] Performance Monitoring
-- [ ] Trigger Box
+- [ ] Configurable window size
 
 ### Future
 
@@ -92,3 +92,4 @@
 - [ ] Terrain generation
 - [ ] Editor
 - [ ] UI System
+- [ ] Trigger Box

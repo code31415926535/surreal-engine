@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib/engine";
+import Engine from "../../src/lib";
 import { CurvePath, LineCurve3, MeshPhongMaterial, Vector3 } from 'three';
 
 async function main() {
