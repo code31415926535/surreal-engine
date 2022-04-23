@@ -4,11 +4,11 @@
   "private": false,
   "version": "0.1.0",
   "files": [
-    "dist/surreal-engine.es.js",
-    "dist/surreal-engine.umd.js"
+    "dist"
   ],
   "main": "dist/surreal-engine.umd.js",
   "module": "dist/surreal-engine.es.js",
+  "types": "dist/surreal-engine.d.ts",
   "exports": {
     ".": {
       "import": "./dist/surreal-engine.es.js",
@@ -18,11 +18,12 @@
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
-    "build": "tsc && vite build",
+    "build": "npm run build:module && npm run build:types",
+    "build:module": "tsc && vite build && rm -rf ./dist/assets",
+    "build:types": "tsc -m amd -t ESNext -d --isolatedModules false --moduleResolution node --emitDeclarationOnly --outFile dist/index src/lib/index.ts",
     "build:examples": "tsc && vite --config vite.examples.config.js build"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.2",
     "@types/three": "^0.139.0",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"

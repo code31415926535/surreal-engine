@@ -46,7 +46,7 @@
 - [x] Cleanup ammo types
 - [x] Readme
 - [x] Build examples
-- [ ] Create npm library
+- [x] Create npm library
 
 ### v0.2
 
