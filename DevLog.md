@@ -69,9 +69,6 @@
 - [ ] Better debugging
 - [ ] Performance Monitoring
 - [ ] Configurable window size
-
-### v0.4
-
 - [ ] Documentation
 
 ### Future

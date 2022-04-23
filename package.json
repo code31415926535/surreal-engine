@@ -1,7 +1,20 @@
 {
   "name": "surreal-engine",
+  "description": "A typescript game engine",
   "private": false,
   "version": "0.1.0",
+  "files": [
+    "dist/surreal-engine.es.js",
+    "dist/surreal-engine.umd.js"
+  ],
+  "main": "dist/surreal-engine.umd.js",
+  "module": "dist/surreal-engine.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/surreal-engine.es.js",
+      "require": "./dist/surreal-engine.umd.js"
+    }
+  },
   "scripts": {
     "dev": "vite",
     "preview": "vite preview",
@@ -9,6 +22,7 @@
     "build:examples": "tsc && vite --config vite.examples.config.js build"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
     "@types/three": "^0.139.0",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"

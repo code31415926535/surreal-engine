@@ -19,6 +19,7 @@ import AmmoType from 'ammojs-typed';
 import ThirdPersonCameraSystem from './systems/camera/thirdPersonCameraSystem';
 import ThirdPersonCamera from './components/thirdPersonCamera';
 import SurrealSystem from './systems/surrealSystem';
+// @ts-ignore
 import initAmmo from './ammo.js';
 
 declare global {
