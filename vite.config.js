@@ -1,5 +1,5 @@
-const path = require('path')
-const { defineConfig } = require('vite')
+const path = require('path');
+const { defineConfig } = require('vite');
 
 export default defineConfig({
   build: {

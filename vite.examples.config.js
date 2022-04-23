@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, 'examples/index.html'),
         simpleShapes: resolve(__dirname, 'examples/1-simple-shapes/index.html'),
         lightingShadowsFog: resolve(__dirname, 'examples/2-lighting-shadows-fog/index.html'),
         motion: resolve(__dirname, 'examples/3-motion/index.html'),

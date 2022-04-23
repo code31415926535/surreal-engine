@@ -46,7 +46,6 @@
 - [x] Cleanup ammo types
 - [x] Readme
 - [x] Build examples
-- [ ] Deploy examples somewhere
 - [ ] Create npm library
 
 ### v0.2
@@ -59,7 +58,6 @@
 - [ ] Surreal Enity
 - [ ] Add managers to surreal system
 - [ ] Animation system
-- [ ] Better example page
 
 ### v0.3
 
@@ -71,6 +69,10 @@
 - [ ] Better debugging
 - [ ] Performance Monitoring
 - [ ] Configurable window size
+
+### v0.4
+
+- [ ] Documentation
 
 ### Future
 

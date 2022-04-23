@@ -937,7 +937,7 @@ $F.prototype.CreateEllipsoid=function(a,c,d,e){var f=this.bB;a&&"object"===typeo
 $F.prototype.CreateFromTriMesh=function(a,c,d,e,f){var m=this.bB;bE();a&&"object"===typeof a&&(a=a.bB);"object"==typeof c&&(c=fE(c));if("object"==typeof d&&"object"===typeof d){var y=cE(d,Qa);dE(d,Qa,y);d=y}e&&"object"===typeof e&&(e=e.bB);f&&"object"===typeof f&&(f=f.bB);return k(ED(m,a,c,d,e,f),Y)};
 $F.prototype.CreateFromConvexHull=function(a,c,d,e){var f=this.bB;a&&"object"===typeof a&&(a=a.bB);c&&"object"===typeof c&&(c=c.bB);d&&"object"===typeof d&&(d=d.bB);e&&"object"===typeof e&&(e=e.bB);return k(FD(f,a,c,d,e),Y)};$F.prototype.__destroy__=function(){GD(this.bB)};
 (function(){function a(){b.PHY_FLOAT=HD();b.PHY_DOUBLE=ID();b.PHY_INTEGER=JD();b.PHY_SHORT=KD();b.PHY_FIXEDPOINT88=LD();b.PHY_UCHAR=MD();b.CONST_GIMPACT_COMPOUND_SHAPE=ND();b.CONST_GIMPACT_TRIMESH_SHAPE_PART=OD();b.CONST_GIMPACT_TRIMESH_SHAPE=PD();b.BT_CONSTRAINT_ERP=QD();b.BT_CONSTRAINT_STOP_ERP=RD();b.BT_CONSTRAINT_CFM=SD();b.BT_CONSTRAINT_STOP_CFM=TD()}Ya?a():Wa.unshift(a)})();b.CONTACT_ADDED_CALLBACK_SIGNATURE="iiiiiiii";b.CONTACT_DESTROYED_CALLBACK_SIGNATURE="ii";
-b.CONTACT_PROCESSED_CALLBACK_SIGNATURE="iiii";b.INTERNAL_TICK_CALLBACK_SIGNATURE="vif";this.Ammo=b;
+b.CONTACT_PROCESSED_CALLBACK_SIGNATURE="iiii";b.INTERNAL_TICK_CALLBACK_SIGNATURE="vif";
 
 
   return Ammo.ready
@@ -950,3 +950,5 @@ else if (typeof define === 'function' && define['amd'])
   define([], function() { return Ammo; });
 else if (typeof exports === 'object')
   exports["Ammo"] = Ammo;
+
+export default Ammo;

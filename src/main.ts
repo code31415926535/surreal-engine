@@ -1,0 +1,1 @@
+import '../examples/1-simple-shapes';

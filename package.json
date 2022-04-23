@@ -1,11 +1,11 @@
 {
   "name": "surreal-engine",
-  "private": true,
-  "version": "0.0.0",
+  "private": false,
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
     "preview": "vite preview",
+    "build": "tsc && vite build",
     "build:examples": "tsc && vite --config vite.examples.config.js build"
   },
   "devDependencies": {

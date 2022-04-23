@@ -19,6 +19,7 @@ import AmmoType from 'ammojs-typed';
 import ThirdPersonCameraSystem from './systems/camera/thirdPersonCameraSystem';
 import ThirdPersonCamera from './components/thirdPersonCamera';
 import SurrealSystem from './systems/surrealSystem';
+import initAmmo from './ammo.js';
 
 declare global {
   interface Window {
@@ -88,7 +89,7 @@ export default class Engine {
    *  before doing any other operations.
    */
   public async init() {
-    window.Ammo = await window.Ammo();
+    window.Ammo = await initAmmo();
     this.world = new World({
       entityPoolSize: this.entityPoolSize,
     });
