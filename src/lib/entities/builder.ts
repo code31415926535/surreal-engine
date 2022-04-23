@@ -17,8 +17,7 @@ import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
 import KeyboardInputManager from "../input/keyboardInputManager";
 import KeyboardMotion from "../components/keyboardInput";
-import FollowCamera from "../components/followCamera";
-import ThirdPersonCamera from "../components/thirdPersonCamera";
+import FollowCamera, { FollowCameraSchema } from '../components/followCamera';
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -89,13 +88,24 @@ export default class EntityBuilder {
   }
 
   // TODO: Make this configurable
-  public withFollowCamera = (): EntityBuilder => {
-    this.entity.addComponent(FollowCamera, {});
-    return this;
+  public withOffsetCamera = (): EntityBuilder => {
+    const idealOffset = new Vector3(15, 15, 15);
+    return this.withFollowCamera({
+      idealLookAt: new Vector3(),
+      idealOffset,
+      followRotation: false,
+    }) 
   }
 
+  // TODO: Make this configurable
   public withThirdPersonCamera = (): EntityBuilder => {
-    this.entity.addComponent(ThirdPersonCamera, {});
+    const idealLookAt = new Vector3(5, 2.5, 0);
+    const idealOffset = new Vector3(-15, 5, 0);
+    return this.withFollowCamera({ idealLookAt, idealOffset, followRotation: true });
+  }
+
+  public withFollowCamera = (opts: FollowCameraSchema): EntityBuilder => {
+    this.entity.addComponent(FollowCamera, opts);
     return this;
   }
 

@@ -60,7 +60,7 @@ async function main() {
   }).withKeyboardMotion({
     speed: 2,
     rotation: 1.5,
-  }).withFollowCamera();
+  }).withOffsetCamera();
 
   engine.creator.sphere({
     radius: 1,
