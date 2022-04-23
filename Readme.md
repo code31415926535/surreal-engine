@@ -6,7 +6,7 @@ A simple typescript game engine.
 npm install --save surreal-engine
 ```
 
-TODO: Make library work and add example usage
+TODO: Add example usage
 
 ## Features
 
