@@ -1,25 +1,24 @@
-import { Entity, Not, System } from "ecsy";
+import { Entity, EntitySnapshot, IterativeSystem, Query } from 'tick-knock';
 import { Vector3 } from "three";
 import Body from "../components/body";
-import Model, { ModelSchema } from "../components/model";
-import StaticMotion, { StaticMotionSchema } from "../components/staticMotion";
+import Model from "../components/model";
+import StaticMotion from "../components/staticMotion";
 
-export default class StaticMotionSystem extends System {
-  private updateModel(model: ModelSchema, staticMotion: StaticMotionSchema): void {
-    const fraction = staticMotion.current / staticMotion.duration;
-    const position = staticMotion.path.getPointAt(fraction);
-    const tangent = staticMotion.path.getTangentAt(fraction);
-
-    const up = new Vector3(0, 1, 0);
-    const axis = new Vector3();
-    model.obj.position.copy(staticMotion.pos.clone().add(position));
-    axis.crossVectors(up, tangent).normalize();
-    model.obj.quaternion.setFromAxisAngle(axis, Math.acos(up.dot(tangent)));
+// TODO: Refactor system to work on body instead of model
+export default class StaticMotionSystem extends IterativeSystem {
+  constructor() {
+    super(new Query(entity => entity.hasAll(Model, StaticMotion) && !entity.has(Body)));
   }
 
-  private executeEntity(entity: Entity, delta: number): void {
-    const staticMotion = entity.getMutableComponent(StaticMotion)! as any as StaticMotionSchema;
-    const model = entity.getComponent(Model)! as any as ModelSchema;
+  protected entityAdded = ({current}: EntitySnapshot) => {
+    const model = current.get(Model)!;
+    const staticMotion = current.get(StaticMotion)!;
+    staticMotion.pos = model.mesh.position.clone();
+  }
+
+  protected updateEntity(entity: Entity, delta: number): void {
+    const staticMotion = entity.get(StaticMotion)!;
+    const model = entity.get(Model)!;
 
     staticMotion.current += delta;
     if (staticMotion.current > staticMotion.duration) {
@@ -35,29 +34,15 @@ export default class StaticMotionSystem extends System {
     this.updateModel(model, staticMotion);
   }
 
-  execute(delta: number): void {
-    const added = this.queries.staticMotion.added!;
-    for (const entity of added) {
-      const model = entity.getComponent(Model)! as any as ModelSchema;
-      const staticMotion = entity.getMutableComponent(StaticMotion)! as any as StaticMotionSchema;
-      staticMotion.pos = model.obj.position.clone();
-    }
+  private updateModel(model: Model, staticMotion: StaticMotion): void {
+    const fraction = staticMotion.current / staticMotion.duration;
+    const position = staticMotion.path.getPointAt(fraction);
+    const tangent = staticMotion.path.getTangentAt(fraction);
 
-    for (const entity of this.queries.staticMotion.results) {
-      this.executeEntity(entity, delta);
-    }
+    const up = new Vector3(0, 1, 0);
+    const axis = new Vector3();
+    model.mesh.position.copy(staticMotion.pos.clone().add(position));
+    axis.crossVectors(up, tangent).normalize();
+    model.mesh.quaternion.setFromAxisAngle(axis, Math.acos(up.dot(tangent)));
   }
 }
-
-StaticMotionSystem.queries = {
-  staticMotion: {
-    components: [
-      StaticMotion,
-      Model,
-      Not(Body),
-    ],
-    listen: {
-      added: true,
-    },
-  },
-};

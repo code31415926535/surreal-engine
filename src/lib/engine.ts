@@ -1,22 +1,18 @@
-import { ComponentConstructor, SystemConstructor, World } from 'ecsy';
+import {
+  Engine as ECSEngine,
+} from 'tick-knock';
 import {
   WebGLRenderer,
 } from 'three';
-import Model from './components/model';
-import Body from './components/body';
-import EntityCreator from './managers/entityCreator';
+import EntityCreator from './managers/EntityCreator';
 import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
-import StaticMotion from './components/staticMotion';
-import KeyboardMotion from './components/keyboardMotion';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
 import AssetManager from './managers/AssetManager';
 import AmmoType from 'ammojs-typed';
 import FollowCameraSystem from './systems/followCameraSystem';
-import FollowCamera from './components/followCamera';
-import SurrealSystem from './systems/surrealSystem';
 // @ts-ignore
 import initAmmo from './ammo.js';
 import MaterialManager from './managers/MaterialManager';
@@ -30,7 +26,6 @@ declare global {
 export interface EngineOpts {
   debug?: boolean;
   physics?: boolean;
-  entityPoolSize?: number;
   gravity?: { x: number, y: number, z: number };
   antialias?: boolean;
 }
@@ -62,14 +57,14 @@ export default class Engine {
    * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
   public assets!: AssetManager;
+  // TODO: Document
   public materials!: MaterialManager;
 
   private previousTime: number = 0;
-  private world!: World;
+  private ecs!: ECSEngine;
 
   private debug: boolean;
   private physics: boolean;
-  private entityPoolSize: number;
   private gravity: { x: number; y: number; z: number; };
   private antialias: boolean;
 
@@ -80,7 +75,6 @@ export default class Engine {
 
     this.debug = opts?.debug ?? false;
     this.physics = opts?.physics ?? true;
-    this.entityPoolSize = opts?.entityPoolSize ?? 1000;
     this.gravity = opts?.gravity ?? { x: 0, y: -0.98, z: 0 };
     this.antialias = opts?.antialias ?? true;
   }
@@ -91,31 +85,20 @@ export default class Engine {
    */
   public async init() {
     window.Ammo = await initAmmo();
-    this.world = new World({
-      entityPoolSize: this.entityPoolSize,
-    });
-    this.world.registerComponent(Model);
-    this.world.registerComponent(Body);
-    this.world.registerComponent(StaticMotion);
-    this.world.registerComponent(KeyboardMotion);
-    this.world.registerComponent(FollowCamera);
-    this.world.registerSystem(RenderSystem, {
-      canvas: this.canvas,
-      debug: this.debug,
-      antialias: this.antialias,
-    });
+    this.ecs = new ECSEngine();
+    this.ecs.addSystem(new RenderSystem(this.canvas, this.debug, this.antialias), 1);
     if (this.physics) {
-      this.world.registerSystem(PhysicsSystem, { gravity: this.gravity });
-      this.world.registerSystem(PhysicsRendererSyncSystem, {});
+      this.ecs.addSystem(new PhysicsSystem(this.gravity), 2);
+      this.ecs.addSystem(new PhysicsRendererSyncSystem(), 3);
     }
-    this.world.registerSystem(StaticMotionSystem, {});
-    this.world.registerSystem(KeyboardMovementSystem, {});
+    this.ecs.addSystem(new StaticMotionSystem(), 4);
+    this.ecs.addSystem(new KeyboardMovementSystem(), 5);
     if (!this.debug) {
-      this.world.registerSystem(FollowCameraSystem, {});
+      this.ecs.addSystem(new FollowCameraSystem(), 6);
     }
 
     this.assets = new AssetManager();
-    this.creator = new EntityCreator(this.world, this.debug);
+    this.creator = new EntityCreator(this.ecs, this.debug);
     this.materials = new MaterialManager(this.assets);
   }
 
@@ -126,7 +109,7 @@ export default class Engine {
    * @param opts The options for the camera.
    */
   public setPerspectiveCamera(opts: PerspectiveCameraOptions) {
-    this.world.getSystem(RenderSystem).setPerspectiveCamera(opts);
+    this.ecs.getSystem(RenderSystem)!.setPerspectiveCamera(opts);
   }
 
   /**
@@ -137,7 +120,7 @@ export default class Engine {
    * @param opts The options for the camera.
    */
   public setOrthographicCamera(opts: OrthographicCameraOptions) {
-    this.world.getSystem(RenderSystem).setOrthographicCamera(opts);
+    this.ecs.getSystem(RenderSystem)!.setOrthographicCamera(opts);
   }
 
   /**
@@ -146,23 +129,17 @@ export default class Engine {
    * @param opts The options for the background.
    */
   public setBackground(opts: BackgroundOptions) {
-    this.world.getSystem(RenderSystem).setBackground(opts);
-  }
-
-  /**
-   * Register a component to the engine.
-   * @param component The component to add.
-   */
-  public registerComponent(component: ComponentConstructor<any>) {
-    this.world.registerComponent(component);
+    this.ecs.getSystem(RenderSystem)!.setBackground(opts);
   }
 
   /**
    * Register a system to the engine.
    * @param system The system to add.
+   * 
+   * TODO: Make this work with proper priority.
    */
-  public registerSystem(system: SystemConstructor<SurrealSystem>) {
-    this.world.registerSystem(system, {});
+  public registerSystem(system: any) {
+    this.ecs.addSystem(system);
   }
 
   /**
@@ -179,7 +156,7 @@ export default class Engine {
       }
 
       this.execute();
-      this.world.execute(t - this.previousTime, t);
+      this.ecs.update(t - this.previousTime);
       this.previousTime = t;
     });
   }

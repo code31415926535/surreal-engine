@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "ammojs-typed": "^1.0.6",
-    "ecsy": "^0.4.2",
-    "three": "^0.139.2"
+    "three": "^0.139.2",
+    "tick-knock": "^4.0.2"
   }
 }

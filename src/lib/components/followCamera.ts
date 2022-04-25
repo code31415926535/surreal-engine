@@ -1,16 +1,9 @@
-import { Component, Types } from "ecsy";
 import { Vector3 } from "three";
 
-export interface FollowCameraSchema {
-  idealLookAt: Vector3;
-  idealOffset: Vector3;
-  followRotation?: boolean;
+export default class FollowCamera {
+  constructor(
+    public idealLookAt: Vector3, 
+    public idealOffset: Vector3, 
+    public followRotation: boolean = true
+  ) {}
 }
-
-export default class FollowCamera extends Component<FollowCameraSchema> {}
-
-FollowCamera.schema = {
-  idealLookAt: { type: Types.Ref },
-  idealOffset: { type: Types.Ref },
-  followRotation: { type: Types.Boolean, default: true },
-};

@@ -1,4 +1,4 @@
-import { World } from "ecsy";
+import { Engine as ECSEngine } from 'tick-knock';
 import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
 import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions } from "../utils/entityBuilder";
 
@@ -52,13 +52,13 @@ export interface DirectionalLightOptions extends PointLightOptions {
  * @see https://ecsy.io/
  */
 export default class EntityCreator {
-  constructor(private world: World, private debug: boolean) {}
+  constructor(private ecs: ECSEngine, private debug: boolean) {}
 
   /**
    * Creates an emtpy entity without any components.
    */
   empty(): EntityBuilder {
-    return new EntityBuilder(this.world);
+    return new EntityBuilder(this.ecs);
   }
 
   /**
@@ -68,7 +68,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   ethereal(opts: Object3DOptions): EntityBuilder {
-    return new EntityBuilder(this.world).withObject3D({ obj: opts.obj });
+    return new EntityBuilder(this.ecs).withObject3D({ obj: opts.obj });
   }
 
   /**
@@ -79,7 +79,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   box(opts: BoxOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.world)
+    const builder = new EntityBuilder(this.ecs)
       .withShapeModel({ ...opts, type: 'box' });
     
     if (opts.rigid) {
@@ -97,7 +97,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   sphere(opts: SphereOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.world)
+    const builder = new EntityBuilder(this.ecs)
       .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
     
     if (opts.rigid) {

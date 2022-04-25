@@ -38,7 +38,7 @@ async function main() {
   curve.add(new LineCurve3(new Vector3(25, 0, 0), new Vector3(0, 0, 0)));
 
   engine.creator.directionalLight({
-    color: '0xffffff',
+    color: '#ffffff',
     intensity: 1,
     pos: { x: -12.5, y: 10, z: -12.5 },
     target: { x: 0, y: 0, z: 0 },

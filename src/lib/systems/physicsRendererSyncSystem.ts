@@ -1,21 +1,15 @@
+import { Query, Entity, IterativeSystem } from 'tick-knock';
 import Body from "../components/body";
-import Model, { ModelSchema } from "../components/model";
-import { getPosition, getQuaternion } from "../entityUtils";
-import SurrealSystem from "./surrealSystem";
+import Model from "../components/model";
 
-export default class PhysicsRendererSyncSystem extends SurrealSystem {
-  execute(): void {
-    const entities = this.queries.entities.results;
-    for (const entity of entities) {
-      const model = entity.getComponent(Model)! as any as ModelSchema;
-      model.obj.position.copy(getPosition(entity));
-      model.obj.quaternion.copy(getQuaternion(entity));
-    }
+export default class PhysicsRendererSyncSystem extends IterativeSystem {
+  constructor() {
+    super(new Query(entity => entity.hasAll(Body, Model)));
   }
-}
 
-PhysicsRendererSyncSystem.queries = {
-  entities: {
-    components: [ Body, Model ],
+  protected updateEntity(entity: Entity): void {
+    const model = entity.get(Model)!;
+    model.mesh.position.copy(entity.get(Body)!.position);
+    model.mesh.quaternion.copy(entity.get(Body)!.quaternion);
   }
 }

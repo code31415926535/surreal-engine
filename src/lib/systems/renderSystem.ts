@@ -1,4 +1,4 @@
-import { Attributes, System } from "ecsy";
+import { ReactionSystem, Query, EntitySnapshot } from 'tick-knock';
 import {
   PCFSoftShadowMap,
   PerspectiveCamera,
@@ -12,7 +12,7 @@ import {
   Texture,
 } from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import Model, { ModelSchema } from "../components/model";
+import Model from "../components/model";
 
 export interface OrthographicCameraOptions {
   distance: number;
@@ -37,14 +37,42 @@ export interface BackgroundOptions {
   skybox?: Texture;
 }
 
-export default class RenderSystem extends System {
-  private renderer!: WebGLRenderer;
-  private scene!: Scene;
+export default class RenderSystem extends ReactionSystem {
+  private renderer: WebGLRenderer;
+  private scene: Scene;
   /**
    * Current camera being used by the system.
    */
   public camera!: PerspectiveCamera | OrthographicCamera;
   private debug: boolean = false;
+
+  constructor(canvas: string, debug: boolean, antialias: boolean) {
+    super(new Query(entity => entity.hasComponent(Model)));
+    this.debug = debug;
+    this.renderer = new WebGLRenderer({
+      antialias,
+      canvas: document.querySelector(canvas)!,
+    });
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = PCFSoftShadowMap;
+    this.scene = new Scene();
+
+    this.setPerspectiveCamera({
+      fov: 75,
+      position: { x: 10, y: 10, z: 10 },
+    });
+
+    if (this.debug) {
+      this.scene.add(new GridHelper(100, 10));
+      this.scene.add(new AxesHelper(100));
+    }
+
+    window.addEventListener('resize', () => {
+      this.onResize();
+    });
+  }
 
   /**
    * Set the camera to an {@link https://threejs.org/docs/#api/cameras/OrthographicCamera OrthographicCamera} An orthographic camera is
@@ -108,33 +136,6 @@ export default class RenderSystem extends System {
     }
   }
 
-  init(attributes: Attributes) {
-    this.debug = attributes.debug;
-    this.renderer = new WebGLRenderer({
-      antialias: attributes.antialias,
-      canvas: document.querySelector(attributes.canvas)!,
-    });
-    this.renderer.setPixelRatio(window.devicePixelRatio);
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = PCFSoftShadowMap;
-    this.scene = new Scene();
-
-    this.setPerspectiveCamera({
-      fov: 75,
-      position: { x: 10, y: 10, z: 10 },
-    });
-
-    if (this.debug) {
-      this.scene.add(new GridHelper(100, 10));
-      this.scene.add(new AxesHelper(100));
-    }
-
-    window.addEventListener('resize', () => {
-      this.onResize();
-    });
-  }
-
   private onResize() {
     if (this.camera instanceof PerspectiveCamera) {
       this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -143,23 +144,15 @@ export default class RenderSystem extends System {
     this.renderer.setSize(window.innerWidth, window.innerHeight);
   }
 
-  execute(): void {
-    const added = this.queries.model.added!;
-    for (const entity of added) {
-      const model = entity.getComponent(Model)! as any as ModelSchema;
-      this.scene.add(model.obj);
-    }
-
+  public update(): void {
     this.renderer.render(this.scene, this.camera);
   }
-}
 
-RenderSystem.queries = {
-  model: { 
-    components: [ Model ],
-    listen: {
-      added: true,
-      removed: true,
-    },
-  },
+  protected entityAdded = ({ current }: EntitySnapshot) => {
+    this.scene.add(current.get(Model)!.mesh);
+  }
+
+  protected entityRemoved = ({ previous }: EntitySnapshot) => {
+    this.scene.remove(previous.get(Model)!.mesh);
+  }
 }

@@ -1,35 +1,38 @@
-import { Entity } from "ecsy";
+import { Query, Entity, IterativeSystem } from 'tick-knock';
 import { Vector3 } from "three";
 import Body from "../components/body";
-import FollowCamera, { FollowCameraSchema } from "../components/followCamera";
-import { getPosition, getQuaternion } from "../entityUtils";
-import SurrealSystem from "./surrealSystem";
+import FollowCamera from "../components/followCamera";
+import RenderSystem from './renderSystem';
 
-export default class FollowCameraSystem extends SurrealSystem {
+export default class FollowCameraSystem extends IterativeSystem {
   private currentPosition: Vector3 = new Vector3();
   private currentLookAt: Vector3 = new Vector3();
 
+  constructor() {
+    super(new Query(entity => entity.hasAll(FollowCamera, Body)));
+  }
+
   private calculateIdealOffset(target: Entity): Vector3 {
-    const followCamera = target.getComponent(FollowCamera)! as any as FollowCameraSchema;
+    const followCamera = target.get(FollowCamera)!;
     const idealOffset = followCamera.idealOffset.clone();
     if (followCamera.followRotation) {
-      idealOffset.applyQuaternion(getQuaternion(target));
+      idealOffset.applyQuaternion(target.get(Body)!.quaternion);
     }
-    idealOffset.add(getPosition(target));
+    idealOffset.add(target.get(Body)!.position);
     return idealOffset;
   }
 
   private calculateIdealLookAt(target: Entity): Vector3 {
-    const followCamera = target.getComponent(FollowCamera)! as any as FollowCameraSchema;
+    const followCamera = target.get(FollowCamera)!;
     const idealLookAt = followCamera.idealLookAt.clone();
     if (followCamera.followRotation) {
-      idealLookAt.applyQuaternion(getQuaternion(target));
+      idealLookAt.applyQuaternion(target.get(Body)!.quaternion);
     }
-    idealLookAt.add(getPosition(target));
+    idealLookAt.add(target.get(Body)!.position);
     return idealLookAt;
   }
 
-  private updateCamera(entity: Entity, delta: number) {
+  protected updateEntity(entity: Entity, delta: number): void {
     const idealPosition = this.calculateIdealOffset(entity);
     const idealLookAt = this.calculateIdealLookAt(entity);
 
@@ -38,22 +41,8 @@ export default class FollowCameraSystem extends SurrealSystem {
     this.currentLookAt.lerp(idealLookAt, t);
     this.currentPosition.lerp(idealPosition, t);
 
-    this.renderSystem.camera.position.copy(this.currentPosition);
-    this.renderSystem.camera.lookAt(this.currentLookAt);
+    const renderSystem = this.engine.getSystem(RenderSystem)!;
+    renderSystem.camera.position.copy(this.currentPosition);
+    renderSystem.camera.lookAt(this.currentLookAt);
   }
-
-  execute(delta: number): void {
-    for (const target of this.queries.target.results) {
-      this.updateCamera(target, delta);
-    }
-  }
-}
-
-FollowCameraSystem.queries = {
-  target: {
-    components: [FollowCamera, Body],
-    listen: {
-      added: true,
-    }
-  },
 }

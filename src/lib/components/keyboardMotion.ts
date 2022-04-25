@@ -1,16 +1,9 @@
-import { Component, Types } from "ecsy";
 import KeyboardInputManager from "../controllers/keyboardInputController";
 
-export interface KeyboardMotionSchema {
-  value: KeyboardInputManager;
-  speed: number;
-  rotation: number;
+export default class KeyboardMotion {
+  constructor(
+    public value: KeyboardInputManager,
+    public speed: number = 1,
+    public rotation: number = 1,
+  ) {}
 }
-
-export default class KeyboardMotion extends Component<KeyboardMotionSchema> {}
-
-KeyboardMotion.schema = {
-  value: { type: Types.Ref },
-  speed: { type: Types.Number, default: 1 },
-  rotation: { type: Types.Number, default: 1 },
-};

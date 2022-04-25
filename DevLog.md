@@ -51,11 +51,11 @@
 ### v0.2
 
 - [x] Merge cameras into a single system
-- [ ] Refactor project to a cleaner structure
+- [x] Refactor project to a cleaner structure
 - [x] Material configuration in builder
 - [ ] Use assets directly in entity creator
-- [ ] Better Entity Component System
-- [ ] Surreal Enity
+- [x] Better Entity Component System
+- [x] Surreal Enity (not needed with new ECS)
 - [ ] Add managers to surreal system
 - [ ] Animation system
 

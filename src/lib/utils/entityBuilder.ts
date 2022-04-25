@@ -1,4 +1,8 @@
 import {
+  Engine as ECSEngine,
+  Entity,
+} from 'tick-knock';
+import {
   BoxGeometry,
   BufferGeometry,
   CylinderGeometry,
@@ -9,13 +13,12 @@ import {
   Vector3,
 } from "three";
 import Ammo from "ammojs-typed";
-import { Component, ComponentConstructor, Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
 import KeyboardInputController from "../controllers/keyboardInputController";
 import KeyboardMotion from "../components/keyboardMotion";
-import FollowCamera, { FollowCameraSchema } from '../components/followCamera';
+import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 
 export interface RigidBodyOptions {
@@ -56,72 +59,63 @@ export interface KeyboardMotionOptions {
 }
 
 export default class EntityBuilder {
-  entity: Entity;
+  private entity: Entity;
 
-  constructor(private world: World) {
-    this.entity = this.world.createEntity();
+  constructor(private ecs: ECSEngine) {
+    this.entity = new Entity();
+    this.ecs.addEntity(this.entity);
   }
 
   public withRigidBody = (opts: RigidBodyOptions): EntityBuilder => {
-    this.entity.addComponent(Body, { obj: this.buildRigidBody(opts) });
+    this.entity.addComponent(new Body(this.buildRigidBody(opts)));
     return this;
   }
 
   public withObject3D = (opts: Object3DOptions): EntityBuilder => {
-    this.entity.addComponent(Model, { obj: opts.obj });
+    this.entity.addComponent(new Model(opts.obj));
     return this;
   }
 
   public withShapeModel = (opts: ShapeModelOptions): EntityBuilder => {
-    this.entity.addComponent(Model, { obj: this.buildShapeModel(opts) });
+    this.entity.addComponent(new Model(this.buildShapeModel(opts)));
     return this;
   }
 
   public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
-    this.entity.addComponent(KeyboardMotion, {
-      value:  new KeyboardInputController(),
-      speed: opts?.speed || 1,
-      rotation: opts?.rotation || 1,
-    });
+    this.entity.addComponent(new KeyboardMotion(new KeyboardInputController(), opts?.speed, opts?.rotation));
     return this;
   }
 
   // TODO: Make this configurable
   public withOffsetCamera = (): EntityBuilder => {
     const idealOffset = new Vector3(15, 15, 15);
-    return this.withFollowCamera({
-      idealLookAt: new Vector3(),
-      idealOffset,
-      followRotation: false,
-    }) 
+    return this.withFollowCamera(new FollowCamera(new Vector3(), idealOffset, false));
   }
 
   // TODO: Make this configurable
   public withThirdPersonCamera = (): EntityBuilder => {
     const idealLookAt = new Vector3(5, 2.5, 0);
     const idealOffset = new Vector3(-15, 5, 0);
-    return this.withFollowCamera({ idealLookAt, idealOffset, followRotation: true });
+    return this.withFollowCamera(new FollowCamera(idealLookAt, idealOffset, true));
   }
 
-  public withFollowCamera = (opts: FollowCameraSchema): EntityBuilder => {
-    this.entity.addComponent(FollowCamera, opts);
+  public withFollowCamera = (component: FollowCamera): EntityBuilder => {
+    this.entity.addComponent(component);
     return this;
   }
 
-  public with = <C extends Component<any>>(
-    Component: ComponentConstructor<C>,
-    values?: Partial<Omit<C, keyof Component<any>>>
-  ): EntityBuilder => {
-    this.entity.addComponent(Component, values);
+  public with = (component: any): EntityBuilder => {
+    this.entity.addComponent(component);
     return this;
   }
 
   public withStaticMotion = (opts: StaticMoitonOptions): EntityBuilder => {
-    this.entity.addComponent(StaticMotion, {
-      path: opts.path,
-      duration: opts.duration || 1000,
-      loop: opts.loop !== undefined ? opts.loop : true,
-    });
+    this.entity.addComponent(new StaticMotion(
+      opts.path,
+      opts.duration || 1000,
+      opts.loop !== undefined ? opts.loop : true,
+      new Vector3(),
+    ));
     return this;
   }
 

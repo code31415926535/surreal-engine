@@ -72,7 +72,7 @@ async function main() {
   });
 
   engine.creator.directionalLight({
-    color: '0xffffff',
+    color: '#ffffff',
     intensity: 1,
     pos: { x: -12.5, y: 10, z: -12.5 },
     target: { x: 0, y: 0, z: 0 },
@@ -82,7 +82,7 @@ async function main() {
   });
 
   engine.creator.ambientLight({
-    color: '0xffffff',
+    color: '#ffffff',
     intensity: 0.25,
   });
 

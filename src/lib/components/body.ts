@@ -1,14 +1,29 @@
 import Ammo from "ammojs-typed";
-import { Component, Types } from "ecsy";
+import { Quaternion, Vector3 } from "three";
 
-export interface BodySchema {
-  obj: Ammo.btRigidBody;
-  prevY: number;
+export default class Body {
+  public prevY: number;
+
+  constructor(public body: Ammo.btRigidBody) {
+    this.prevY = 0;
+  }
+
+  public get position(): Vector3 {
+    const worldTransform = this.body.getWorldTransform();
+    return new Vector3(
+      worldTransform.getOrigin().x(),
+      worldTransform.getOrigin().y(),
+      worldTransform.getOrigin().z(),
+    );
+  }
+
+  public get quaternion(): Quaternion {
+    const worldTransform = this.body.getWorldTransform();
+    return new Quaternion(
+      worldTransform.getRotation().x(),
+      worldTransform.getRotation().y(),
+      worldTransform.getRotation().z(),
+      worldTransform.getRotation().w(),
+    );
+  }
 }
-
-export default class Body extends Component<BodySchema> {}
-
-Body.schema = {
-  obj: { type: Types.Ref },
-  prevY: { type: Types.Number, default: 0 },
-};
