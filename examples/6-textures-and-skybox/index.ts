@@ -6,8 +6,8 @@ async function main() {
   await engine.init();
 
   engine.assets.setBasePath("/assets/");
-  engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
-  engine.assets.addTexture("floor@bump", "textures/floor_bump.png", { repeat: { x: 5, y: 5 } });
+  engine.assets.addTexture("floor", "textures/floor.png");
+  engine.assets.addTexture("floor@bump", "textures/floor_bump.png");
   engine.assets.addCubeTexture("skybox", [
     "textures/vz_techno_back.png",
     "textures/vz_techno_down.png",
@@ -27,7 +27,7 @@ async function main() {
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
-  engine.materials.addTexturedMaterial("floor", { texture: "floor" });
+  engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 5, y: 5 } });
   engine.materials.addTexturedMaterial("box", {
     texture: {
       map: "box@diffuse",

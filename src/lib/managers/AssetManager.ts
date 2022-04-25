@@ -1,12 +1,6 @@
-import { AnimationClip, Group, LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
+import { AnimationClip, Group, LoadingManager, Texture } from "three";
 import ModelLoader, { LoadModelOptions } from "../utils/model";
 import TextureLoader from "../utils/texture";
-
-export interface AddTextureOptions {
-  wrapS?: Wrapping;
-  wrapT?: Wrapping;
-  repeat?: { x: number, y: number };
-}
 
 /**
  * Asset manager class. It is responsible to load assets
@@ -21,7 +15,6 @@ export default class AssetManager {
   private texturesToLoad: {
     name: string;
     path: string;
-    opts?: AddTextureOptions;
   }[] = [];
   private cubeTexturesToLoad: {
     name: string;
@@ -57,8 +50,8 @@ export default class AssetManager {
     this.cubeTexturesToLoad.push({ name, paths: paths.map(path => this.basePath + path) });
   }
 
-  public addTexture(name: string, path: string, opts?: AddTextureOptions): void {
-    this.texturesToLoad.push({ name, path: this.basePath + path, opts });
+  public addTexture(name: string, path: string): void {
+    this.texturesToLoad.push({ name, path: this.basePath + path });
   }
 
   public addModel(name: string, path: string, opts?: LoadModelOptions): void {
@@ -96,10 +89,6 @@ export default class AssetManager {
 
     const promisesTexture = this.texturesToLoad.map(async (texture) => {
       const result = await this.textureLoader.load(texture.path);
-      result.wrapS = texture.opts?.wrapS || RepeatWrapping;
-      result.wrapT = texture.opts?.wrapT || RepeatWrapping;
-      result.repeat.x = texture.opts?.repeat?.x || 1;
-      result.repeat.y = texture.opts?.repeat?.y || 1;
       this.textures[texture.name] = result;
     });
     const promisesCube = this.cubeTexturesToLoad.map(async (texture) => {

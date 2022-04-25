@@ -19,6 +19,7 @@ export interface TexturedMaterialOptions extends CommonMaterialOptions {
     aoMap?: string;
     bumpMap?: string;
   }
+  repeat?: { x: number, y: number };
 }
 
 export default class MaterialManager {

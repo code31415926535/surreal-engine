@@ -58,7 +58,7 @@
 - [x] Surreal Enity (not needed with new ECS)
 - [x] Add multi-texture material support
 - [ ] Kinetic object for collision purpouse
-- [ ] Advanced Texturing for material
+- [x] Advanced Texturing for material
 - [ ] Animation system
 
 ### v0.3
@@ -79,13 +79,13 @@
 - [ ] Simple platformer example
 - [ ] First person Camera
 - [ ] More advanced physics
+- [ ] Event System
+- [ ] Postprocessing
 
 ### Future
 
 - [ ] Plane geometry
-- [ ] Event System
 - [ ] Create Groups of Entities
-- [ ] Postprocessing
 - [ ] Particles
 - [ ] Follow Directional Light
 - [ ] Spotlight

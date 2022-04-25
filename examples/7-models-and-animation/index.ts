@@ -6,8 +6,8 @@ async function main() {
   await engine.init();
 
   engine.assets.setBasePath("/assets/");
-  engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
-  engine.assets.addTexture("floor@bump", "textures/floor_bump.png", { repeat: { x: 5, y: 5 } });
+  engine.assets.addTexture("floor", "textures/floor.png");
+  engine.assets.addTexture("floor@bump", "textures/floor_bump.png");
   engine.assets.addCubeTexture("skybox", [
     "textures/vz_techno_back.png",
     "textures/vz_techno_down.png",
@@ -27,7 +27,8 @@ async function main() {
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
-  engine.materials.addTexturedMaterial("floor", { texture: "floor" });
+  engine.materials.addTexturedMaterial("floor@square", { texture: "floor", repeat: { x: 5, y: 5 } });
+  engine.materials.addTexturedMaterial("floor@row", { texture: "floor", repeat: { x: 1, y: 5 } });
 
   // Lighting
   engine.creator.directionalLight({
@@ -46,11 +47,19 @@ async function main() {
     size: { x: 50, y: 1, z: 50 },
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial("floor"),
+    material: engine.materials.getMaterial("floor@square"),
     rigid: true,
     receiveShadow: true,
   });
-  // TODO: More ground with different texturing
+  engine.creator.box({
+    pos: { x: 0, y: 0, z: 50 },
+    size: { x: 10, y: 1, z: 50 },
+    mass: 0,
+    restitution: 0.3,
+    material: engine.materials.getMaterial("floor@row"),
+    rigid: true,
+    receiveShadow: true,
+  })
 
   engine.assets.getModel("character").position.set(0, 0.5, 0);
 

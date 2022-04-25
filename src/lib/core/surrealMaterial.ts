@@ -1,4 +1,4 @@
-import { Material, MeshPhongMaterial, Texture } from "three";
+import { Material, MeshPhongMaterial, RepeatWrapping, Texture } from "three";
 
 export interface SurrealMaterialOpts {
   type: 'real';
@@ -9,6 +9,7 @@ export interface SurrealMaterialOpts {
     aoMap?: Texture;
     bumpMap?: Texture;
   }
+  repeat?: { x: number, y: number };
   shininess?: number;
   reflectivity?: number;
   opacity?: number;
@@ -27,14 +28,26 @@ export default class SurrealMaterial {
       });
     } else {
       this.material = new MeshPhongMaterial({
-        map: opts.textures.map,
-        normalMap: opts.textures.normalMap,
-        aoMap: opts.textures.aoMap,
-        bumpMap: opts.textures.bumpMap,
+        map: this.cloneTexture(opts.textures.map, opts),
+        normalMap: this.cloneTexture(opts.textures.normalMap, opts),
+        aoMap: this.cloneTexture(opts.textures.aoMap, opts),
+        bumpMap: this.cloneTexture(opts.textures.bumpMap, opts),
         opacity: opts.opacity || 1,
         shininess: opts.shininess || 30,
         reflectivity: opts.reflectivity || 1,
       });
     }
+  }
+
+  private cloneTexture(texture: Texture | undefined, opts: SurrealMaterialOpts): Texture | undefined {
+    if (!texture) {
+      return undefined;
+    }
+    const clone = texture.clone();
+    clone.wrapS = RepeatWrapping;
+    clone.wrapT = RepeatWrapping;
+    clone.repeat.set(opts.repeat?.x || 1, opts.repeat?.y || 1);
+    clone.needsUpdate = true;
+    return clone;
   }
 }
