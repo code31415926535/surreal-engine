@@ -4,15 +4,15 @@ import {
 } from 'three';
 import Model from './components/model';
 import Body from './components/body';
-import EntityCreator from './entities';
+import EntityCreator from './managers/entityCreator';
 import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
 import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
 import StaticMotion from './components/staticMotion';
-import KeyboardMotion from './components/keyboardInput';
+import KeyboardMotion from './components/keyboardMotion';
 import KeyboardMovementSystem from './systems/keyboardMovementSystem';
-import Assets from './loaders';
+import AssetManager from './managers/AssetManager';
 import AmmoType from 'ammojs-typed';
 import FollowCameraSystem from './systems/followCameraSystem';
 import FollowCamera from './components/followCamera';
@@ -61,7 +61,7 @@ export default class Engine {
    * await engine.assets.load();
    * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
-  public assets!: Assets;
+  public assets!: AssetManager;
   public materials!: MaterialManager;
 
   private previousTime: number = 0;
@@ -114,7 +114,7 @@ export default class Engine {
       this.world.registerSystem(FollowCameraSystem, {});
     }
 
-    this.assets = new Assets();
+    this.assets = new AssetManager();
     this.creator = new EntityCreator(this.world, this.debug);
     this.materials = new MaterialManager(this.assets);
   }

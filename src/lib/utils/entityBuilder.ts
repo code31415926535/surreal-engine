@@ -13,8 +13,8 @@ import { Component, ComponentConstructor, Entity, World } from "ecsy";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
-import KeyboardInputManager from "../input/keyboardInputManager";
-import KeyboardMotion from "../components/keyboardInput";
+import KeyboardInputController from "../controllers/keyboardInputController";
+import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera, { FollowCameraSchema } from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 
@@ -79,7 +79,7 @@ export default class EntityBuilder {
 
   public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
     this.entity.addComponent(KeyboardMotion, {
-      value:  new KeyboardInputManager(),
+      value:  new KeyboardInputController(),
       speed: opts?.speed || 1,
       rotation: opts?.rotation || 1,
     });

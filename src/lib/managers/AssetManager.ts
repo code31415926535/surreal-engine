@@ -1,6 +1,6 @@
 import { AnimationClip, Group, LoadingManager, RepeatWrapping, Texture, Wrapping } from "three";
-import ModelLoader, { LoadModelOptions } from "./model";
-import TextureLoader from "./texture";
+import ModelLoader, { LoadModelOptions } from "../utils/model";
+import TextureLoader from "../utils/texture";
 
 export interface AddTextureOptions {
   wrapS?: Wrapping;
@@ -9,12 +9,10 @@ export interface AddTextureOptions {
 }
 
 /**
- * TODO: Move to managers
- * 
  * Asset manager class. It is responsible to load assets
  *  and store them in a single place.
  */
-export default class Assets {
+export default class AssetManager {
   private loadingManager: LoadingManager;
   private textureLoader: TextureLoader;
   private modelLoader: ModelLoader;

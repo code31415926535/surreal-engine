@@ -1,6 +1,6 @@
 import { World } from "ecsy";
 import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
-import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions } from "./builder";
+import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions } from "../utils/entityBuilder";
 
 interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
   rigid?: boolean;

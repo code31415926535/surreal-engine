@@ -1,5 +1,5 @@
 import SurrealMaterial from "../core/surrealMaterial";
-import Assets from "../loaders";
+import AssetManager from "./AssetManager";
 import colorNames from './css-color-names';
 
 interface CommonMaterialOptions {
@@ -24,7 +24,7 @@ export interface TexturedMaterialOptions extends CommonMaterialOptions {
 export default class MaterialManager {
   private materials: Map<string, SurrealMaterial> = new Map();
 
-  constructor(private assets: Assets) {
+  constructor(private assets: AssetManager) {
     Object.keys(colorNames).forEach((color) => {
       // @ts-ignore
       this.addPlainMaterial(color, { color: colorNames[color] });

@@ -1,5 +1,5 @@
 import { Component, Types } from "ecsy";
-import KeyboardInputManager from "../input/keyboardInputManager";
+import KeyboardInputManager from "../controllers/keyboardInputController";
 
 export interface KeyboardMotionSchema {
   value: KeyboardInputManager;

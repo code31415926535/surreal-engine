@@ -7,8 +7,7 @@ export type KeyboardInput = {
   shift: boolean;
 };
 
-// TODO: Move to controllers
-export default class KeyboardInputManager {
+export default class KeyboardInputController {
   public input: KeyboardInput;
   
   constructor() {

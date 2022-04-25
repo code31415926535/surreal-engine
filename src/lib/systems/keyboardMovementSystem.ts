@@ -1,6 +1,6 @@
 import { Quaternion, Vector3 } from "three";
 import Body, { BodySchema } from "../components/body";
-import KeyboardMotion, { KeyboardMotionSchema } from "../components/keyboardInput";
+import KeyboardMotion, { KeyboardMotionSchema } from "../components/keyboardMotion";
 import { getPosition, getQuaternion } from "../entityUtils";
 import SurrealSystem from "./surrealSystem";
 
