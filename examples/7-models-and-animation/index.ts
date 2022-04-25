@@ -59,9 +59,7 @@ async function main() {
     material: engine.materials.getMaterial("floor@row"),
     rigid: true,
     receiveShadow: true,
-  })
-
-  engine.assets.getModel("character").position.set(0, 0.5, 0);
+  });
 
   engine.creator.model({
     model: "knight_statue",
@@ -74,16 +72,11 @@ async function main() {
     pos: { x: -10, y: 0.5, z: 11 },
   });
 
+  // TODO: This does not work if copied
   // TODO: Model has to support collision box
   engine.creator.empty().withObject3D({
     obj: engine.assets.getModel("character"),
-  }).withRigidBody({
-    size: { x: 0.5, y: 0.5, z: 0.5 },
-    type: 'box',
-    mass: 1,
-    restitution: 0.3,
-    friction: 0.5,
-  });
+  }).withThirdPersonCamera().withKeyboardMotion();
 
   engine.start();
 }

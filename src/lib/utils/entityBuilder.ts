@@ -177,12 +177,17 @@ export default class EntityBuilder {
 
   private build3DModel = (opts: Model3DOptions): Object3D => {
     const { model, pos, quat, size } = opts;
-    const object = new Group();
-    object.add(model.clone());
-    object.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
-    object.quaternion.set(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1);
-    object.scale.set(size?.x || 1, size?.y || 1, size?.z || 1);
-    return object;
+    const copy = model.clone();
+    if (pos) {
+      copy.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
+    }
+    if (quat) {
+      copy.quaternion.set(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1);
+    }
+    if (size) {
+      copy.scale.set(size?.x || 1, size?.y || 1, size?.z || 1);
+    }
+    return copy;
   }
 
   private buildGeometry = (opts: ShapeModelOptions): BufferGeometry => {
