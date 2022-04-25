@@ -1,6 +1,5 @@
 import '../../src/style.css';
 import Engine from "../../src/lib/engine";
-import { MeshPhongMaterial } from 'three';
 
 // TODO: Complete example
 async function main() {
@@ -28,6 +27,7 @@ async function main() {
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
+  engine.materials.addTexturedMaterial("floor", { texture: "floor" });
 
   // Lighting
   engine.creator.directionalLight({
@@ -46,10 +46,7 @@ async function main() {
     size: { x: 50, y: 1, z: 50 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({
-      map: engine.assets.getTexture("floor"),
-      bumpMap: engine.assets.getTexture("floor@bump"),
-    }),
+    material: engine.materials.getMaterial("floor"),
     rigid: true,
     receiveShadow: true,
   });
