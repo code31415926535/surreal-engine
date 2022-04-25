@@ -98,7 +98,7 @@ export default class Engine {
     }
 
     this.assets = new AssetManager();
-    this.creator = new EntityCreator(this.ecs, this.debug);
+    this.creator = new EntityCreator(this.ecs, this.assets, this.debug);
     this.materials = new MaterialManager(this.assets);
   }
 

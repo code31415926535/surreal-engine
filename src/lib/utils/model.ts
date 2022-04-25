@@ -1,5 +1,6 @@
 import { AnimationClip, Group, LoadingManager, Mesh, MeshBasicMaterial } from "three";
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
 export interface LoadModelOptions {
   scale: number;
@@ -24,6 +25,9 @@ export default class ModelLoader {
     switch (extension) {
       case "fbx":
         return await this.loadFbx(path, opts);
+      case "gltf":
+      case "glb":
+        return await this.loadGltf(path, opts);
       default:
         throw new Error("Unsupported file type");
     }
@@ -43,5 +47,13 @@ export default class ModelLoader {
       }
     });
     return fbx;
+  }
+
+  private async loadGltf(path: string, opts?: LoadModelOptions): Promise<Group> {
+    const scale = opts?.scale || 1;
+    const loader = new GLTFLoader(this.manager);
+    const glb = await loader.loadAsync(path);
+    glb.scene.scale.set(scale, scale, scale);
+    return glb.scene;
   }
 }

@@ -53,16 +53,17 @@
 - [x] Merge cameras into a single system
 - [x] Refactor project to a cleaner structure
 - [x] Material configuration in builder
-- [ ] Use assets directly in entity creator
+- [x] Use assets directly in entity creator
 - [x] Better Entity Component System
 - [x] Surreal Enity (not needed with new ECS)
-- [ ] Add managers to surreal system
+- [x] Add multi-texture material support
+- [ ] Kinetic object for collision purpouse
+- [ ] Advanced Texturing for material
 - [ ] Animation system
 
 ### v0.3
 
-- [x] Add multi-texture material support
-- [ ] Kinetic object for collision purpouse
+- [ ] Add managers to surreal system
 - [ ] Text on screen
 - [ ] Fps meter
 - [ ] Loading indicator (using css)
@@ -72,22 +73,24 @@
 - [ ] Documentation
 - [ ] Better error handling
 
+### v0.4
+
+- [ ] Static Motion on Solid bodies
+- [ ] Simple platformer example
+- [ ] First person Camera
+- [ ] More advanced physics
+
 ### Future
 
 - [ ] Plane geometry
-- [ ] First person Camera
 - [ ] Event System
 - [ ] Create Groups of Entities
 - [ ] Postprocessing
 - [ ] Particles
-- [ ] More advanced physics
 - [ ] Follow Directional Light
 - [ ] Spotlight
 - [ ] RectAreaLight
 - [ ] HemisphericalLight
-- [ ] Predefined curves
-- [ ] All curve properties
-- [ ] Static Motion Reverse and PingPong
 - [ ] Heightmaps
 - [ ] Terrain generation
 - [ ] Editor

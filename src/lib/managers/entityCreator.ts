@@ -1,6 +1,7 @@
 import { Engine as ECSEngine } from 'tick-knock';
 import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
-import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions } from "../utils/entityBuilder";
+import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
+import AssetManager from './AssetManager';
 
 interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
   rigid?: boolean;
@@ -13,6 +14,10 @@ export interface SphereOptions extends Omit<ShapeOptions, "type" | "size"> {
 }
 
 export interface CylinderOptions extends Omit<ShapeOptions, "type"> {}
+
+export interface ModelOptions extends Omit<Model3DOptions, "model"> {
+  model: string;
+}
 
 export interface EtherealOptions {
   obj: Object3D;
@@ -49,10 +54,13 @@ export interface DirectionalLightOptions extends PointLightOptions {
  * and adding logic to entities.
  * 
  * @see https://en.wikipedia.org/wiki/Entity_component_system
- * @see https://ecsy.io/
  */
 export default class EntityCreator {
-  constructor(private ecs: ECSEngine, private debug: boolean) {}
+  constructor(
+    private ecs: ECSEngine,
+    private assets: AssetManager,
+    private debug: boolean,
+  ) {}
 
   /**
    * Creates an emtpy entity without any components.
@@ -69,6 +77,14 @@ export default class EntityCreator {
    */
   ethereal(opts: Object3DOptions): EntityBuilder {
     return new EntityBuilder(this.ecs).withObject3D({ obj: opts.obj });
+  }
+
+  model(opts: ModelOptions): EntityBuilder {
+    const obj = this.assets.getModel(opts.model);
+    return new EntityBuilder(this.ecs).with3DModel({
+      ...opts,
+      model: obj,
+    });
   }
 
   /**

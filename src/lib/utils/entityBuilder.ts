@@ -11,6 +11,7 @@ import {
   CurvePath,
   SphereGeometry,
   Vector3,
+  Group,
 } from "three";
 import Ammo from "ammojs-typed";
 import Model from "../components/model";
@@ -20,6 +21,8 @@ import KeyboardInputController from "../controllers/keyboardInputController";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
+
+// TODO: Pos Quat Size unify
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -39,6 +42,15 @@ export interface ShapeModelOptions {
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
   material: SurrealMaterial;
+  castShadow?: boolean;
+  receiveShadow?: boolean;
+}
+
+export interface Model3DOptions {
+  model: Group;
+  pos?: { x: number; y: number; z: number };
+  quat?: { x: number; y: number; z: number; w: number };
+  size?: { x: number; y: number; z: number };
   castShadow?: boolean;
   receiveShadow?: boolean;
 }
@@ -78,6 +90,11 @@ export default class EntityBuilder {
 
   public withShapeModel = (opts: ShapeModelOptions): EntityBuilder => {
     this.entity.addComponent(new Model(this.buildShapeModel(opts)));
+    return this;
+  }
+
+  public with3DModel = (opts: Model3DOptions): EntityBuilder => {
+    this.entity.addComponent(new Model(this.build3DModel(opts)));
     return this;
   }
 
@@ -156,6 +173,16 @@ export default class EntityBuilder {
     mesh.quaternion.set(opts.quat?.x || 0, opts.quat?.y || 0, opts.quat?.z || 0, opts.quat?.w || 1);
   
     return mesh;
+  }
+
+  private build3DModel = (opts: Model3DOptions): Object3D => {
+    const { model, pos, quat, size } = opts;
+    const object = new Group();
+    object.add(model.clone());
+    object.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
+    object.quaternion.set(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1);
+    object.scale.set(size?.x || 1, size?.y || 1, size?.z || 1);
+    return object;
   }
 
   private buildGeometry = (opts: ShapeModelOptions): BufferGeometry => {

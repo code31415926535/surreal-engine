@@ -1,8 +1,6 @@
 import '../../src/style.css';
 import Engine from "../../src/lib/engine";
 import { MeshPhongMaterial } from 'three';
-import { Component, Types } from 'ecsy';
-import SurrealSystem from '../../src/lib/systems/surrealSystem';
 
 interface BreakableSchema {
   breaksIn: number;

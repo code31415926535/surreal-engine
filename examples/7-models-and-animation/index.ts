@@ -1,9 +1,8 @@
 import '../../src/style.css';
 import Engine from "../../src/lib/engine";
 
-// TODO: Complete example
 async function main() {
-  const engine = new Engine('#demo');
+  const engine = new Engine('#demo', { debug: true });
   await engine.init();
 
   engine.assets.setBasePath("/assets/");
@@ -17,6 +16,7 @@ async function main() {
     "textures/vz_techno_right.png",
     "textures/vz_techno_up.png",
   ]);
+  engine.assets.addModel("knight_statue", "models/knight_statue.glb", { scale: 2 });
   engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.03 });
   engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
 
@@ -50,12 +50,22 @@ async function main() {
     rigid: true,
     receiveShadow: true,
   });
+  // TODO: More ground with different texturing
 
   engine.assets.getModel("character").position.set(0, 0.5, 0);
 
-  // TODO: Add cretor function for entity with model
-  // TODO: Model has to support changing position, rotation and scale
-  // TODO: Model has to support collision detection
+  engine.creator.model({
+    model: "knight_statue",
+    size: { x: 1, y: 1, z: 1 },
+    pos: { x: 10, y: 0.5, z: 11 },
+  });
+  engine.creator.model({
+    model: "knight_statue",
+    size: { x: 1.2, y: 1.5, z: 1 },
+    pos: { x: -10, y: 0.5, z: 11 },
+  });
+
+  // TODO: Model has to support collision box
   engine.creator.empty().withObject3D({
     obj: engine.assets.getModel("character"),
   }).withRigidBody({
