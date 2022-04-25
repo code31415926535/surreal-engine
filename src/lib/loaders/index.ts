@@ -71,6 +71,10 @@ export default class Assets {
     this.animationsToLoad.push({ name, path: this.basePath + path, opts });
   }
 
+  public isTexture(name: string): boolean {
+    return !!this.textures[name];
+  }
+
   public getTexture(name: string): Texture {
     return this.textures[name];
   }

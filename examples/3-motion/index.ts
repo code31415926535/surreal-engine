@@ -1,6 +1,6 @@
 import '../../src/style.css';
 import Engine from "../../src/lib";
-import { CurvePath, LineCurve3, MeshPhongMaterial, Vector3 } from 'three';
+import { CurvePath, LineCurve3, Vector3 } from 'three';
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -16,7 +16,7 @@ async function main() {
     size: { x: 25, y: 1, z: 25 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xcc0000 }),
+    material: engine.materials.getMaterial('red'),
     rigid: true,
     receiveShadow: true,
   });
@@ -26,7 +26,7 @@ async function main() {
     pos: { x: 0, y: 10, z: 0 },
     mass: 0.5,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
   });

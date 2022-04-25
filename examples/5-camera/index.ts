@@ -1,6 +1,5 @@
 import '../../src/style.css';
 import Engine from "../../src/lib";
-import { MeshPhongMaterial } from 'three';
 
 async function main() {
   const engine = new Engine('#demo');
@@ -24,7 +23,7 @@ async function main() {
       size: { x: size, y: 1, z: size },
       mass: 0,
       restitution: 0.3,
-      material: new MeshPhongMaterial({ color: 0xcc0000 }),
+      material: engine.materials.getMaterial('red'),
       rigid: true,
       receiveShadow: true,
     });
@@ -35,7 +34,7 @@ async function main() {
     pos: { x: -10 - size / 2 - 10 * (size + 3), y: -100, z: 0 },
     mass: 0,
     restitution: 0.9,
-    material: new MeshPhongMaterial({ color: 0x0000cc }),
+    material: engine.materials.getMaterial('blue'),
     rigid: true,
     receiveShadow: true,
   });
@@ -44,7 +43,7 @@ async function main() {
     size: { x: 20, y: 1, z: 80 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xcc0000 }),
+    material: engine.materials.getMaterial('red'),
     rigid: true,
     receiveShadow: true,
   });
@@ -54,7 +53,7 @@ async function main() {
     pos: { x: 0, y: 10, z: 0 },
     mass: 0.5,
     restitution: 0.1,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion({
@@ -67,7 +66,7 @@ async function main() {
     pos: { x: 5, y: 10, z: 5 },
     mass: 0.5,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0x0000ff }),
+    material: engine.materials.getMaterial('blue'),
     rigid: true,
     castShadow: true,
   });

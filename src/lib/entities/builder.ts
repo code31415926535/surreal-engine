@@ -2,9 +2,7 @@ import {
   BoxGeometry,
   BufferGeometry,
   CylinderGeometry,
-  Material,
   Mesh,
-  MeshPhongMaterial,
   Object3D,
   CurvePath,
   SphereGeometry,
@@ -18,6 +16,7 @@ import StaticMotion from "../components/staticMotion";
 import KeyboardInputManager from "../input/keyboardInputManager";
 import KeyboardMotion from "../components/keyboardInput";
 import FollowCamera, { FollowCameraSchema } from '../components/followCamera';
+import SurrealMaterial from "../core/surrealMaterial";
 
 export interface RigidBodyOptions {
   type: 'box' | 'sphere' | 'cylinder';
@@ -36,7 +35,7 @@ export interface ShapeModelOptions {
   size: { x: number; y: number; z: number };
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
-  material?: Material;
+  material: SurrealMaterial;
   castShadow?: boolean;
   receiveShadow?: boolean;
 }
@@ -154,8 +153,8 @@ export default class EntityBuilder {
 
   private buildShapeModel = (opts: ShapeModelOptions) => {
     const geometry = this.buildGeometry(opts);
-    const material = opts.material || new MeshPhongMaterial({ color: 0xffffff });
-    const mesh = new Mesh(geometry, material);
+    const surrealMaterial = opts.material;
+    const mesh = new Mesh(geometry, surrealMaterial.material);
     mesh.castShadow = opts.castShadow || false;
     mesh.receiveShadow = opts.receiveShadow || false;
     

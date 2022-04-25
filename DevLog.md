@@ -50,9 +50,9 @@
 
 ### v0.2
 
-- [ ] Merge cameras into a single system
+- [x] Merge cameras into a single system
 - [ ] Refactor project to a cleaner structure
-- [ ] Material configuration in builder
+- [x] Material configuration in builder
 - [ ] Use assets directly in entity creator
 - [ ] Better Entity Component System
 - [ ] Surreal Enity
@@ -61,7 +61,7 @@
 
 ### v0.3
 
-- [ ] Add multi-texture material support
+- [x] Add multi-texture material support
 - [ ] Kinetic object for collision purpouse
 - [ ] Text on screen
 - [ ] Fps meter
@@ -70,6 +70,7 @@
 - [ ] Performance Monitoring
 - [ ] Configurable window size
 - [ ] Documentation
+- [ ] Better error handling
 
 ### Future
 
@@ -92,3 +93,4 @@
 - [ ] Editor
 - [ ] UI System
 - [ ] Trigger Box
+- [ ] Levels

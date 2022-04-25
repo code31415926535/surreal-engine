@@ -1,6 +1,5 @@
 import '../../src/style.css';
 import Engine from "../../src/lib";
-import { MeshPhongMaterial } from 'three';
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -16,7 +15,7 @@ async function main() {
     size: { x: 25, y: 1, z: 25 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xcc0000 }),
+    material: engine.materials.getMaterial('red'),
     rigid: true,
     receiveShadow: true,
   });
@@ -26,11 +25,12 @@ async function main() {
     pos: { x: 0, y: 10, z: 0 },
     mass: 0.5,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion();
 
+  engine.materials.addPlainMaterial('box', { color: '#333333' });
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 8; j++) {
       engine.creator.box({
@@ -40,7 +40,7 @@ async function main() {
         restitution: 0.1,
         rigid: true,
         castShadow: true,
-        material: new MeshPhongMaterial({ color: 0x333333 }),
+        material: engine.materials.getMaterial('box'),
       });
     }
   }
@@ -53,7 +53,7 @@ async function main() {
     friction: 0.5,
     rigid: true,
     castShadow: true,
-    material: new MeshPhongMaterial({ color: 0x333333 }),
+    material: engine.materials.getMaterial('box'),
     linearDamping: 0.2,
     angularDamping: 0.2,
   });

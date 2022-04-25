@@ -1,6 +1,5 @@
 import '../../src/style.css';
 import Engine from "../../src/lib";
-import { MeshPhongMaterial } from 'three';
 
 async function main() {
   const engine = new Engine('#demo');
@@ -28,6 +27,17 @@ async function main() {
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
+  engine.materials.addTexturedMaterial("floor", { texture: "floor" });
+  engine.materials.addTexturedMaterial("box", {
+    texture: {
+      map: "box@diffuse",
+      normalMap: "box@normal",
+      aoMap: "box@ao",
+      bumpMap: "box@bump",
+    },
+    shininess: 50,
+    reflectivity: 0.8,
+  });
 
   // Lighting
   engine.creator.directionalLight({
@@ -46,10 +56,7 @@ async function main() {
     size: { x: 50, y: 1, z: 50 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({
-      map: engine.assets.getTexture("floor"),
-      bumpMap: engine.assets.getTexture("floor@bump"),
-    }),
+    material: engine.materials.getMaterial("floor"),
     rigid: true,
     receiveShadow: true,
   });
@@ -60,19 +67,10 @@ async function main() {
     pos: { x: 10, y: 10, z: 10 },
     mass: 0.5,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
-  }).withKeyboardMotion().withFollowCamera();
-
-  const material = new MeshPhongMaterial({
-    map: engine.assets.getTexture("box@diffuse"),
-    normalMap: engine.assets.getTexture("box@normal"),
-    bumpMap: engine.assets.getTexture("box@bump"),
-    aoMap: engine.assets.getTexture("box@ao"),
-    shininess: 50,
-    reflectivity: 0.8,
-  });
+  }).withKeyboardMotion().withOffsetCamera();
 
   // Some Boxes
   for (let i = 0; i < 3; i++) {
@@ -85,7 +83,7 @@ async function main() {
           restitution: 0.1,
           rigid: true,
           castShadow: true,
-          material,
+          material: engine.materials.getMaterial('box'),
         });
       }
     }

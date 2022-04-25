@@ -19,6 +19,7 @@ import FollowCamera from './components/followCamera';
 import SurrealSystem from './systems/surrealSystem';
 // @ts-ignore
 import initAmmo from './ammo.js';
+import MaterialManager from './managers/MaterialManager';
 
 declare global {
   interface Window {
@@ -61,6 +62,7 @@ export default class Engine {
    * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
   public assets!: Assets;
+  public materials!: MaterialManager;
 
   private previousTime: number = 0;
   private world!: World;
@@ -114,6 +116,7 @@ export default class Engine {
 
     this.assets = new Assets();
     this.creator = new EntityCreator(this.world, this.debug);
+    this.materials = new MaterialManager(this.assets);
   }
 
   /**

@@ -1,6 +1,5 @@
 import '../../src/style.css';
 import Engine from "../../src/lib";
-import { MeshPhongMaterial } from 'three';
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -17,6 +16,7 @@ async function main() {
     size: { x: 25, y: 1, z: 25 },
     mass: 0,
     restitution: 0.3,
+    material: engine.materials.getMaterial('white'),
     rigid: true,
     receiveShadow: true,
   });
@@ -26,7 +26,7 @@ async function main() {
     pos: { x: 0, y: 10, z: 0 },
     mass: 0.5,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('magenta'),
     rigid: true,
     castShadow: true,
   });
@@ -36,7 +36,7 @@ async function main() {
     pos: {x: 0.5, y: 15, z: 0},
     mass: 1,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0x00ffcc }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
   });
@@ -46,7 +46,7 @@ async function main() {
     pos: {x: 0, y: 20, z: 0},
     mass: 1,
     restitution: 0.3,
-    material: new MeshPhongMaterial({ color: 0xccff00 }),
+    material: engine.materials.getMaterial('blue'),
     rigid: true,
     castShadow: true,
   });
