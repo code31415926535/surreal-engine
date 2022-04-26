@@ -12,15 +12,18 @@ import {
   SphereGeometry,
   Vector3,
   Group,
+  AnimationClip,
 } from "three";
 import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
 import KeyboardInputController from "../controllers/keyboardInputController";
+import AnimationController from "../controllers/animationController";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
+import Animation from '../components/animation';
 
 // TODO: Pos Quat Size unify
 
@@ -53,6 +56,14 @@ export interface Model3DOptions {
   size?: { x: number; y: number; z: number };
   castShadow?: boolean;
   receiveShadow?: boolean;
+}
+
+export interface AnimationOptions {
+  initial: string;
+  clips: [{
+    name: string;
+    clip: AnimationClip;
+  }]
 }
 
 export interface Object3DOptions {
@@ -95,6 +106,16 @@ export default class EntityBuilder {
 
   public with3DModel = (opts: Model3DOptions): EntityBuilder => {
     this.entity.addComponent(new Model(this.build3DModel(opts)));
+    return this;
+  }
+
+  public withAnimation = (opts: AnimationOptions): EntityBuilder => {
+    const ctrl = new AnimationController(this.entity);
+    opts.clips.forEach(clip => {
+      ctrl.addAnimation(clip.name, clip.clip);
+    });
+    ctrl.setState(opts.initial);
+    this.entity.addComponent(new Animation(ctrl));
     return this;
   }
 

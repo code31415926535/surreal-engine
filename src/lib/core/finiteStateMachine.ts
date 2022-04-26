@@ -5,22 +5,19 @@ export abstract class State<T> {
     this.name = name;
   }
   abstract enter: (prevState: State<T> | null) => void;
-  abstract exit: () => void;
-  abstract update: (fsm: FiniteStateMachine<T>) => void;
+  abstract update: (fsm: FiniteStateMachine<T>, delta: number) => void;
 }
 
-type StateConstructor<T> = new (data: T, name: string) => State<T>;
-
 export default class FiniteStateMachine<T> {
-  private states: { [key: string]: StateConstructor<T> };
+  private states: { [key: string]: State<T> };
   public currentState: State<T> | null;
 
-  constructor(private data: T) {
+  constructor() {
     this.states = {};
     this.currentState = null;
   }
 
-  public addState(name: string, state: StateConstructor<T>): void {
+  public addState(name: string, state: State<T>): void {
     this.states[name] = state;
   }
 
@@ -30,17 +27,15 @@ export default class FiniteStateMachine<T> {
       if (prevState.name === name) {
         return;
       }
-      prevState.exit();
     }
 
-    const state = new this.states[name](this.data, name);
-    this.currentState = state;
-    state.enter(prevState);
+    this.currentState = this.states[name];
+    this.currentState.enter(prevState);
   }
 
-  public update(): void {
+  public update(delta: number): void {
     if (this.currentState) {
-      this.currentState.update(this);
+      this.currentState.update(this, delta);
     }
   }
 }

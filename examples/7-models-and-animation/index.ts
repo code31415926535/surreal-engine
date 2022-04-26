@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib/engine";
+import Engine from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo', { debug: true });
@@ -72,11 +72,20 @@ async function main() {
     pos: { x: -10, y: 0.5, z: 11 },
   });
 
-  // TODO: This does not work if copied
+  // TODO: Some bugs with this model. Fix them.
   // TODO: Model has to support collision box
   engine.creator.empty().withObject3D({
     obj: engine.assets.getModel("character"),
-  }).withThirdPersonCamera().withKeyboardMotion();
+  })
+    .withThirdPersonCamera()
+    .withKeyboardMotion()
+    .withAnimation({
+      initial: "idle",
+      clips: [{
+        name: "idle",
+        clip: engine.assets.getAnimation("character@idle"),
+      }]
+    });
 
   engine.start();
 }

@@ -16,6 +16,7 @@ import FollowCameraSystem from './systems/followCameraSystem';
 // @ts-ignore
 import initAmmo from './ammo.js';
 import MaterialManager from './managers/MaterialManager';
+import AnimationSystem from './systems/animationSystem';
 
 declare global {
   interface Window {
@@ -96,6 +97,7 @@ export default class Engine {
     if (!this.debug) {
       this.ecs.addSystem(new FollowCameraSystem(), 6);
     }
+    this.ecs.addSystem(new AnimationSystem(), 7);
 
     this.assets = new AssetManager();
     this.creator = new EntityCreator(this.ecs, this.assets, this.debug);

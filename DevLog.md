@@ -57,21 +57,22 @@
 - [x] Better Entity Component System
 - [x] Surreal Enity (not needed with new ECS)
 - [x] Add multi-texture material support
-- [ ] Kinetic object for collision purpouse
+- [ ] Text on screen
+- [ ] Loading indicator (using css)
 - [x] Advanced Texturing for material
-- [ ] Animation system
+- [x] Basic Animations
 
 ### v0.3
 
-- [ ] Add managers to surreal system
-- [ ] Text on screen
 - [ ] Fps meter
-- [ ] Loading indicator (using css)
 - [ ] Better debugging
+- [ ] Kinetic object for collision purpouse
+- [ ] Fix Fbx bugs
 - [ ] Performance Monitoring
 - [ ] Configurable window size
 - [ ] Documentation
 - [ ] Better error handling
+- [ ] Advanced Animation
 
 ### v0.4
 
