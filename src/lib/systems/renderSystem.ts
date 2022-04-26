@@ -46,12 +46,15 @@ export default class RenderSystem extends ReactionSystem {
   public camera!: PerspectiveCamera | OrthographicCamera;
   private debug: boolean = false;
 
-  constructor(canvas: string, debug: boolean, antialias: boolean) {
+  constructor(containerQuery: string, debug: boolean, antialias: boolean) {
     super(new Query(entity => entity.hasComponent(Model)));
     this.debug = debug;
+    const canvas = document.createElement("canvas");
+    canvas.id = "surreal-engine-canvas";
+    document.querySelector(containerQuery)!.appendChild(canvas);
     this.renderer = new WebGLRenderer({
       antialias,
-      canvas: document.querySelector(canvas)!,
+      canvas,
     });
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(window.innerWidth, window.innerHeight);

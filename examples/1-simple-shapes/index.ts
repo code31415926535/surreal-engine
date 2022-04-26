@@ -1,11 +1,22 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import Engine, { CreateTextWidget } from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo', {
     debug: true,
   });
   await engine.init();
+
+  engine.creator.widget(CreateTextWidget({
+    text: '1 - Simple Shapes',
+    style: {
+      marginTop: 10,
+      marginLeft: 10,
+      pointerEvents: 'none',
+      color: 'white',
+      fontSize: 24,
+    }
+  }));
 
   engine.creator.ambientLight({
     color: '#ffffff',

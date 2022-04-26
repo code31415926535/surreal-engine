@@ -57,7 +57,7 @@
 - [x] Better Entity Component System
 - [x] Surreal Enity (not needed with new ECS)
 - [x] Add multi-texture material support
-- [ ] Text on screen
+- [x] Text on screen
 - [ ] Loading indicator (using css)
 - [x] Advanced Texturing for material
 - [x] Basic Animations

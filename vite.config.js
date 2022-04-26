@@ -11,5 +11,12 @@ export default defineConfig({
       name: "SurrealEngine",
       fileName: (format) => `index.${format}.js`,
     },
+    rollupOptions: {
+      external: ['react', 'react-dom'],
+      global: {
+        react: 'React',
+        'react-dom': 'ReactDOM',
+      }
+    }
   },
 });

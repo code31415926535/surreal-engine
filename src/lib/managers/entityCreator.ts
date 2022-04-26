@@ -2,6 +2,8 @@ import { Engine as ECSEngine } from 'tick-knock';
 import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
 import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
 import AssetManager from './AssetManager';
+import Widget from '../components/widget';
+import { nanoid } from 'nanoid';
 
 interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
   rigid?: boolean;
@@ -79,6 +81,24 @@ export default class EntityCreator {
     return new EntityBuilder(this.ecs).withObject3D({ obj: opts.obj });
   }
 
+  /**
+   * Creates a widget entity. A widget is a building block used
+   * to create the UI.
+   * 
+   * @param opts {@link JSX.Element}
+   * @returns {@link EntityBuilder}
+   */
+  widget(elem: JSX.Element): EntityBuilder {
+    return new EntityBuilder(this.ecs).with(new Widget(nanoid(), elem));
+  }
+
+  /**
+   * Creates an entity from a 3D model. **opts.model** is the name of
+   * the model in the asset manager.
+   * 
+   * @param opts {@link ModelOptions}
+   * @returns {@link EntityBuilder}
+   */
   model(opts: ModelOptions): EntityBuilder {
     const obj = this.assets.getModel(opts.model);
     return new EntityBuilder(this.ecs).with3DModel({

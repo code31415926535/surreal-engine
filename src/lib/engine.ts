@@ -17,6 +17,7 @@ import FollowCameraSystem from './systems/followCameraSystem';
 import initAmmo from './ammo.js';
 import MaterialManager from './managers/MaterialManager';
 import AnimationSystem from './systems/animationSystem';
+import WidgetSystem from './systems/widgetSystem';
 
 declare global {
   interface Window {
@@ -69,7 +70,7 @@ export default class Engine {
   private gravity: { x: number; y: number; z: number; };
   private antialias: boolean;
 
-  constructor(private canvas: string, opts?: EngineOpts) {
+  constructor(private containerQuery: string, opts?: EngineOpts) {
     if (! WebGLRenderer) {
       throw new Error('WebGL is not supported');
     }
@@ -87,7 +88,7 @@ export default class Engine {
   public async init() {
     window.Ammo = await initAmmo();
     this.ecs = new ECSEngine();
-    this.ecs.addSystem(new RenderSystem(this.canvas, this.debug, this.antialias), 1);
+    this.ecs.addSystem(new RenderSystem(this.containerQuery, this.debug, this.antialias), 1);
     if (this.physics) {
       this.ecs.addSystem(new PhysicsSystem(this.gravity), 2);
       this.ecs.addSystem(new PhysicsRendererSyncSystem(), 3);
@@ -98,6 +99,7 @@ export default class Engine {
       this.ecs.addSystem(new FollowCameraSystem(), 6);
     }
     this.ecs.addSystem(new AnimationSystem(), 7);
+    this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
 
     this.assets = new AssetManager();
     this.creator = new EntityCreator(this.ecs, this.assets, this.debug);
