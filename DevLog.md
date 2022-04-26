@@ -61,6 +61,7 @@
 - [ ] Loading indicator (using css)
 - [x] Advanced Texturing for material
 - [x] Basic Animations
+- [ ] JSX
 
 ### v0.3
 
@@ -98,3 +99,4 @@
 - [ ] UI System
 - [ ] Trigger Box
 - [ ] Levels
+- [ ] Toggle visibility for widget

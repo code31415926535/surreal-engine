@@ -19,10 +19,7 @@ async function main() {
   engine.assets.addModel("knight_statue", "models/knight_statue.glb", { scale: 2 });
   engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.03 });
   engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
-
-  await engine.assets.load((progress) => {
-    console.log(`Loading: ${progress * 100}%`);
-  });
+  await engine.assets.load();
 
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),

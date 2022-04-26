@@ -1,35 +1,24 @@
 import '../../src/style.css';
 import Engine from "../../src/lib/engine";
-import { MeshPhongMaterial } from 'three';
-
-interface BreakableSchema {
-  breaksIn: number;
-}
-
-class Breakable extends Component<BreakableSchema> {}
-
-Breakable.schema = {
-  breaksIn: { type: Types.Number, default: 1000 },
-}
 
 // TODO: Improve breakable system by adding a "break" event
-class BreakableSystem extends SurrealSystem {
-  static queries = {
-    breakables: {
-      components: [Breakable],
-    }
-  }
+// class BreakableSystem extends SurrealSystem {
+//   static queries = {
+//     breakables: {
+//       components: [Breakable],
+//     }
+//   }
 
-  execute(delta: number) {
-    this.queries.breakables.results.forEach(entity => {
-      const breakable = entity.getMutableComponent(Breakable) as any as BreakableSchema;
-      breakable.breaksIn -= delta;
-      if (breakable.breaksIn <= 0) {
-        entity.removeAllComponents();
-      }
-    });
-  }
-}
+//   execute(delta: number) {
+//     this.queries.breakables.results.forEach(entity => {
+//       const breakable = entity.getMutableComponent(Breakable) as any as BreakableSchema;
+//       breakable.breaksIn -= delta;
+//       if (breakable.breaksIn <= 0) {
+//         entity.removeAllComponents();
+//       }
+//     });
+//   }
+// }
 
 // TODO: Complete example
 async function main() {
@@ -37,8 +26,8 @@ async function main() {
   await engine.init();
 
   engine.assets.setBasePath("/assets/");
-  engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
-  engine.assets.addTexture("floor@bump", "textures/floor_bump.png", { repeat: { x: 5, y: 5 } });
+  engine.assets.addTexture("floor", "textures/floor.png");
+  engine.assets.addTexture("floor@bump", "textures/floor_bump.png");
   engine.assets.addCubeTexture("skybox", [
     "textures/vz_techno_back.png",
     "textures/vz_techno_down.png",
@@ -50,16 +39,13 @@ async function main() {
   // engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.03 });
   // engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
 
-  await engine.assets.load((progress) => {
-    console.log(`Loading: ${progress * 100}%`);
-  });
+  await engine.assets.load();
+  engine.materials.addTexturedMaterial("floor@square", { texture: "floor", repeat: { x: 5, y: 5 } });
+  engine.materials.addTexturedMaterial("floor@single", { texture: "floor", repeat: { x: 1, y: 1 } });
 
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
   });
-
-  engine.registerComponent(Breakable);
-  engine.registerSystem(BreakableSystem);
 
   // Lighting
   engine.creator.directionalLight({
@@ -78,27 +64,20 @@ async function main() {
     size: { x: 50, y: 1, z: 50 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({
-      map: engine.assets.getTexture("floor"),
-      bumpMap: engine.assets.getTexture("floor@bump"),
-    }),
+    material: engine.materials.getMaterial("floor@square"),
     rigid: true,
     receiveShadow: true,
   });
 
-  // TODO: make texture look nice here
   engine.creator.box({
     size: { x: 5, y: 5, z: 5 },
     pos: { x: 0, y: -1, z: 29.5 },
     mass: 0,
-    material: new MeshPhongMaterial({
-      map: engine.assets.getTexture("floor"),
-      bumpMap: engine.assets.getTexture("floor@bump"),
-    }),
+    material: engine.materials.getMaterial("floor@single"),
     friction: 0.9,
     rigid: true,
     receiveShadow: true,
-  }).with(Breakable, { breaksIn: 6000 });
+  });
 
   // Ground Target
   engine.creator.box({
@@ -106,10 +85,7 @@ async function main() {
     pos: { x: 0, y: 1, z: 127.5 },
     mass: 0,
     restitution: 0.3,
-    material: new MeshPhongMaterial({
-      map: engine.assets.getTexture("floor"),
-      bumpMap: engine.assets.getTexture("floor@bump"),
-    }),
+    material: engine.materials.getMaterial("floor@square"),
     rigid: true,
     receiveShadow: true,
   });
@@ -121,7 +97,7 @@ async function main() {
     mass: 0.5,
     restitution: 0.3,
     friction: 0.9,
-    material: new MeshPhongMaterial({ color: 0xffcc00 }),
+    material: engine.materials.getMaterial('yellow'),
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion()

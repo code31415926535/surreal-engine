@@ -18,6 +18,7 @@ import initAmmo from './ammo.js';
 import MaterialManager from './managers/MaterialManager';
 import AnimationSystem from './systems/animationSystem';
 import WidgetSystem from './systems/widgetSystem';
+import { ProgressWidget } from './widgets';
 
 declare global {
   interface Window {
@@ -50,6 +51,7 @@ export default class Engine {
    * });
    */
   public creator!: EntityCreator;
+
   /**
    * Asset manager class. Use this to register and manage assets.
    * 
@@ -59,7 +61,14 @@ export default class Engine {
    * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
   public assets!: AssetManager;
-  // TODO: Document
+
+  /**
+   * Material manager class. Use this to register and manage materials.
+   * 
+   * @example
+   * engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 5, y: 5 } });
+   * const material = engine.materials.getMaterial("floor");
+   */
   public materials!: MaterialManager;
 
   private previousTime: number = 0;
@@ -101,7 +110,15 @@ export default class Engine {
     this.ecs.addSystem(new AnimationSystem(), 7);
     this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
 
-    this.assets = new AssetManager();
+    let widgetId = '';
+    this.assets = new AssetManager((percentage) => {
+      if (percentage === 0) {
+        widgetId = this.creator.widget(ProgressWidget({ percentage }));
+      } else {
+        // TODO: This should be entity manager
+        this.creator.updateWidget(widgetId, { percentage });
+      }
+    });
     this.creator = new EntityCreator(this.ecs, this.assets, this.debug);
     this.materials = new MaterialManager(this.assets);
   }

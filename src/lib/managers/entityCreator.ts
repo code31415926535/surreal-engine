@@ -85,11 +85,13 @@ export default class EntityCreator {
    * Creates a widget entity. A widget is a building block used
    * to create the UI.
    * 
-   * @param opts {@link JSX.Element}
-   * @returns {@link EntityBuilder}
+   * @param opts {@link any}
+   * @returns id of the widget
    */
-  widget(elem: JSX.Element): EntityBuilder {
-    return new EntityBuilder(this.ecs).with(new Widget(nanoid(), elem));
+  widget(elem: any): string {
+    const id = nanoid();
+    new EntityBuilder(this.ecs).with(new Widget(id, elem));
+    return id;
   }
 
   /**

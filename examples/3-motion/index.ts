@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import Engine, { InfoWidget } from "../../src/lib";
 import { CurvePath, LineCurve3, Vector3 } from 'three';
 
 async function main() {
@@ -11,6 +11,11 @@ async function main() {
   engine.setBackground({
     color: "#252525",
   });
+
+  engine.creator.widget(new InfoWidget({
+    title: '3 - Motion',
+    text: 'This feature is still work in progress and is subject to change.',
+  }));
 
   engine.creator.box({
     size: { x: 25, y: 1, z: 25 },

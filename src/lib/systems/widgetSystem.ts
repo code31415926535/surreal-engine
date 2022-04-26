@@ -1,4 +1,4 @@
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { EntitySnapshot, Query, ReactionSystem } from "tick-knock";
 import Widget from "../components/widget";
 import "../widgets/Widget.css";
@@ -17,6 +17,7 @@ export default class WidgetSystem extends ReactionSystem {
     element.id = widget.id;
     element.className = "surreal-engine-widget";
     this.container.appendChild(element);
-    ReactDOM.render(widget.root, element);
+    // TODO: Potential memory leak here
+    createRoot(element).render(widget.root);
   }
 }

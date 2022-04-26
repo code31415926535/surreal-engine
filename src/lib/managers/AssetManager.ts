@@ -35,7 +35,7 @@ export default class AssetManager {
   private models: { [name: string]: Group } = {};
   private animations: { [name: string]: AnimationClip } = {};
 
-  constructor() {
+  constructor(private onProgress: (progress: number) => void) {
     this.loadingManager = new LoadingManager();
     this.textureLoader = new TextureLoader(this.loadingManager);
     this.modelLoader = new ModelLoader(this.loadingManager);
@@ -78,13 +78,16 @@ export default class AssetManager {
     return this.animations[name];
   }
 
-  public async load(
-    onProgress?: (progress: number) => void,
-  ): Promise<void> {
-    if (onProgress) {
-      this.loadingManager.onProgress = (_, loaded, total) => {
-        onProgress(loaded / total);
-      }
+  /**
+   * Loads all assets and returns a promise that resolves when all assets are loaded.
+   * This should always be called after all assets are added.
+   * 
+   * @returns {Promise<void>}
+   */
+  public async load(): Promise<void> {
+    this.loadingManager.onStart = () => this.onProgress(0);
+    this.loadingManager.onProgress = (_, loaded, total) => {
+      this.onProgress(loaded / total);
     }
 
     const promisesTexture = this.texturesToLoad.map(async (texture) => {

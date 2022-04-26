@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine, { CreateTextWidget } from "../../src/lib";
+import Engine, { InfoWidget } from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -7,15 +7,9 @@ async function main() {
   });
   await engine.init();
 
-  engine.creator.widget(CreateTextWidget({
-    text: '1 - Simple Shapes',
-    style: {
-      marginTop: 10,
-      marginLeft: 10,
-      pointerEvents: 'none',
-      color: 'white',
-      fontSize: 24,
-    }
+  engine.creator.widget(InfoWidget({
+    title: '1 - Simple Shapes',
+    text: 'This is a simple example of how to create simple shapes.',
   }));
 
   engine.creator.ambientLight({

@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import Engine, { InfoWidget } from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo');
@@ -15,6 +15,10 @@ async function main() {
   engine.setBackground({
     color: "#252525",
   });
+  engine.creator.widget(new InfoWidget({
+    title: '5 - Camera',
+    text: 'This example shows how to configure a simple follow camera.',
+  }));
 
   const size = 12;
   for (let i = 0; i < 10; i++) {

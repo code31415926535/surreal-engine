@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import Engine, { InfoWidget } from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -14,6 +14,11 @@ async function main() {
       density: 0.08,
     }
   });
+
+  engine.creator.widget(new InfoWidget({
+    title: '2 - Lighting & Shadows & Fog',
+    text: 'This example shows how to use lighting, shadows and fog.',
+  }));
 
   engine.creator.pointLight({
     color: '#ffffff',

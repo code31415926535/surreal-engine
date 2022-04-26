@@ -1,9 +1,13 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import Engine, { InfoWidget } from "../../src/lib";
 
 async function main() {
   const engine = new Engine('#demo');
   await engine.init();
+  engine.creator.widget(InfoWidget({
+    title: '6 - Textures and Skybox',
+    text: 'This example shows how to use textures and skybox. Skybox is a cube map that can be used to simulate the sky.',
+  }));
 
   engine.assets.setBasePath("/assets/");
   engine.assets.addTexture("floor", "textures/floor.png");
@@ -20,9 +24,7 @@ async function main() {
   engine.assets.addTexture("box@bump", "textures/metal/metalbox_bump.png");
   engine.assets.addTexture("box@ao", "textures/metal/metalbox_AO.png");
   engine.assets.addTexture("box@diffuse", "textures/metal/metalbox_diffuse.png");
-  await engine.assets.load((progress) => {
-    console.log(`Loading: ${progress * 100}%`);
-  });
+  await engine.assets.load();
 
   engine.setBackground({
     skybox: engine.assets.getTexture("skybox"),
