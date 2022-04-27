@@ -4,7 +4,7 @@ import {
 import {
   WebGLRenderer,
 } from 'three';
-import EntityCreator from './managers/EntityCreator';
+import EntityCreator from './managers/entityCreator';
 import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
 import PhysicsSystem from './systems/physicsSystem';
 import StaticMotionSystem from './systems/staticMotionSystem';
