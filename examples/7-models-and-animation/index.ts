@@ -1,10 +1,10 @@
 import '../../src/style.css';
-import { EditOptions, quickStart } from "../../src/lib/surreal-engine";
+import { quickStart, WireframeDebug } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
     '#demo', 
-    {debug: EditOptions },
+    { debug: WireframeDebug },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -19,6 +19,7 @@ async function main() {
       ]);
       assets.addModel("knight_statue", "models/knight_statue.glb");
       assets.addModel("character", "models/Vanguard.dae");
+      assets.addModel("datsun", "models/free_datsun_280z/scene.gltf");
   },
   (engine) => {
     engine.setBackground({
@@ -57,6 +58,15 @@ async function main() {
       rigid: true,
       receiveShadow: true,
     });
+    engine.creator.box({
+      pos: { x: 0, y: 0, z: 100 },
+      size: { x: 50, y: 1, z: 50 },
+      mass: 0,
+      restitution: 0.3,
+      material: engine.materials.getMaterial("floor@square"),
+      rigid: true,
+      receiveShadow: true,
+    })
   
     engine.creator.model({
       model: "knight_statue",
@@ -67,6 +77,13 @@ async function main() {
       model: "knight_statue",
       size: { x: 1.2, y: 1.5, z: 1 },
       pos: { x: -10, y: 0.5, z: 11 },
+    });
+
+    // TODO: Infer collison box from geometry
+    engine.creator.model({
+      model: "datsun",
+      size: { x: 3, y: 3, z: 3 },
+      pos: { x: 0, y: 1, z: 90 },
     });
   
     // TODO: Model has to support collision box

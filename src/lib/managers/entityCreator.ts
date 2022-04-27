@@ -1,5 +1,5 @@
 import { Engine as ECSEngine } from 'tick-knock';
-import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
+import { AmbientLight, DirectionalLight, Object3D, PointLight } from "three";
 import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
 import AssetManager from './AssetManager';
 import Widget from '../components/widget';

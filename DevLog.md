@@ -65,8 +65,8 @@
 
 ### v0.3
 
-- [ ] Fix Model bugs
-- [ ] Better debugging
+- [x] Fix Model bugs
+- [x] More complex debugging
 - [ ] Kinetic object for collision purpouse
 - [ ] Performance Monitoring
 - [ ] Fps meter
@@ -85,6 +85,8 @@
 - [ ] Event System
 - [ ] Postprocessing
 - [ ] Update Animations
+- [ ] Make debug interactive
+- [ ] UI System
 - [ ] Simple platformer example
 
 ### Future
@@ -99,7 +101,6 @@
 - [ ] Heightmaps
 - [ ] Terrain generation
 - [ ] Editor
-- [ ] UI System
 - [ ] Trigger Box
 - [ ] Levels
 - [ ] Toggle visibility for widget
