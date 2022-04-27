@@ -58,18 +58,18 @@
 - [x] Surreal Enity (not needed with new ECS)
 - [x] Add multi-texture material support
 - [x] Text on screen
-- [ ] Loading indicator (using css)
+- [x] Loading indicator (using css)
 - [x] Advanced Texturing for material
 - [x] Basic Animations
-- [ ] JSX
+- [x] JSX
 
 ### v0.3
 
-- [ ] Fps meter
+- [ ] Fix Fbx bugs
 - [ ] Better debugging
 - [ ] Kinetic object for collision purpouse
-- [ ] Fix Fbx bugs
 - [ ] Performance Monitoring
+- [ ] Fps meter
 - [ ] Configurable window size
 - [ ] Documentation
 - [ ] Better error handling
@@ -78,11 +78,11 @@
 ### v0.4
 
 - [ ] Static Motion on Solid bodies
-- [ ] Simple platformer example
 - [ ] First person Camera
 - [ ] More advanced physics
 - [ ] Event System
 - [ ] Postprocessing
+- [ ] Simple platformer example
 
 ### Future
 

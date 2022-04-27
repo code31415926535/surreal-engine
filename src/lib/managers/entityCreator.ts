@@ -86,12 +86,11 @@ export default class EntityCreator {
    * to create the UI.
    * 
    * @param opts {@link any}
-   * @returns id of the widget
+   * @returns {@link EntityBuilder}
    */
-  widget(elem: any): string {
+  widget(elem: JSX.Element): EntityBuilder {
     const id = nanoid();
-    new EntityBuilder(this.ecs).with(new Widget(id, elem));
-    return id;
+    return new EntityBuilder(this.ecs).with(new Widget(id, elem));
   }
 
   /**

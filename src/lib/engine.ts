@@ -19,6 +19,7 @@ import MaterialManager from './managers/MaterialManager';
 import AnimationSystem from './systems/animationSystem';
 import WidgetSystem from './systems/widgetSystem';
 import { ProgressWidget } from './widgets';
+import EntityManager from './managers/EntityManager';
 
 declare global {
   interface Window {
@@ -70,6 +71,8 @@ export default class Engine {
    * const material = engine.materials.getMaterial("floor");
    */
   public materials!: MaterialManager;
+  // TODO: Document
+  public manager!: EntityManager;
 
   private previousTime: number = 0;
   private ecs!: ECSEngine;
@@ -110,16 +113,20 @@ export default class Engine {
     this.ecs.addSystem(new AnimationSystem(), 7);
     this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
 
-    let widgetId = '';
+    // TODO: There should be a better architecture for this.
+    let widgetId = 0;
     this.assets = new AssetManager((percentage) => {
       if (percentage === 0) {
-        widgetId = this.creator.widget(ProgressWidget({ percentage }));
+        widgetId = this.creator.widget(ProgressWidget({ percentage })).id;
+      } else if (percentage === 1) {
+        this.manager.remove(widgetId);
       } else {
-        // TODO: This should be entity manager
-        this.creator.updateWidget(widgetId, { percentage });
+        // TODO: This is quite bad performance-wise.
+        this.manager.updateWidget(widgetId, ProgressWidget({ percentage }));
       }
     });
     this.creator = new EntityCreator(this.ecs, this.assets, this.debug);
+    this.manager = new EntityManager(this.ecs);
     this.materials = new MaterialManager(this.assets);
   }
 

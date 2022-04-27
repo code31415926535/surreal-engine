@@ -157,6 +157,10 @@ export default class EntityBuilder {
     return this;
   }
 
+  public get id(): number {
+    return this.entity.id;
+  }
+
   private buildRigidBody = (opts: RigidBodyOptions): Ammo.btRigidBody => {
     const { pos, quat, mass, restitution } = opts;
     const transform = new window.Ammo.btTransform();
