@@ -74,6 +74,8 @@
 - [ ] Documentation
 - [ ] Better error handling
 - [ ] Advanced Animation
+- [ ] Scriptability
+- [ ] Pause engine when not in focus
 
 ### v0.4
 
