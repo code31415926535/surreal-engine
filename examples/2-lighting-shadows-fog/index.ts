@@ -15,7 +15,7 @@ async function main() {
     }
   });
 
-  engine.creator.widget(new InfoWidget({
+  engine.creator.widget(InfoWidget({
     title: '2 - Lighting & Shadows & Fog',
     text: 'This example shows how to use lighting, shadows and fog.',
   }));

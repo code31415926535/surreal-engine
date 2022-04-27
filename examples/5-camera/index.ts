@@ -15,7 +15,7 @@ async function main() {
   engine.setBackground({
     color: "#252525",
   });
-  engine.creator.widget(new InfoWidget({
+  engine.creator.widget(InfoWidget({
     title: '5 - Camera',
     text: 'This example shows how to configure a simple follow camera.',
   }));

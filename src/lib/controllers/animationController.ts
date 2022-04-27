@@ -30,7 +30,7 @@ class RepeatAnimationState extends State<AnimationStateData> {
     action.play();
   }
 
-  update = (fsm: FiniteStateMachine<AnimationStateData>, delta: number) => {}
+  update = () => {}
 }
 
 export default class AnimationController {

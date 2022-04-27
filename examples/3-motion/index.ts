@@ -12,7 +12,7 @@ async function main() {
     color: "#252525",
   });
 
-  engine.creator.widget(new InfoWidget({
+  engine.creator.widget(InfoWidget({
     title: '3 - Motion',
     text: 'This feature is still work in progress and is subject to change.',
   }));

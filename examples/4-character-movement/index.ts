@@ -10,7 +10,7 @@ async function main() {
   engine.setBackground({
     color: "#252525",
   });
-  engine.creator.widget(new InfoWidget({
+  engine.creator.widget(InfoWidget({
     title: '4 - Character Movement',
     text: 'This examples shows how to use character movement. Press the w, a, s, d keys to move the character. Press the spacebar to jump.',
   }));
