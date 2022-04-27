@@ -11,7 +11,6 @@ import {
   CurvePath,
   SphereGeometry,
   Vector3,
-  Group,
   AnimationClip,
 } from "three";
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -51,7 +50,7 @@ export interface ShapeModelOptions {
 }
 
 export interface Model3DOptions {
-  model: Group;
+  model: Object3D;
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
   size?: { x: number; y: number; z: number };

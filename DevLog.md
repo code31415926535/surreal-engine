@@ -73,7 +73,7 @@
 - [ ] Configurable window size
 - [ ] Documentation
 - [x] Better error handling
-- [ ] Advanced Animation
+- [ ] Make Basic Animation actually work
 - [ ] Scriptability
 - [ ] Pause engine when not in focus
 
@@ -84,6 +84,7 @@
 - [ ] More advanced physics
 - [ ] Event System
 - [ ] Postprocessing
+- [ ] Update Animations
 - [ ] Simple platformer example
 
 ### Future

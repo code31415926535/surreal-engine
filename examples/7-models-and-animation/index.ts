@@ -1,10 +1,10 @@
 import '../../src/style.css';
-import { quickStart } from "../../src/lib/surreal-engine";
+import { EditOptions, quickStart } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
     '#demo', 
-    { debug: true },
+    {debug: EditOptions },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");

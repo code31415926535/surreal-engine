@@ -1,5 +1,5 @@
-import { AnimationClip, Group, LoadingManager, Texture } from "three";
-import ModelLoader, { LoadModelOptions } from "../utils/model";
+import { AnimationClip, LoadingManager, Object3D, Texture } from "three";
+import ModelLoader from "../utils/model";
 import TextureLoader from "../utils/texture";
 
 /**
@@ -23,16 +23,14 @@ export default class AssetManager {
   private modelsToLoad: {
     name: string;
     path: string;
-    opts?: LoadModelOptions
   }[] = [];
   private animationsToLoad: {
     name: string;
     path: string;
-    opts?: LoadModelOptions
   }[] = [];
 
   private textures: { [name: string]: Texture } = {};
-  private models: { [name: string]: Group } = {};
+  private models: { [name: string]: Object3D } = {};
   private animations: { [name: string]: AnimationClip } = {};
 
   constructor(
@@ -57,12 +55,12 @@ export default class AssetManager {
     this.texturesToLoad.push({ name, path: this.basePath + path });
   }
 
-  public addModel(name: string, path: string, opts?: LoadModelOptions): void {
-    this.modelsToLoad.push({ name, path: this.basePath + path, opts });
+  public addModel(name: string, path: string): void {
+    this.modelsToLoad.push({ name, path: this.basePath + path });
   }
 
-  public addAnimation(name: string, path: string, opts?: LoadModelOptions): void {
-    this.animationsToLoad.push({ name, path: this.basePath + path, opts });
+  public addAnimation(name: string, path: string): void {
+    this.animationsToLoad.push({ name, path: this.basePath + path });
   }
 
   public isTexture(name: string): boolean {
@@ -73,7 +71,7 @@ export default class AssetManager {
     return this.textures[name];
   }
 
-  public getModel(name: string): Group {
+  public getModel(name: string): Object3D {
     return this.models[name];
   }
 
@@ -105,11 +103,11 @@ export default class AssetManager {
       this.textures[texture.name] = result;
     });
     const promisesModel = this.modelsToLoad.map(async (model) => {
-      const result = await this.modelLoader.load(model.path, model.opts);
+      const result = await this.modelLoader.load(model.path);
       this.models[model.name] = result;
     });
     const promisesAnimation = this.animationsToLoad.map(async (animation) => {
-      const result = await this.modelLoader.loadAnimation(animation.path, animation.opts);
+      const result = await this.modelLoader.loadAnimation(animation.path);
       this.animations[animation.name] = result;
     });
 

@@ -20,6 +20,8 @@ import AnimationSystem from '../systems/animationSystem';
 import WidgetSystem from '../systems/widgetSystem';
 import { ErrorWidget, ProgressWidget } from '../widgets';
 import EntityManager from '../managers/EntityManager';
+import { DebugOptions } from './debugOptions';
+import DebugSystem from '../systems/debugSystem';
 
 declare global {
   interface Window {
@@ -28,7 +30,7 @@ declare global {
 }
 
 export interface EngineOpts {
-  debug?: boolean;
+  debug?: DebugOptions;
   gravity?: { x: number, y: number, z: number };
   antialias?: boolean;
 }
@@ -82,7 +84,7 @@ export default class Engine {
   private previousTime: number = 0;
   private ecs!: ECSEngine;
 
-  private debug: boolean;
+  private debug: DebugOptions;
   private physics: boolean;
   private gravity: { x: number; y: number; z: number; };
   private antialias: boolean;
@@ -92,7 +94,7 @@ export default class Engine {
       throw new Error('WebGL is not supported');
     }
 
-    this.debug = opts?.debug ?? false;
+    this.debug = opts?.debug ?? {};
     this.physics = true;
     this.gravity = opts?.gravity ?? { x: 0, y: -0.98, z: 0 };
     this.antialias = opts?.antialias ?? true;
@@ -105,7 +107,7 @@ export default class Engine {
   public async init() {
     window.Ammo = await initAmmo();
     this.ecs = new ECSEngine();
-    this.ecs.addSystem(new RenderSystem(this.containerQuery, this.debug, this.antialias), 1);
+    this.ecs.addSystem(new RenderSystem(this.containerQuery, this.antialias), 1);
     if (this.physics) {
       this.ecs.addSystem(new PhysicsSystem(this.gravity), 2);
       this.ecs.addSystem(new PhysicsRendererSyncSystem(), 3);
@@ -117,6 +119,9 @@ export default class Engine {
     }
     this.ecs.addSystem(new AnimationSystem(), 7);
     this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
+    if (this.debug) {
+      this.ecs.addSystem(new DebugSystem(this.debug, this), 1000);
+    }
 
     // TODO: There should be a better architecture for this.
     let errorWidget = -1;
@@ -138,7 +143,7 @@ export default class Engine {
         errorWidget = this.creator.widget(ErrorWidget({ error })).id;
       }
     });
-    this.creator = new EntityCreator(this.ecs, this.assets, this.debug);
+    this.creator = new EntityCreator(this.ecs, this.assets);
     this.manager = new EntityManager(this.ecs);
     this.materials = new MaterialManager(this.assets);
   }
@@ -187,6 +192,9 @@ export default class Engine {
    * Start the engine.
    */
   public start() {
+    if (this.debug) {
+      this.ecs.getSystem(DebugSystem)!.init();
+    }
     this.execute();
   }
 
