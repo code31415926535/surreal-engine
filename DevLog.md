@@ -65,14 +65,14 @@
 
 ### v0.3
 
-- [ ] Fix Fbx bugs
+- [ ] Fix Model bugs
 - [ ] Better debugging
 - [ ] Kinetic object for collision purpouse
 - [ ] Performance Monitoring
 - [ ] Fps meter
 - [ ] Configurable window size
 - [ ] Documentation
-- [ ] Better error handling
+- [x] Better error handling
 - [ ] Advanced Animation
 - [ ] Scriptability
 - [ ] Pause engine when not in focus

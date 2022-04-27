@@ -35,7 +35,10 @@ export default class AssetManager {
   private models: { [name: string]: Group } = {};
   private animations: { [name: string]: AnimationClip } = {};
 
-  constructor(private onProgress: (progress: number) => void) {
+  constructor(
+    private onProgress: (progress: number) => void,
+    private onError: (error: Error) => void,
+  ) {
     this.loadingManager = new LoadingManager();
     this.textureLoader = new TextureLoader(this.loadingManager);
     this.modelLoader = new ModelLoader(this.loadingManager);
@@ -89,6 +92,9 @@ export default class AssetManager {
     this.loadingManager.onProgress = (_, loaded, total) => {
       this.onProgress(loaded / total);
     }
+    this.loadingManager.onError = (url: string) => {
+      this.onError(new Error(`Failed to load ${url}`));
+    };
 
     const promisesTexture = this.texturesToLoad.map(async (texture) => {
       const result = await this.textureLoader.load(texture.path);

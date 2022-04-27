@@ -4,6 +4,11 @@ import Widget from "../components/widget";
 export default class EntityManager {
   constructor(private ecs: ECSEngine) {}
 
+  public is(id: number): boolean {
+    const entity = this.ecs.getEntityById(id);
+    return entity !== undefined;
+  }
+
   public remove(id: number) {
     const entity = this.ecs.getEntityById(id);
     if (! entity) {
