@@ -68,14 +68,11 @@
 - [x] Fix Model bugs
 - [x] More complex debugging
 - [ ] Kinetic object for collision purpouse
-- [ ] Performance Monitoring
-- [ ] Fps meter
+- [x] Fps meter
 - [ ] Configurable window size
-- [ ] Documentation
 - [x] Better error handling
 - [ ] Make Basic Animation actually work
 - [ ] Scriptability
-- [ ] Pause engine when not in focus
 
 ### v0.4
 
@@ -91,13 +88,11 @@
 
 ### Future
 
+- [ ] Performance Monitoring
+- [ ] Documentation
+- [ ] Pause engine when not in focus
 - [ ] Plane geometry
-- [ ] Create Groups of Entities
 - [ ] Particles
-- [ ] Follow Directional Light
-- [ ] Spotlight
-- [ ] RectAreaLight
-- [ ] HemisphericalLight
 - [ ] Heightmaps
 - [ ] Terrain generation
 - [ ] Editor

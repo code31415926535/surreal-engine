@@ -1,4 +1,4 @@
-import { Engine as ECSEngine } from "tick-knock";
+import { Engine as ECSEngine, Entity } from "tick-knock";
 import Widget from "../components/widget";
 
 export default class EntityManager {
@@ -15,6 +15,10 @@ export default class EntityManager {
       return;
     }
     this.ecs.removeEntity(entity);
+  }
+
+  public get(id: number): Entity | undefined {
+    return this.ecs.getEntityById(id);
   }
 
    public updateWidget(id: number, elem: JSX.Element) {

@@ -1,10 +1,10 @@
 import '../../src/style.css';
-import { quickStart, WireframeDebug } from "../../src/lib/surreal-engine";
+import { MotionDebug, quickStart } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
     '#demo', 
-    { debug: WireframeDebug },
+    { showFps: true, debug: MotionDebug },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -79,12 +79,12 @@ async function main() {
       pos: { x: -10, y: 0.5, z: 11 },
     });
 
-    // TODO: Infer collison box from geometry
-    engine.creator.model({
-      model: "datsun",
-      size: { x: 3, y: 3, z: 3 },
-      pos: { x: 0, y: 1, z: 90 },
-    });
+    // TODO: Very very slow
+    // engine.creator.model({
+    //   model: "datsun",
+    //   size: { x: 3, y: 3, z: 3 },
+    //   pos: { x: 0, y: 1, z: 90 },
+    // });
   
     // TODO: Model has to support collision box
     engine.creator.model({
@@ -93,7 +93,7 @@ async function main() {
       pos: { x: 0, y: 0.5, z: 0.5 },
     })
       .withThirdPersonCamera()
-      .withKeyboardMotion()
+      .withKeyboardMotion();
       // .withAnimation({
       //   initial: "idle",
       //   clips: [{

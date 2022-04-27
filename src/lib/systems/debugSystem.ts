@@ -10,6 +10,7 @@ import {
 } from 'three';
 import RenderSystem from "./renderSystem";
 import Model from "../components/model";
+import { getHelperFromSkeleton } from 'three/examples/jsm/utils/SkeletonUtils';
 
 export default class DebugSystem extends ReactionSystem {
   constructor(private debug: DebugOptions, private parent: Engine) {
@@ -35,13 +36,21 @@ export default class DebugSystem extends ReactionSystem {
 
     if (this.debug.wireframe) {
       model.mesh.traverse((child) => {
-        if (child.type.includes('Mesh')) {
+        if ((child as Mesh).isMesh || child.type === 'Mesh') {
           const mat = (child as Mesh).material;
-          if (['MeshPhongMaterial', 'MeshStandardMatrial'].includes((mat as Material).type)) {
+          if (['MeshPhongMaterial', 'MeshStandardMatrial', 'MeshPhysicalMaterial'].includes((mat as Material).type)) {
             (mat as MeshPhongMaterial).wireframe = true;
           }
         }
       });
+    }
+
+    if (this.debug.skeleton) {
+      const skeleton = model.skeleton;
+      if (skeleton) {
+        const helper = getHelperFromSkeleton(skeleton);
+        this.parent.creator.ethereal({ obj: helper });
+      }
     }
   }
 }

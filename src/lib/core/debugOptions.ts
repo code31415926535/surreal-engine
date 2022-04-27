@@ -7,6 +7,7 @@ export type DebugOptions = {
   };
   orbitControls?: boolean;
   wireframe?: boolean;
+  skeleton?: boolean;
 }
 
 export const BasicDebug: DebugOptions = {
@@ -19,4 +20,9 @@ export const BasicDebug: DebugOptions = {
 export const WireframeDebug: DebugOptions = {
   orbitControls: true,
   wireframe: true,
+}
+
+export const MotionDebug: DebugOptions = {
+  orbitControls: true,
+  skeleton: true,
 }

@@ -1,8 +1,11 @@
 import '../../src/style.css';
-import { Engine, InfoWidget } from "../../src/lib/surreal-engine";
+import { BasicDebug, Engine, InfoWidget } from "../../src/lib/surreal-engine";
 
 async function main() {
-  const engine = new Engine('#demo');
+  const engine = new Engine('#demo', {
+    showFps: true,
+    debug: BasicDebug,
+  });
   await engine.init();
   engine.creator.widget(InfoWidget({
     title: '6 - Textures and Skybox',

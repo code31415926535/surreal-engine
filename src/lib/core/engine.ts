@@ -22,6 +22,7 @@ import { ErrorWidget, ProgressWidget } from '../widgets';
 import EntityManager from '../managers/EntityManager';
 import { DebugOptions } from './debugOptions';
 import DebugSystem from '../systems/debugSystem';
+import FpsSystem from '../systems/fpsSystem';
 
 declare global {
   interface Window {
@@ -31,6 +32,7 @@ declare global {
 
 export interface EngineOpts {
   debug?: DebugOptions;
+  showFps?: boolean;
   gravity?: { x: number, y: number, z: number };
   antialias?: boolean;
 }
@@ -85,6 +87,7 @@ export default class Engine {
   private ecs!: ECSEngine;
 
   private debug: DebugOptions;
+  private showFps: boolean;
   private physics: boolean;
   private gravity: { x: number; y: number; z: number; };
   private antialias: boolean;
@@ -95,6 +98,7 @@ export default class Engine {
     }
 
     this.debug = opts?.debug ?? {};
+    this.showFps = opts?.showFps ?? false;
     this.physics = true;
     this.gravity = opts?.gravity ?? { x: 0, y: -0.98, z: 0 };
     this.antialias = opts?.antialias ?? true;
@@ -119,6 +123,9 @@ export default class Engine {
     }
     this.ecs.addSystem(new AnimationSystem(), 7);
     this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
+    if (this.showFps) {
+      this.ecs.addSystem(new FpsSystem(this), 999);
+    }
     if (this.debug) {
       this.ecs.addSystem(new DebugSystem(this.debug, this), 1000);
     }
@@ -192,6 +199,9 @@ export default class Engine {
    * Start the engine.
    */
   public start() {
+    if (this.showFps) {
+      this.ecs.getSystem(FpsSystem)!.init();
+    }
     if (this.debug) {
       this.ecs.getSystem(DebugSystem)!.init();
     }
