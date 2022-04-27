@@ -1,7 +1,7 @@
 import { createRoot, Root } from 'react-dom/client';
 import { Entity, EntitySnapshot, IterativeSystem, Query } from "tick-knock";
 import Widget from "../components/widget";
-import "../widgets/Widget.css";
+import "../widgets/widget.css";
 
 export default class WidgetSystem extends IterativeSystem {
   private container: HTMLElement;
