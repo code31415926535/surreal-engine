@@ -14,6 +14,7 @@ import {
   Group,
   AnimationClip,
 } from "three";
+import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
 import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
@@ -202,7 +203,7 @@ export default class EntityBuilder {
 
   private build3DModel = (opts: Model3DOptions): Object3D => {
     const { model, pos, quat, size } = opts;
-    const copy = model.clone();
+    const copy = clone(model);
     if (pos) {
       copy.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
     }

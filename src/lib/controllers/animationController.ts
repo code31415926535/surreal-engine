@@ -44,9 +44,10 @@ export default class AnimationController {
   }
 
   public addAnimation(name: string, clip: AnimationClip): AnimationController {
+    const clonedClip = clip.clone();
     this.animations[name] = {
       action: this.mixer.clipAction(clip),
-      clip,
+      clip: clonedClip,
     };
     this.fsm.addState(name, new RepeatAnimationState({
       animations: this.animations,

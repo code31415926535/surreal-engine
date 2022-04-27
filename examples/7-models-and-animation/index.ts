@@ -17,9 +17,8 @@ async function main() {
         "textures/vz_techno_right.png",
         "textures/vz_techno_up.png",
       ]);
-      assets.addModel("knight_statue", "models/knight_statue.glb", { scale: 2 });
-      assets.addModel("character", "models/Vanguard.dae", { scale: 0.03 });
-      // engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
+      assets.addModel("knight_statue", "models/knight_statue.glb");
+      assets.addModel("character", "models/Vanguard.dae");
   },
   (engine) => {
     engine.setBackground({
