@@ -41,7 +41,7 @@
     "preview": "vite preview",
     "build": "npm run build:module && npm run build:types",
     "build:module": "tsc && vite build && rm -rf ./dist/assets",
-    "build:types": "tsc --jsx react -m amd -t ESNext -d --isolatedModules false --esModuleInterop --moduleResolution node --emitDeclarationOnly --outFile dist/index src/lib/index.ts",
+    "build:types": "tsc --jsx react -m amd -t ESNext -d --isolatedModules false --esModuleInterop --moduleResolution node --emitDeclarationOnly --outFile dist/surreal-engine src/lib/surreal-engine.ts",
     "build:examples": "tsc && vite --config vite.examples.config.js build"
   },
   "peerDependencies": {

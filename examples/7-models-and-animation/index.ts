@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib";
+import { Engine } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo', { debug: true });

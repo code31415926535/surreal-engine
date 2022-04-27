@@ -7,15 +7,17 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/lib/index.ts'),
+      entry: path.resolve(__dirname, 'src/lib/surreal-engine.ts'),
       name: "SurrealEngine",
-      fileName: (format) => `index.${format}.js`,
+      fileName: (format) => `surreal-engine.${format}.js`,
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
-      global: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        }
       }
     }
   },

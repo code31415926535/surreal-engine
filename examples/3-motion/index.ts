@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine, { InfoWidget } from "../../src/lib";
+import { Engine, InfoWidget } from "../../src/lib/surreal-engine";
 import { CurvePath, LineCurve3, Vector3 } from 'three';
 
 async function main() {

@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine, { InfoWidget } from "../../src/lib";
+import { Engine, InfoWidget } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo');

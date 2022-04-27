@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import Engine from "../../src/lib/engine";
+import { Engine } from "../../src/lib/surreal-engine";
 
 // TODO: Improve breakable system by adding a "break" event
 // class BreakableSystem extends SurrealSystem {
