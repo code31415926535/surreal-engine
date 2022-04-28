@@ -1,11 +1,11 @@
 import '../../src/style.css';
-import { LightDebug, quickStart } from "../../src/lib/surreal-engine";
+import { quickStart } from "../../src/lib/surreal-engine";
 import { Euler, Quaternion, Vector3 } from 'three';
 
 async function main() {
   quickStart(
     '#demo', 
-    { showFps: true, debug: LightDebug },
+    { showFps: true },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -95,7 +95,7 @@ async function main() {
     engine.creator.model({
       model: "character",
       size: { x: 2, y: 2, z: 2 },
-      pos: { x: 0, y: 0.5, z: 0.5 },
+      pos: { x: 0, y: 0, z: 0 },
       offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
       castShadow: true,
     })

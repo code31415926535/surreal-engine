@@ -76,13 +76,12 @@
 - [x] Make camera configurable
 - [ ] More complex animation system
 
-- [ ] Move away from quaternion
-
-- [ ] Cleaner material usage
-- [ ] Static Motion on Solid bodies
-
 - [ ] Postprocessing
 
+- [ ] Move away from quaternion
+- [ ] Cleaner material usage
+
+- [ ] Static Motion on Solid bodies
 - [ ] Scriptability
 
 - [ ] Timer System
