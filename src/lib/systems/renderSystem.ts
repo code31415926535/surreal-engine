@@ -4,15 +4,13 @@ import {
   PerspectiveCamera,
   Scene,
   WebGLRenderer,
-  GridHelper,
-  AxesHelper,
   OrthographicCamera,
   FogExp2,
   Color,
   Texture,
 } from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import Model from "../components/model";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 export interface OrthographicCameraOptions {
   distance: number;
@@ -44,11 +42,8 @@ export default class RenderSystem extends ReactionSystem {
    * Current camera being used by the system.
    */
   public camera!: PerspectiveCamera | OrthographicCamera;
-  private debug: boolean = false;
-
-  constructor(containerQuery: string, debug: boolean, antialias: boolean) {
+  constructor(containerQuery: string, antialias: boolean) {
     super(new Query(entity => entity.hasComponent(Model)));
-    this.debug = debug;
     const canvas = document.createElement("canvas");
     canvas.id = "surreal-engine-canvas";
     document.querySelector(containerQuery)!.appendChild(canvas);
@@ -66,11 +61,6 @@ export default class RenderSystem extends ReactionSystem {
       fov: 75,
       position: { x: 10, y: 10, z: 10 },
     });
-
-    if (this.debug) {
-      this.scene.add(new GridHelper(100, 10));
-      this.scene.add(new AxesHelper(100));
-    }
 
     window.addEventListener('resize', () => {
       this.onResize();
@@ -96,9 +86,6 @@ export default class RenderSystem extends ReactionSystem {
     this.camera.position.set(10, 10, 10);
     this.camera.lookAt(0, 0, 0);
 
-    if (this.debug) {
-      new OrbitControls(this.camera, this.renderer.domElement);
-    }
   }
 
   /**
@@ -116,10 +103,10 @@ export default class RenderSystem extends ReactionSystem {
     );
     this.camera.position.set(opts.position.x, opts.position.y, opts.position.z);
     this.camera.lookAt(opts.lookAt?.x || 0, opts.lookAt?.y || 0, opts.lookAt?.z || 0);
+  }
 
-    if (this.debug) {
-      new OrbitControls(this.camera, this.renderer.domElement);
-    }
+  public orbitControls() {
+    new OrbitControls(this.camera, this.renderer.domElement);
   }
 
   /**

@@ -1,5 +1,5 @@
 import { Engine as ECSEngine } from 'tick-knock';
-import { AmbientLight, CameraHelper, DirectionalLight, DirectionalLightHelper, Object3D, PointLight, PointLightHelper } from "three";
+import { AmbientLight, DirectionalLight, Object3D, PointLight } from "three";
 import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
 import AssetManager from './AssetManager';
 import Widget from '../components/widget';
@@ -61,14 +61,13 @@ export default class EntityCreator {
   constructor(
     private ecs: ECSEngine,
     private assets: AssetManager,
-    private debug: boolean,
   ) {}
 
   /**
    * Creates an emtpy entity without any components.
    */
   empty(): EntityBuilder {
-    return new EntityBuilder(this.ecs);
+    return new EntityBuilder(this.ecs, this.assets);
   }
 
   /**
@@ -78,7 +77,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   ethereal(opts: Object3DOptions): EntityBuilder {
-    return new EntityBuilder(this.ecs).withObject3D({ obj: opts.obj });
+    return this.empty().withObject3D({ obj: opts.obj });
   }
 
   /**
@@ -90,7 +89,7 @@ export default class EntityCreator {
    */
   widget(elem: JSX.Element): EntityBuilder {
     const id = nanoid();
-    return new EntityBuilder(this.ecs).with(new Widget(id, elem));
+    return this.empty().with(new Widget(id, elem));
   }
 
   /**
@@ -102,7 +101,7 @@ export default class EntityCreator {
    */
   model(opts: ModelOptions): EntityBuilder {
     const obj = this.assets.getModel(opts.model);
-    return new EntityBuilder(this.ecs).with3DModel({
+    return this.empty().with3DModel({
       ...opts,
       model: obj,
     });
@@ -116,7 +115,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   box(opts: BoxOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.ecs)
+    const builder = this.empty()
       .withShapeModel({ ...opts, type: 'box' });
     
     if (opts.rigid) {
@@ -134,7 +133,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   sphere(opts: SphereOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.ecs)
+    const builder = this.empty()
       .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
     
     if (opts.rigid) {
@@ -161,10 +160,10 @@ export default class EntityCreator {
     const light = new PointLight(opts.color, opts.intensity);
     light.position.set(opts.pos.x, opts.pos.y, opts.pos.z);
 
-    if (this.debug) {
-      const helper = new PointLightHelper(light);
-      this.ethereal({ obj: helper });
-    }
+    // if (this.debug) {
+    //   const helper = new PointLightHelper(light);
+    //   this.ethereal({ obj: helper });
+    // }
 
     if (opts.castShadow) {
       light.castShadow = true;
@@ -191,10 +190,10 @@ export default class EntityCreator {
     light.position.set(opts.pos.x, opts.pos.y, opts.pos.z);
     light.target.position.set(opts.target.x, opts.target.y, opts.target.z);
 
-    if (this.debug) {
-      const helper = new DirectionalLightHelper(light);
-      this.ethereal({ obj: helper });
-    }
+    // if (this.debug) {
+    //   const helper = new DirectionalLightHelper(light);
+    //   this.ethereal({ obj: helper });
+    // }
 
     if (opts.castShadow) {
       light.castShadow = true;
@@ -207,10 +206,10 @@ export default class EntityCreator {
       light.shadow.mapSize.width = opts.shadowResolution || 1024;
       light.shadow.mapSize.height = opts.shadowResolution || 1024;
 
-      if (this.debug) {
-        const helper = new CameraHelper(light.shadow.camera);
-        this.ethereal({ obj: helper });
-      }
+      // if (this.debug) {
+      //   const helper = new CameraHelper(light.shadow.camera);
+      //   this.ethereal({ obj: helper });
+      // }
     }
 
     return this.ethereal({ obj: light });

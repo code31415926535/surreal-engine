@@ -11,9 +11,9 @@ import {
   CurvePath,
   SphereGeometry,
   Vector3,
-  Group,
-  AnimationClip,
 } from "three";
+// @ts-ignore
+import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
 import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
@@ -24,6 +24,7 @@ import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 import Animation from '../components/animation';
+import AssetManager from '../managers/AssetManager';
 
 // TODO: Pos Quat Size unify
 
@@ -50,7 +51,7 @@ export interface ShapeModelOptions {
 }
 
 export interface Model3DOptions {
-  model: Group;
+  model: Object3D;
   pos?: { x: number; y: number; z: number };
   quat?: { x: number; y: number; z: number; w: number };
   size?: { x: number; y: number; z: number };
@@ -62,7 +63,7 @@ export interface AnimationOptions {
   initial: string;
   clips: [{
     name: string;
-    clip: AnimationClip;
+    clip: string;
   }]
 }
 
@@ -84,7 +85,7 @@ export interface KeyboardMotionOptions {
 export default class EntityBuilder {
   private entity: Entity;
 
-  constructor(private ecs: ECSEngine) {
+  constructor(private ecs: ECSEngine, private assets: AssetManager) {
     this.entity = new Entity();
     this.ecs.addEntity(this.entity);
   }
@@ -111,10 +112,14 @@ export default class EntityBuilder {
 
   public withAnimation = (opts: AnimationOptions): EntityBuilder => {
     const ctrl = new AnimationController(this.entity);
-    opts.clips.forEach(clip => {
-      ctrl.addAnimation(clip.name, clip.clip);
+    opts.clips.forEach(clipName => {
+      const clip = this.assets.getAnimation(clipName.clip);
+      if (!clip) {
+        throw new Error(`Animation ${clipName.clip} not found`);
+      }
+      ctrl.addAnimation(clipName.name, clip);
     });
-    ctrl.setState(opts.initial);
+    ctrl.play(opts.initial);
     this.entity.addComponent(new Animation(ctrl));
     return this;
   }
@@ -202,7 +207,7 @@ export default class EntityBuilder {
 
   private build3DModel = (opts: Model3DOptions): Object3D => {
     const { model, pos, quat, size } = opts;
-    const copy = model.clone();
+    const copy = clone(model);
     if (pos) {
       copy.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
     }

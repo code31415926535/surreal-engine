@@ -65,40 +65,53 @@
 
 ### v0.3
 
-- [ ] Fix Fbx bugs
-- [ ] Better debugging
+- [x] Fix Model bugs
+- [x] More complex debugging
+- [x] Fps meter
+- [x] Make Basic Animation actually work
+- [x] Better error handling
+
+- [ ] Event System
 - [ ] Kinetic object for collision purpouse
-- [ ] Performance Monitoring
-- [ ] Fps meter
-- [ ] Configurable window size
-- [ ] Documentation
-- [ ] Better error handling
-- [ ] Advanced Animation
+- [ ] More complex animation system
+
 - [ ] Scriptability
-- [ ] Pause engine when not in focus
 
 ### v0.4
 
 - [ ] Static Motion on Solid bodies
+- [ ] Attachment to model
 - [ ] First person Camera
-- [ ] More advanced physics
-- [ ] Event System
+- [ ] Configurable window size
+- [ ] UI System
 - [ ] Postprocessing
+- [ ] Cleaner material usage
 - [ ] Simple platformer example
 
-### Future
+### v0.5
 
+- [ ] Editor
+
+### v0.6
+
+- [ ] Pause engine when not in focus
+- [ ] Make debug interactive
+- [ ] Entity Templates
+- [ ] Make camera configurable
+- [ ] Clean and simple way to define pos, size and quat
+- [ ] Toggle visibility for widget
+
+### 1.0.0
+
+- [ ] Documentation
+- [ ] Performance Monitoring
 - [ ] Plane geometry
-- [ ] Create Groups of Entities
 - [ ] Particles
-- [ ] Follow Directional Light
-- [ ] Spotlight
-- [ ] RectAreaLight
-- [ ] HemisphericalLight
 - [ ] Heightmaps
 - [ ] Terrain generation
-- [ ] Editor
-- [ ] UI System
 - [ ] Trigger Box
 - [ ] Levels
-- [ ] Toggle visibility for widget
+- [ ] Update Animations
+- [ ] Soft Body Physics
+- [ ] Cloth Physics
+- [ ] Breakable objects
