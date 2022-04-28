@@ -1,28 +1,35 @@
 import {
-  Engine as ECSEngine,
+  Engine as ECSEngine, System,
 } from 'tick-knock';
 import {
   WebGLRenderer,
 } from 'three';
-import EntityCreator from '../managers/entityCreator';
-import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from '../systems/renderSystem';
-import PhysicsSystem from '../systems/physicsSystem';
-import StaticMotionSystem from '../systems/staticMotionSystem';
-import PhysicsRendererSyncSystem from '../systems/physicsRendererSyncSystem';
-import KeyboardMovementSystem from '../systems/keyboardMovementSystem';
-import AssetManager from '../managers/AssetManager';
 import AmmoType from 'ammojs-typed';
-import FollowCameraSystem from '../systems/followCameraSystem';
 // @ts-ignore
 import initAmmo from '../ammo.js';
+import EntityCreator from '../managers/entityCreator';
+import { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from '../systems/renderSystem';
+import AssetManager from '../managers/AssetManager';
+import {
+  PhysicsSystem,
+  RenderSystem,
+  PhysicsRendererSyncSystem,
+  KeyboardMovementSystem,
+  StaticMotionSystem,
+  FollowCameraSystem,
+  AnimationSystem,
+  DebugSystem,
+  FpsSystem,
+  WidgetSystem,
+  KeyboardInputSystem,
+} from '../systems';
+import {
+  ErrorWidget,
+  ProgressWidget,
+} from '../widgets';
 import MaterialManager from '../managers/MaterialManager';
-import AnimationSystem from '../systems/animationSystem';
-import WidgetSystem from '../systems/widgetSystem';
-import { ErrorWidget, ProgressWidget } from '../widgets';
 import EntityManager from '../managers/EntityManager';
 import { DebugOptions } from './debugOptions';
-import DebugSystem from '../systems/debugSystem';
-import FpsSystem from '../systems/fpsSystem';
 
 declare global {
   interface Window {
@@ -83,6 +90,10 @@ export default class Engine {
    */
   public manager!: EntityManager;
 
+  public get systems() {
+    return this.ecs.systems;
+  }
+
   private previousTime: number = 0;
   private ecs!: ECSEngine;
 
@@ -111,18 +122,25 @@ export default class Engine {
   public async init() {
     window.Ammo = await initAmmo();
     this.ecs = new ECSEngine();
+
+    // Core Systems
     this.ecs.addSystem(new RenderSystem(this.containerQuery, this.antialias), 1);
     if (this.physics) {
       this.ecs.addSystem(new PhysicsSystem(this.gravity), 2);
       this.ecs.addSystem(new PhysicsRendererSyncSystem(), 3);
     }
     this.ecs.addSystem(new StaticMotionSystem(), 4);
-    this.ecs.addSystem(new KeyboardMovementSystem(), 5);
-    if (!this.debug) {
-      this.ecs.addSystem(new FollowCameraSystem(), 6);
+    this.ecs.addSystem(new AnimationSystem(), 5);
+    this.ecs.addSystem(new WidgetSystem(this.containerQuery), 6);
+
+    // Movement and Camera Systems
+    this.ecs.addSystem(new KeyboardInputSystem(), 10);
+    this.ecs.addSystem(new KeyboardMovementSystem(), 11);
+    if (! this.debug.orbitControls) {
+      this.ecs.addSystem(new FollowCameraSystem(), 20);
     }
-    this.ecs.addSystem(new AnimationSystem(), 7);
-    this.ecs.addSystem(new WidgetSystem(this.containerQuery), 8);
+
+    // Helper Systems
     if (this.showFps) {
       this.ecs.addSystem(new FpsSystem(this), 999);
     }
@@ -188,10 +206,8 @@ export default class Engine {
   /**
    * Register a system to the engine.
    * @param system The system to add.
-   * 
-   * TODO: Make this work with proper priority.
    */
-  public registerSystem(system: any) {
+  public registerSystem(system: System) {
     this.ecs.addSystem(system);
   }
 

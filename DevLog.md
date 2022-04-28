@@ -72,18 +72,17 @@
 - [x] Better error handling
 
 - [ ] Event System
+- [ ] Updated Motion System
+
 - [ ] Kinetic object for collision purpouse
 - [ ] More complex animation system
 
-- [ ] Scriptability
-
 ### v0.4
 
+- [ ] Scriptability
 - [ ] Static Motion on Solid bodies
 - [ ] Attachment to model
 - [ ] First person Camera
-- [ ] Configurable window size
-- [ ] UI System
 - [ ] Postprocessing
 - [ ] Cleaner material usage
 - [ ] Simple platformer example
@@ -94,6 +93,7 @@
 
 ### v0.6
 
+- [ ] UI System
 - [ ] Pause engine when not in focus
 - [ ] Make debug interactive
 - [ ] Entity Templates
@@ -103,6 +103,7 @@
 
 ### 1.0.0
 
+- [ ] Configurable window size
 - [ ] Documentation
 - [ ] Performance Monitoring
 - [ ] Plane geometry

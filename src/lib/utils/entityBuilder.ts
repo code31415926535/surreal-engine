@@ -18,7 +18,6 @@ import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
-import KeyboardInputController from "../controllers/keyboardInputController";
 import AnimationController from "../controllers/animationController";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
@@ -125,7 +124,7 @@ export default class EntityBuilder {
   }
 
   public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
-    this.entity.addComponent(new KeyboardMotion(new KeyboardInputController(), opts?.speed, opts?.rotation));
+    this.entity.addComponent(new KeyboardMotion(opts?.speed, opts?.rotation));
     return this;
   }
 
