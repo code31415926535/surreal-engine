@@ -68,7 +68,7 @@
 - [x] Fix Model bugs
 - [x] More complex debugging
 - [x] Fps meter
-- [ ] Make Basic Animation actually work
+- [x] Make Basic Animation actually work
 - [x] Better error handling
 
 - [ ] Event System

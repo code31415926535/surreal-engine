@@ -12,6 +12,7 @@ import {
   SphereGeometry,
   Vector3,
 } from "three";
+// @ts-ignore
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
 import Ammo from "ammojs-typed";
 import Model from "../components/model";

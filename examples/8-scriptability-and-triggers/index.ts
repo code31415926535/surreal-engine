@@ -1,25 +1,6 @@
 import '../../src/style.css';
 import { Engine } from "../../src/lib/surreal-engine";
 
-// TODO: Improve breakable system by adding a "break" event
-// class BreakableSystem extends SurrealSystem {
-//   static queries = {
-//     breakables: {
-//       components: [Breakable],
-//     }
-//   }
-
-//   execute(delta: number) {
-//     this.queries.breakables.results.forEach(entity => {
-//       const breakable = entity.getMutableComponent(Breakable) as any as BreakableSchema;
-//       breakable.breaksIn -= delta;
-//       if (breakable.breaksIn <= 0) {
-//         entity.removeAllComponents();
-//       }
-//     });
-//   }
-// }
-
 // TODO: Complete example
 async function main() {
   const engine = new Engine('#demo');
@@ -36,8 +17,6 @@ async function main() {
     "textures/vz_techno_right.png",
     "textures/vz_techno_up.png",
   ]);
-  // engine.assets.addModel("character", "models/exo_gray.fbx", { scale: 0.03 });
-  // engine.assets.addAnimation("character@idle", "models/exo_gray@idle.fbx");
 
   await engine.assets.load();
   engine.materials.addTexturedMaterial("floor@square", { texture: "floor", repeat: { x: 5, y: 5 } });

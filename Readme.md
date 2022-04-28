@@ -136,6 +136,7 @@ Now we have quite a fun game already! Come back when `0.3.0` is ready for more c
 - [Character Movement](./examples/4-character-movement/index.ts)
 - [Camera](./examples/5-camera/index.ts)
 - [Textures and Skybox](./examples/6-textures-and-skybox/index.ts)
+- [Models and Animation](./examples/7-models-and-animation/index.ts)
 
 [npm]: https://img.shields.io/npm/v/surreal-engine
 [npm-url]: https://www.npmjs.com/package/surreal-engine

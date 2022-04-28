@@ -10,6 +10,7 @@ import {
 } from 'three';
 import RenderSystem from "./renderSystem";
 import Model from "../components/model";
+// @ts-ignore
 import { getHelperFromSkeleton } from 'three/examples/jsm/utils/SkeletonUtils';
 
 export default class DebugSystem extends ReactionSystem {
