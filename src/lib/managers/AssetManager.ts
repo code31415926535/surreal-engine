@@ -82,7 +82,7 @@ export default class AssetManager {
     return this.models[name];
   }
 
-  public getAnimation(name: string): AnimationClip {
+  public getAnimation(name: string): AnimationClip | undefined {
     return this.animations[name];
   }
 

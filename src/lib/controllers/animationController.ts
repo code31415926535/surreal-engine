@@ -22,10 +22,9 @@ export default class AnimationController {
   }
 
   public addAnimation(name: string, clip: AnimationClip): AnimationController {
-    const clonedClip = clip.clone();
     this.animations[name] = {
       action: this.mixer.clipAction(clip),
-      clip: clonedClip,
+      clip,
     };
     return this;
   }
@@ -33,8 +32,8 @@ export default class AnimationController {
   public play(name: string) {
     const { action } = this.animations[name];
     action.time = 0.0;
-    action.setEffectiveTimeScale(1.0);
-    action.setEffectiveWeight(1.0);
+    action.setEffectiveTimeScale(1);
+    action.setEffectiveWeight(1);
     action.enabled = true;
     if (this.prevAnimation) {
       this.prevAnimation.crossFadeTo(action, 0.5, true);
@@ -43,7 +42,7 @@ export default class AnimationController {
     this.prevAnimation = action;
   }
 
-  update(timeElapsed: number): void {
-    this.mixer.update(timeElapsed);
+  update(delta: number): void {
+    this.mixer.update(delta * 0.001);
   }
 }
