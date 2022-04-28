@@ -1,10 +1,11 @@
-import { Query, Entity, IterativeSystem } from 'tick-knock';
+import { Query, Entity } from 'tick-knock';
 import { Vector3 } from "three";
 import Body from "../components/body";
 import FollowCamera from "../components/followCamera";
 import RenderSystem from './renderSystem';
+import SingleEntitySystem from './singleEntitySystem';
 
-export default class FollowCameraSystem extends IterativeSystem {
+export default class FollowCameraSystem extends SingleEntitySystem {
   private currentPosition: Vector3 = new Vector3();
   private currentLookAt: Vector3 = new Vector3();
 

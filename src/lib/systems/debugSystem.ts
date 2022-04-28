@@ -8,7 +8,7 @@ import {
   Mesh,
   MeshPhongMaterial,
 } from 'three';
-import RenderSystem from "./renderSystem";
+import RenderSystem, { CameraChangedEvent } from "./renderSystem";
 import Model from "../components/model";
 // @ts-ignore
 import { getHelperFromSkeleton } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -26,9 +26,11 @@ export default class DebugSystem extends ReactionSystem {
       this.parent.creator.ethereal({ obj: new GridHelper(this.debug.grid.size) });
     }
     if (this.debug.orbitControls) {
-      // TODO: Subscribe for camera changes
       const rs = this.engine.getSystem(RenderSystem)!;
       rs.orbitControls();
+      this.engine.subscribe(CameraChangedEvent, () => {
+        rs.orbitControls();
+      });
     }
   }
 
@@ -52,6 +54,20 @@ export default class DebugSystem extends ReactionSystem {
         const helper = getHelperFromSkeleton(skeleton);
         this.parent.creator.ethereal({ obj: helper });
       }
+    }
+
+    // TODO: Make this work
+    if (this.debug.boundingBox && model.boundingBox) {
+      // model.computeBoundingBox();
+      // if (model.boundingBox) {
+      //   const b = new Mesh( new BoxGeometry(
+      //     model.boundingBox.max.x - model.boundingBox.min.x,
+      //     model.boundingBox.max.y - model.boundingBox.min.y,
+      //     model.boundingBox.max.z - model.boundingBox.min.z,
+      //   ), new MeshPhongMaterial({ color: 0x00ff00 }));
+      //   b.applyMatrix4(model.mesh.matrixWorld);
+      //   this.parent.creator.ethereal({ obj: b });
+      // }
     }
   }
 }

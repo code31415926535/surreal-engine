@@ -1,6 +1,8 @@
-import { AnimationClip, Bone, Object3D, Skeleton } from "three";
+import { AnimationClip, Bone, Box3, Mesh, Object3D, Skeleton } from "three";
 
 export default class Model {
+  public boundingBox: Box3 | null = null;
+
   constructor(public mesh: Object3D) {}
 
   public get attachmentPoints() {
@@ -22,5 +24,15 @@ export default class Model {
     });
 
     return result.length > 0 ? new Skeleton(result) : null;
+  }
+
+  public computeBoundingBox() {
+    this.mesh.traverse(child => {
+      if (! this.boundingBox && (child as Mesh).isMesh) {
+        (child as Mesh).geometry.computeBoundingBox();
+        this.boundingBox = new Box3();
+        this.boundingBox.copy((child as Mesh).geometry.boundingBox!);
+      }
+    })
   }
 }

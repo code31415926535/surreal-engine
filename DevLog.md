@@ -71,20 +71,20 @@
 - [x] Make Basic Animation actually work
 - [x] Better error handling
 
-- [ ] Event System
-- [ ] Updated Motion System
-
+- [x] Event System
+- [x] Updated Motion System
 - [ ] Kinetic object for collision purpouse
 - [ ] More complex animation system
+
+- [ ] Make camera configurable
+- [ ] Cleaner material usage
 
 ### v0.4
 
 - [ ] Scriptability
 - [ ] Static Motion on Solid bodies
-- [ ] Attachment to model
-- [ ] First person Camera
 - [ ] Postprocessing
-- [ ] Cleaner material usage
+- [ ] Timer System
 - [ ] Simple platformer example
 
 ### v0.5
@@ -93,11 +93,11 @@
 
 ### v0.6
 
+- [ ] Attachment to model
+- [ ] First person Camera
 - [ ] UI System
-- [ ] Pause engine when not in focus
 - [ ] Make debug interactive
 - [ ] Entity Templates
-- [ ] Make camera configurable
 - [ ] Clean and simple way to define pos, size and quat
 - [ ] Toggle visibility for widget
 

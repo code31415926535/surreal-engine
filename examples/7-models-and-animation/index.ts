@@ -4,7 +4,7 @@ import { MotionDebug, quickStart } from "../../src/lib/surreal-engine";
 async function main() {
   quickStart(
     '#demo', 
-    { showFps: true, debug: MotionDebug },
+    { showFps: true, debug: { ...MotionDebug, orbitControls: false, boundingBox: true } },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -86,7 +86,6 @@ async function main() {
       pos: { x: 0, y: 1, z: 90 },
     });
 
-    // TODO: Model has to support collision box
     engine.creator.model({
       model: "character",
       size: { x: 2, y: 2, z: 2 },
@@ -98,7 +97,9 @@ async function main() {
           name: "idle",
           clip: "character@Idle",
         }]      
-      });
+      })
+      .withBoundingBox()
+      .withKeyboardMotion();
   });
 }
 

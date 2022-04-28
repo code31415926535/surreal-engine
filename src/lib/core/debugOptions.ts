@@ -8,6 +8,7 @@ export type DebugOptions = {
   orbitControls?: boolean;
   wireframe?: boolean;
   skeleton?: boolean;
+  boundingBox?: boolean;
 }
 
 export const BasicDebug: DebugOptions = {

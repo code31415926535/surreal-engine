@@ -11,6 +11,7 @@ import {
   CurvePath,
   SphereGeometry,
   Vector3,
+  Box3,
 } from "three";
 // @ts-ignore
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -94,6 +95,19 @@ export default class EntityBuilder {
     return this;
   }
 
+  public withBoundingBox = (): EntityBuilder => {
+    const model = this.entity.get(Model);
+    if (!model) {
+      throw new Error('You must add a model to an entity before adding a bounding box');
+    }
+    model.computeBoundingBox();
+    if (!model.boundingBox) {
+      throw new Error('Model has no mesh to compute bounding box');
+    }
+    this.entity.addComponent(new Body(this.buildRigidBodyFromBox(model.boundingBox)));
+    return this;
+  }
+
   public withObject3D = (opts: Object3DOptions): EntityBuilder => {
     this.entity.addComponent(new Model(opts.obj));
     return this;
@@ -163,6 +177,31 @@ export default class EntityBuilder {
 
   public get id(): number {
     return this.entity.id;
+  }
+
+  private buildRigidBodyFromBox = (box: Box3): Ammo.btRigidBody => {
+    const opts: RigidBodyOptions = {
+      type: 'box',
+      size: {
+        x: box.max.x - box.min.x,
+        y: box.max.y - box.min.y,
+        z: box.max.z - box.min.z,
+      },
+      pos: {
+        x: box.min.x + (box.max.x - box.min.x) / 2,
+        y: box.min.y + (box.max.y - box.min.y) / 2,
+        z: box.min.z + (box.max.z - box.min.z) / 2,
+      },
+      quat: {
+        x: 0,
+        y: 0,
+        z: 0,
+        w: 1,
+      },
+      // TODO: What about this?
+      mass: 1,
+    }
+    return this.buildRigidBody(opts);
   }
 
   private buildRigidBody = (opts: RigidBodyOptions): Ammo.btRigidBody => {
