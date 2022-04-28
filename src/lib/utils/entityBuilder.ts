@@ -157,6 +157,18 @@ export default class EntityBuilder {
     return this;
   }
 
+  // public asAnimated = (): EntityBuilder => {
+  //   const ctrl = new AnimationController(this.entity);
+  //   const clips = this.entity.get(Model)!;
+  //   console.log(clips);
+  //   // opts.clips.forEach(clip => {
+  //     // ctrl.addAnimation(clip.name, clip.clip);
+  //   // });
+  //   // ctrl.setState(opts.initial);
+  //   // this.entity.addComponent(new Animation(ctrl));
+  //   return this;
+  // }
+
   public get id(): number {
     return this.entity.id;
   }

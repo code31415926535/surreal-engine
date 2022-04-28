@@ -93,14 +93,8 @@ async function main() {
       pos: { x: 0, y: 0.5, z: 0.5 },
     })
       .withThirdPersonCamera()
-      .withKeyboardMotion();
-      // .withAnimation({
-      //   initial: "idle",
-      //   clips: [{
-      //     name: "idle",
-      //     clip: engine.assets.getAnimation("character@idle"),
-      //   }]
-      // });
+      .withKeyboardMotion()
+      // .asAnimated();
   });
 }
 

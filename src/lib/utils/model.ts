@@ -3,7 +3,6 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { ColladaLoader } from 'three/examples/jsm/loaders/ColladaLoader';
 
-// TODO: Check in file has animations and have a way to use them
 export default class ModelLoader {
   constructor(private manager: LoadingManager) {}
 

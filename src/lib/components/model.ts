@@ -1,4 +1,4 @@
-import { Bone, Object3D, Skeleton } from "three";
+import { AnimationClip, Bone, Object3D, Skeleton } from "three";
 
 export default class Model {
   constructor(public mesh: Object3D) {}
@@ -7,6 +7,10 @@ export default class Model {
     return this.skeleton ?
       this.skeleton.bones.map(bone => bone.name) :
       [];
+  }
+
+  public get clips(): AnimationClip[] {
+    return this.mesh.animations;
   }
 
   public get skeleton(): Skeleton | null {

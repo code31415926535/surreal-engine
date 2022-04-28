@@ -73,6 +73,7 @@
 - [x] Better error handling
 - [ ] Make Basic Animation actually work
 - [ ] Scriptability
+- [ ] Attachment to model
 
 ### v0.4
 
@@ -81,8 +82,6 @@
 - [ ] More advanced physics
 - [ ] Event System
 - [ ] Postprocessing
-- [ ] Update Animations
-- [ ] Make debug interactive
 - [ ] UI System
 - [ ] Simple platformer example
 
@@ -99,3 +98,6 @@
 - [ ] Trigger Box
 - [ ] Levels
 - [ ] Toggle visibility for widget
+- [ ] Make debug interactive
+- [ ] Update Animations
+- [ ] Entity Templates
