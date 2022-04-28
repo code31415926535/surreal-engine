@@ -1,5 +1,6 @@
 import '../../src/style.css';
 import { MotionDebug, quickStart } from "../../src/lib/surreal-engine";
+import { Euler, Quaternion, Vector3 } from 'three';
 
 async function main() {
   quickStart(
@@ -86,10 +87,14 @@ async function main() {
       pos: { x: 0, y: 1, z: 90 },
     });
 
+    const euler = new Euler(0, Math.PI / 2, 0);
+    const q = new Quaternion().setFromEuler(euler);
+
     engine.creator.model({
       model: "character",
       size: { x: 2, y: 2, z: 2 },
       pos: { x: 0, y: 0.5, z: 0.5 },
+      offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
     })
       .withAnimation({
         initial: "idle",
@@ -99,7 +104,8 @@ async function main() {
         }]      
       })
       .withBoundingBox()
-      .withKeyboardMotion();
+      .withKeyboardMotion()
+      .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1));
   });
 }
 

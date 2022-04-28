@@ -73,16 +73,17 @@
 
 - [x] Event System
 - [x] Updated Motion System
-- [ ] Kinetic object for collision purpouse
+- [x] Make camera configurable
 - [ ] More complex animation system
 
-- [ ] Make camera configurable
-- [ ] Cleaner material usage
+- [ ] Move away from quaternion
+- [ ] Kinetic object for collision purpouse
 
 ### v0.4
 
-- [ ] Scriptability
+- [ ] Cleaner material usage
 - [ ] Static Motion on Solid bodies
+- [ ] Scriptability
 - [ ] Postprocessing
 - [ ] Timer System
 - [ ] Simple platformer example

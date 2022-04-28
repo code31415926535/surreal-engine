@@ -12,6 +12,7 @@ import {
   SphereGeometry,
   Vector3,
   Box3,
+  Group,
 } from "three";
 // @ts-ignore
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -27,11 +28,15 @@ import Animation from '../components/animation';
 import AssetManager from '../managers/AssetManager';
 
 // TODO: Pos Quat Size unify
+// TODO: Move to Vectory type
 
-export interface RigidBodyOptions {
+export interface PosQuat {
+  pos?: { x: number, y: number, z: number };
+  quat?: { x: number, y: number, z: number, w: number };
+}
+
+export interface RigidBodyOptions extends PosQuat {
   type: 'box' | 'sphere' | 'cylinder';
-  pos?: { x: number; y: number; z: number };
-  quat?: { x: number; y: number; z: number; w: number };
   size: { x: number; y: number; z: number };
   mass?: number;
   restitution?: number;
@@ -40,21 +45,18 @@ export interface RigidBodyOptions {
   angularDamping?: number;
 }
 
-export interface ShapeModelOptions {
+export interface ShapeModelOptions extends PosQuat {
   type: 'box' | 'sphere' | 'cylinder';
   size: { x: number; y: number; z: number };
-  pos?: { x: number; y: number; z: number };
-  quat?: { x: number; y: number; z: number; w: number };
   material: SurrealMaterial;
   castShadow?: boolean;
   receiveShadow?: boolean;
 }
 
-export interface Model3DOptions {
+export interface Model3DOptions extends PosQuat {
   model: Object3D;
-  pos?: { x: number; y: number; z: number };
-  quat?: { x: number; y: number; z: number; w: number };
   size?: { x: number; y: number; z: number };
+  offsetQuat?: { x: number; y: number; z: number; w: number };
   castShadow?: boolean;
   receiveShadow?: boolean;
 }
@@ -142,16 +144,18 @@ export default class EntityBuilder {
     return this;
   }
 
-  // TODO: Make this configurable
-  public withOffsetCamera = (): EntityBuilder => {
-    const idealOffset = new Vector3(15, 15, 15);
+  public withOffsetCamera = (offset?: Vector3): EntityBuilder => {
+    const idealOffset = offset || new Vector3(15, 15, 15);
     return this.withFollowCamera(new FollowCamera(new Vector3(), idealOffset, false));
   }
 
-  // TODO: Make this configurable
-  public withThirdPersonCamera = (): EntityBuilder => {
-    const idealLookAt = new Vector3(5, 2.5, 0);
-    const idealOffset = new Vector3(-15, 5, 0);
+  /**
+   * @param lookAt - The position to look at
+   * @param offset - Offset from the center of the entity
+   */
+  public withThirdPersonCamera = (lookAt?: Vector3, offset?: Vector3): EntityBuilder => {
+    const idealLookAt = lookAt || new Vector3(5, 2.5, 0);
+    const idealOffset = offset || new Vector3(-15, 5, 0);
     return this.withFollowCamera(new FollowCamera(idealLookAt, idealOffset, true));
   }
 
@@ -254,6 +258,17 @@ export default class EntityBuilder {
     }
     if (size) {
       copy.scale.set(size?.x || 1, size?.y || 1, size?.z || 1);
+    }
+    if (opts.offsetQuat) {
+      const group = new Group();
+      group.position.copy(copy.position);
+      group.quaternion.copy(copy.quaternion);
+      group.scale.copy(copy.scale);
+      copy.position.set(0, 0, 0);
+      copy.quaternion.set(opts.offsetQuat.x, opts.offsetQuat.y, opts.offsetQuat.z, opts.offsetQuat.w);
+      copy.scale.set(1, 1, 1);
+      group.add(copy);
+      return group;
     }
     return copy;
   }
