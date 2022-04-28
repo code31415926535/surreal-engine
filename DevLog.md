@@ -77,30 +77,31 @@
 - [ ] More complex animation system
 
 - [ ] Move away from quaternion
-- [ ] Kinetic object for collision purpouse
-
-### v0.4
 
 - [ ] Cleaner material usage
 - [ ] Static Motion on Solid bodies
-- [ ] Scriptability
+
 - [ ] Postprocessing
+
+- [ ] Scriptability
+
 - [ ] Timer System
+
 - [ ] Simple platformer example
 
-### v0.5
+### v0.4
 
 - [ ] Editor
 
-### v0.6
+### v0.5
 
 - [ ] Attachment to model
 - [ ] First person Camera
 - [ ] UI System
 - [ ] Make debug interactive
 - [ ] Entity Templates
-- [ ] Clean and simple way to define pos, size and quat
 - [ ] Toggle visibility for widget
+- [ ] Kinetic object for collision purpouse
 
 ### 1.0.0
 
@@ -114,6 +115,7 @@
 - [ ] Trigger Box
 - [ ] Levels
 - [ ] Update Animations
+- [ ] Sun and sky system
 - [ ] Soft Body Physics
 - [ ] Cloth Physics
 - [ ] Breakable objects

@@ -1,11 +1,11 @@
 import '../../src/style.css';
-import { MotionDebug, quickStart } from "../../src/lib/surreal-engine";
+import { LightDebug, quickStart } from "../../src/lib/surreal-engine";
 import { Euler, Quaternion, Vector3 } from 'three';
 
 async function main() {
   quickStart(
     '#demo', 
-    { showFps: true, debug: { ...MotionDebug, orbitControls: false, boundingBox: true } },
+    { showFps: true, debug: LightDebug },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -73,11 +73,13 @@ async function main() {
       model: "knight_statue",
       size: { x: 1, y: 1, z: 1 },
       pos: { x: 10, y: 0.5, z: 11 },
+      castShadow: true,
     });
     engine.creator.model({
       model: "knight_statue",
       size: { x: 1.2, y: 1.5, z: 1 },
       pos: { x: -10, y: 0.5, z: 11 },
+      castShadow: true,
     });
 
     // TODO: Very very slow
@@ -95,6 +97,7 @@ async function main() {
       size: { x: 2, y: 2, z: 2 },
       pos: { x: 0, y: 0.5, z: 0.5 },
       offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
+      castShadow: true,
     })
       .withAnimation({
         initial: "idle",

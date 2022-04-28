@@ -7,6 +7,10 @@ import {
   Material,
   Mesh,
   MeshPhongMaterial,
+  CameraHelper,
+  DirectionalLight,
+  PointLightHelper,
+  PointLight,
 } from 'three';
 import RenderSystem, { CameraChangedEvent } from "./renderSystem";
 import Model from "../components/model";
@@ -56,18 +60,15 @@ export default class DebugSystem extends ReactionSystem {
       }
     }
 
-    // TODO: Make this work
-    if (this.debug.boundingBox && model.boundingBox) {
-      // model.computeBoundingBox();
-      // if (model.boundingBox) {
-      //   const b = new Mesh( new BoxGeometry(
-      //     model.boundingBox.max.x - model.boundingBox.min.x,
-      //     model.boundingBox.max.y - model.boundingBox.min.y,
-      //     model.boundingBox.max.z - model.boundingBox.min.z,
-      //   ), new MeshPhongMaterial({ color: 0x00ff00 }));
-      //   b.applyMatrix4(model.mesh.matrixWorld);
-      //   this.parent.creator.ethereal({ obj: b });
-      // }
+    if (this.debug.light) {
+      if (model.mesh.type === 'DirectionalLight') {
+        const helper = new CameraHelper((model.mesh as DirectionalLight).shadow.camera);
+        this.parent.creator.ethereal({ obj: helper });
+      }
+      if (model.mesh.type === 'PointLight') {
+        const helper = new PointLightHelper(model.mesh as PointLight);
+        this.parent.creator.ethereal({ obj: helper });
+      }
     }
   }
 }

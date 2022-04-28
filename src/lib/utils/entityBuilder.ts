@@ -249,7 +249,13 @@ export default class EntityBuilder {
 
   private build3DModel = (opts: Model3DOptions): Object3D => {
     const { model, pos, quat, size } = opts;
-    const copy = clone(model);
+    const copy: Object3D = clone(model);
+    copy.traverse(child => {
+      if ((child as Mesh).isMesh) {
+        (child as Mesh).castShadow = opts.castShadow || false;
+        (child as Mesh).receiveShadow = opts.receiveShadow || false;
+      }
+    });
     if (pos) {
       copy.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
     }
