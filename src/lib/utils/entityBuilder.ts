@@ -11,7 +11,6 @@ import {
   CurvePath,
   SphereGeometry,
   Vector3,
-  AnimationClip,
 } from "three";
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
 import Ammo from "ammojs-typed";
@@ -24,6 +23,7 @@ import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 import Animation from '../components/animation';
+import AssetManager from '../managers/AssetManager';
 
 // TODO: Pos Quat Size unify
 
@@ -62,7 +62,7 @@ export interface AnimationOptions {
   initial: string;
   clips: [{
     name: string;
-    clip: AnimationClip;
+    clip: string;
   }]
 }
 
@@ -84,7 +84,7 @@ export interface KeyboardMotionOptions {
 export default class EntityBuilder {
   private entity: Entity;
 
-  constructor(private ecs: ECSEngine) {
+  constructor(private ecs: ECSEngine, private assets: AssetManager) {
     this.entity = new Entity();
     this.ecs.addEntity(this.entity);
   }
@@ -111,10 +111,11 @@ export default class EntityBuilder {
 
   public withAnimation = (opts: AnimationOptions): EntityBuilder => {
     const ctrl = new AnimationController(this.entity);
-    opts.clips.forEach(clip => {
-      ctrl.addAnimation(clip.name, clip.clip);
+    opts.clips.forEach(clipName => {
+      const clip = this.assets.getAnimation(clipName.clip);
+      ctrl.addAnimation(clipName.name, clip);
     });
-    ctrl.setState(opts.initial);
+    ctrl.play(opts.initial);
     this.entity.addComponent(new Animation(ctrl));
     return this;
   }

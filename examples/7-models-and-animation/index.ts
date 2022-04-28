@@ -18,8 +18,8 @@ async function main() {
         "textures/vz_techno_up.png",
       ]);
       assets.addModel("knight_statue", "models/knight_statue.glb");
-      assets.addModel("character", "models/Vanguard.dae");
-      assets.addModel("datsun", "models/free_datsun_280z/scene.gltf");
+      assets.addModel("character", "models/test-char.glb");
+      // assets.addModel("datsun", "models/free_datsun_280z/scene.gltf");
   },
   (engine) => {
     engine.setBackground({
@@ -85,16 +85,23 @@ async function main() {
     //   size: { x: 3, y: 3, z: 3 },
     //   pos: { x: 0, y: 1, z: 90 },
     // });
-  
+
     // TODO: Model has to support collision box
     engine.creator.model({
       model: "character",
-      size: { x: 0.03, y: 0.03, z: 0.03 },
+      size: { x: 2, y: 2, z: 2 },
       pos: { x: 0, y: 0.5, z: 0.5 },
     })
       .withThirdPersonCamera()
       .withKeyboardMotion()
-      // .asAnimated();
+      .withAnimation({
+        initial: "idle",
+        clips: [{
+          name: "idle",
+          clip: "character@Armature|mixamo.com|Layer0",
+        }]      
+      });
+    console.log(engine.assets.animationsFor("character"));
   });
 }
 

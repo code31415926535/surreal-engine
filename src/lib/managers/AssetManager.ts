@@ -24,10 +24,6 @@ export default class AssetManager {
     name: string;
     path: string;
   }[] = [];
-  private animationsToLoad: {
-    name: string;
-    path: string;
-  }[] = [];
 
   private textures: { [name: string]: Texture } = {};
   private models: { [name: string]: Object3D } = {};
@@ -41,6 +37,21 @@ export default class AssetManager {
     this.textureLoader = new TextureLoader(this.loadingManager);
     this.modelLoader = new ModelLoader(this.loadingManager);
     this.basePath = "/assets/";
+  }
+
+  public list(): string[] {
+    return [
+      "==Textures==",
+      ...Object.keys(this.textures),
+      "==Models==",
+      ...Object.keys(this.models),
+      "==Animations==",
+      ...Object.keys(this.animations),
+    ];
+  }
+
+  public animationsFor(modelName: string): string[] {
+    return Object.keys(this.animations).filter(key => key.startsWith(modelName));
   }
 
   public setBasePath(path: string): void {
@@ -57,10 +68,6 @@ export default class AssetManager {
 
   public addModel(name: string, path: string): void {
     this.modelsToLoad.push({ name, path: this.basePath + path });
-  }
-
-  public addAnimation(name: string, path: string): void {
-    this.animationsToLoad.push({ name, path: this.basePath + path });
   }
 
   public isTexture(name: string): boolean {
@@ -104,18 +111,16 @@ export default class AssetManager {
     });
     const promisesModel = this.modelsToLoad.map(async (model) => {
       const result = await this.modelLoader.load(model.path);
-      this.models[model.name] = result;
-    });
-    const promisesAnimation = this.animationsToLoad.map(async (animation) => {
-      const result = await this.modelLoader.loadAnimation(animation.path);
-      this.animations[animation.name] = result;
+      this.models[model.name] = result.object;
+      Object.keys(result.animations).forEach(key => {
+        this.animations[`${model.name}@${key}`] = result.animations[key];
+      });
     });
 
     await Promise.all([
       ...promisesTexture,
       ...promisesCube,
       ...promisesModel,
-      ...promisesAnimation,
     ]);
     this.texturesToLoad = [];
     this.cubeTexturesToLoad = [];

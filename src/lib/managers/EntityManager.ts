@@ -4,6 +4,10 @@ import Widget from "../components/widget";
 export default class EntityManager {
   constructor(private ecs: ECSEngine) {}
 
+  public list(): readonly Entity[] {
+    return this.ecs.entities;
+  }
+
   public is(id: number): boolean {
     const entity = this.ecs.getEntityById(id);
     return entity !== undefined;

@@ -67,7 +67,7 @@ export default class EntityCreator {
    * Creates an emtpy entity without any components.
    */
   empty(): EntityBuilder {
-    return new EntityBuilder(this.ecs);
+    return new EntityBuilder(this.ecs, this.assets);
   }
 
   /**
@@ -77,7 +77,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   ethereal(opts: Object3DOptions): EntityBuilder {
-    return new EntityBuilder(this.ecs).withObject3D({ obj: opts.obj });
+    return this.empty().withObject3D({ obj: opts.obj });
   }
 
   /**
@@ -89,7 +89,7 @@ export default class EntityCreator {
    */
   widget(elem: JSX.Element): EntityBuilder {
     const id = nanoid();
-    return new EntityBuilder(this.ecs).with(new Widget(id, elem));
+    return this.empty().with(new Widget(id, elem));
   }
 
   /**
@@ -101,7 +101,7 @@ export default class EntityCreator {
    */
   model(opts: ModelOptions): EntityBuilder {
     const obj = this.assets.getModel(opts.model);
-    return new EntityBuilder(this.ecs).with3DModel({
+    return this.empty().with3DModel({
       ...opts,
       model: obj,
     });
@@ -115,7 +115,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   box(opts: BoxOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.ecs)
+    const builder = this.empty()
       .withShapeModel({ ...opts, type: 'box' });
     
     if (opts.rigid) {
@@ -133,7 +133,7 @@ export default class EntityCreator {
    * @returns {@link EntityBuilder}
    */
   sphere(opts: SphereOptions): EntityBuilder {
-    const builder = new EntityBuilder(this.ecs)
+    const builder = this.empty()
       .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
     
     if (opts.rigid) {

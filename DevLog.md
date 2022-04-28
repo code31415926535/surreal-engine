@@ -67,37 +67,51 @@
 
 - [x] Fix Model bugs
 - [x] More complex debugging
-- [ ] Kinetic object for collision purpouse
 - [x] Fps meter
-- [ ] Configurable window size
-- [x] Better error handling
 - [ ] Make Basic Animation actually work
+- [x] Better error handling
+
+- [ ] Event System
+- [ ] Kinetic object for collision purpouse
+- [ ] More complex animation system
+
 - [ ] Scriptability
-- [ ] Attachment to model
 
 ### v0.4
 
 - [ ] Static Motion on Solid bodies
+- [ ] Attachment to model
 - [ ] First person Camera
-- [ ] More advanced physics
-- [ ] Event System
-- [ ] Postprocessing
+- [ ] Configurable window size
 - [ ] UI System
+- [ ] Postprocessing
+- [ ] Cleaner material usage
 - [ ] Simple platformer example
 
-### Future
+### v0.5
 
-- [ ] Performance Monitoring
-- [ ] Documentation
+- [ ] Editor
+
+### v0.6
+
 - [ ] Pause engine when not in focus
+- [ ] Make debug interactive
+- [ ] Entity Templates
+- [ ] Make camera configurable
+- [ ] Clean and simple way to define pos, size and quat
+- [ ] Toggle visibility for widget
+
+### 1.0.0
+
+- [ ] Documentation
+- [ ] Performance Monitoring
 - [ ] Plane geometry
 - [ ] Particles
 - [ ] Heightmaps
 - [ ] Terrain generation
-- [ ] Editor
 - [ ] Trigger Box
 - [ ] Levels
-- [ ] Toggle visibility for widget
-- [ ] Make debug interactive
 - [ ] Update Animations
-- [ ] Entity Templates
+- [ ] Soft Body Physics
+- [ ] Cloth Physics
+- [ ] Breakable objects
