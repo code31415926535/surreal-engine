@@ -4,13 +4,13 @@ import {
 import {
   WebGLRenderer,
 } from 'three';
-import EntityCreator from '../managers/EntityCreator';
-import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from '../systems/renderSystem';
-import PhysicsSystem from '../systems/physicsSystem';
-import StaticMotionSystem from '../systems/staticMotionSystem';
-import PhysicsRendererSyncSystem from '../systems/physicsRendererSyncSystem';
-import KeyboardMovementSystem from '../systems/keyboardMovementSystem';
-import AssetManager from '../managers/AssetManager';
+import EntityCreator from './managers/entityCreator';
+import RenderSystem, { BackgroundOptions, OrthographicCameraOptions, PerspectiveCameraOptions } from './systems/renderSystem';
+import PhysicsSystem from './systems/physicsSystem';
+import StaticMotionSystem from './systems/staticMotionSystem';
+import PhysicsRendererSyncSystem from './systems/physicsRendererSyncSystem';
+import KeyboardMovementSystem from './systems/keyboardMovementSystem';
+import AssetManager from './managers/AssetManager';
 import AmmoType from 'ammojs-typed';
 import FollowCameraSystem from '../systems/followCameraSystem';
 // @ts-ignore
