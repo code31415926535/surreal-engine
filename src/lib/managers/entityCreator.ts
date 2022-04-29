@@ -4,6 +4,7 @@ import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Mo
 import AssetManager from './AssetManager';
 import Widget from '../components/widget';
 import { nanoid } from 'nanoid';
+import Timer from '../components/timer';
 
 interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
   rigid?: boolean;
@@ -199,5 +200,9 @@ export default class EntityCreator {
     }
 
     return this.ethereal({ obj: light });
+  }
+
+  timer(callback: () => void, interval: number, repeat: boolean): EntityBuilder {
+    return this.empty().with(new Timer(callback, interval, repeat));
   }
 }

@@ -77,14 +77,13 @@
 - [ ] More complex animation system
 
 - [ ] Postprocessing
+- [x] Timer System
 
 - [ ] Move away from quaternion
 - [ ] Cleaner material usage
 
 - [ ] Static Motion on Solid bodies
 - [ ] Scriptability
-
-- [ ] Timer System
 
 - [ ] Simple platformer example
 

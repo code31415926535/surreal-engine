@@ -22,6 +22,7 @@ import {
   FpsSystem,
   WidgetSystem,
   KeyboardInputSystem,
+  TimerSystem,
 } from '../systems';
 import {
   ErrorWidget,
@@ -139,6 +140,9 @@ export default class Engine {
     if (! this.debug.orbitControls) {
       this.ecs.addSystem(new FollowCameraSystem(), 20);
     }
+
+    // Scripting systems
+    this.ecs.addSystem(new TimerSystem(), 30);
 
     // Helper Systems
     if (this.showFps) {
