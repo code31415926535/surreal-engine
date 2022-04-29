@@ -1,6 +1,6 @@
 import '../../src/style.css';
-import { quickStart } from "../../src/lib/surreal-engine";
-import { Euler, Quaternion, Vector3 } from 'three';
+import { quickStart, UnrealBloomPass, GlitchPass } from "../../src/lib/surreal-engine";
+import { Euler, Quaternion, Vector2, Vector3 } from 'three';
 
 // TODO: Complete with full movement kit
 quickStart(
@@ -81,4 +81,7 @@ quickStart(
       castShadow: true,
     });
   }, 500, true);
+
+  engine.addPostProcessing(new UnrealBloomPass(new Vector2(10, 10), 1.5, 0.4, 0.85));
+  engine.addPostProcessing(new GlitchPass());
 });

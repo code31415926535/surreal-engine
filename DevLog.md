@@ -76,11 +76,11 @@
 - [x] Make camera configurable
 - [ ] More complex animation system
 
-- [ ] Postprocessing
+- [x] Postprocessing
 - [x] Timer System
 
-- [ ] Move away from quaternion
 - [ ] Cleaner material usage
+- [ ] Move away from quaternion
 
 - [ ] Static Motion on Solid bodies
 - [ ] Scriptability
@@ -89,17 +89,16 @@
 
 ### v0.4
 
+- [ ] Better Widgets
 - [ ] Selection System
 - [ ] Editor
 
 ### v0.5
 
-- [ ] Attachment to model
-- [ ] First person Camera
-- [ ] UI System
+- [ ] Pause, Rewind, Step
+- [ ] GUI System
 - [ ] Make debug interactive
 - [ ] Entity Templates
-- [ ] Toggle visibility for widget
 - [ ] Kinetic object for collision purpouse
 
 ### 1.0.0
@@ -118,3 +117,5 @@
 - [ ] Soft Body Physics
 - [ ] Cloth Physics
 - [ ] Breakable objects
+- [ ] First person Camera
+- [ ] Attachment to model
