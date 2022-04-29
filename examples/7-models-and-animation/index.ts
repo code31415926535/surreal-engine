@@ -1,10 +1,11 @@
 import '../../src/style.css';
-import { MotionDebug, quickStart } from "../../src/lib/surreal-engine";
+import { quickStart } from "../../src/lib/surreal-engine";
+import { Euler, Quaternion, Vector3 } from 'three';
 
 async function main() {
   quickStart(
     '#demo', 
-    { showFps: true, debug: MotionDebug },
+    { showFps: true },
     (assets) => {
       assets.setBasePath("/assets/");
       assets.addTexture("floor", "textures/floor.png");
@@ -72,11 +73,13 @@ async function main() {
       model: "knight_statue",
       size: { x: 1, y: 1, z: 1 },
       pos: { x: 10, y: 0.5, z: 11 },
+      castShadow: true,
     });
     engine.creator.model({
       model: "knight_statue",
       size: { x: 1.2, y: 1.5, z: 1 },
       pos: { x: -10, y: 0.5, z: 11 },
+      castShadow: true,
     });
 
     // TODO: Very very slow
@@ -86,11 +89,15 @@ async function main() {
       pos: { x: 0, y: 1, z: 90 },
     });
 
-    // TODO: Model has to support collision box
+    const euler = new Euler(0, Math.PI / 2, 0);
+    const q = new Quaternion().setFromEuler(euler);
+
     engine.creator.model({
       model: "character",
       size: { x: 2, y: 2, z: 2 },
-      pos: { x: 0, y: 0.5, z: 0.5 },
+      pos: { x: 0, y: 0, z: 0 },
+      offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
+      castShadow: true,
     })
       .withAnimation({
         initial: "idle",
@@ -98,7 +105,10 @@ async function main() {
           name: "idle",
           clip: "character@Idle",
         }]      
-      });
+      })
+      .withBoundingBox()
+      .withKeyboardMotion()
+      .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1));
   });
 }
 

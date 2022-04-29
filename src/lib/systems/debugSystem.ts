@@ -7,8 +7,12 @@ import {
   Material,
   Mesh,
   MeshPhongMaterial,
+  CameraHelper,
+  DirectionalLight,
+  PointLightHelper,
+  PointLight,
 } from 'three';
-import RenderSystem from "./renderSystem";
+import RenderSystem, { CameraChangedEvent } from "./renderSystem";
 import Model from "../components/model";
 // @ts-ignore
 import { getHelperFromSkeleton } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -26,9 +30,11 @@ export default class DebugSystem extends ReactionSystem {
       this.parent.creator.ethereal({ obj: new GridHelper(this.debug.grid.size) });
     }
     if (this.debug.orbitControls) {
-      // TODO: Subscribe for camera changes
       const rs = this.engine.getSystem(RenderSystem)!;
       rs.orbitControls();
+      this.engine.subscribe(CameraChangedEvent, () => {
+        rs.orbitControls();
+      });
     }
   }
 
@@ -50,6 +56,17 @@ export default class DebugSystem extends ReactionSystem {
       const skeleton = model.skeleton;
       if (skeleton) {
         const helper = getHelperFromSkeleton(skeleton);
+        this.parent.creator.ethereal({ obj: helper });
+      }
+    }
+
+    if (this.debug.light) {
+      if (model.mesh.type === 'DirectionalLight') {
+        const helper = new CameraHelper((model.mesh as DirectionalLight).shadow.camera);
+        this.parent.creator.ethereal({ obj: helper });
+      }
+      if (model.mesh.type === 'PointLight') {
+        const helper = new PointLightHelper(model.mesh as PointLight);
         this.parent.creator.ethereal({ obj: helper });
       }
     }

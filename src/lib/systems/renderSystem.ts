@@ -12,6 +12,8 @@ import {
 import Model from "../components/model";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
+export class CameraChangedEvent {}
+
 export interface OrthographicCameraOptions {
   distance: number;
   near?: number;
@@ -85,7 +87,7 @@ export default class RenderSystem extends ReactionSystem {
       opts.near || 1000);
     this.camera.position.set(10, 10, 10);
     this.camera.lookAt(0, 0, 0);
-
+    this.dispatch(new CameraChangedEvent());
   }
 
   /**
@@ -103,6 +105,7 @@ export default class RenderSystem extends ReactionSystem {
     );
     this.camera.position.set(opts.position.x, opts.position.y, opts.position.z);
     this.camera.lookAt(opts.lookAt?.x || 0, opts.lookAt?.y || 0, opts.lookAt?.z || 0);
+    try { this.dispatch(new CameraChangedEvent()); } catch (e) { }
   }
 
   public orbitControls() {

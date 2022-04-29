@@ -101,6 +101,7 @@ export default class EntityCreator {
    */
   model(opts: ModelOptions): EntityBuilder {
     const obj = this.assets.getModel(opts.model);
+    // obj.geometry.computeBoundingBox();
     return this.empty().with3DModel({
       ...opts,
       model: obj,
@@ -160,11 +161,6 @@ export default class EntityCreator {
     const light = new PointLight(opts.color, opts.intensity);
     light.position.set(opts.pos.x, opts.pos.y, opts.pos.z);
 
-    // if (this.debug) {
-    //   const helper = new PointLightHelper(light);
-    //   this.ethereal({ obj: helper });
-    // }
-
     if (opts.castShadow) {
       light.castShadow = true;
       light.shadow.camera.near = opts.near || 0.5;
@@ -190,11 +186,6 @@ export default class EntityCreator {
     light.position.set(opts.pos.x, opts.pos.y, opts.pos.z);
     light.target.position.set(opts.target.x, opts.target.y, opts.target.z);
 
-    // if (this.debug) {
-    //   const helper = new DirectionalLightHelper(light);
-    //   this.ethereal({ obj: helper });
-    // }
-
     if (opts.castShadow) {
       light.castShadow = true;
       light.shadow.camera.near = opts.near || 0.5;
@@ -205,11 +196,6 @@ export default class EntityCreator {
       light.shadow.camera.bottom = opts.shadowAreaHeight ? -opts.shadowAreaHeight : -5;
       light.shadow.mapSize.width = opts.shadowResolution || 1024;
       light.shadow.mapSize.height = opts.shadowResolution || 1024;
-
-      // if (this.debug) {
-      //   const helper = new CameraHelper(light.shadow.camera);
-      //   this.ethereal({ obj: helper });
-      // }
     }
 
     return this.ethereal({ obj: light });

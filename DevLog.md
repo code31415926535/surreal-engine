@@ -71,38 +71,41 @@
 - [x] Make Basic Animation actually work
 - [x] Better error handling
 
-- [ ] Event System
-- [ ] Kinetic object for collision purpouse
+- [x] Event System
+- [x] Updated Motion System
+- [x] Make camera configurable
 - [ ] More complex animation system
 
+- [ ] Postprocessing
+
+- [ ] Move away from quaternion
+- [ ] Cleaner material usage
+
+- [ ] Static Motion on Solid bodies
 - [ ] Scriptability
+
+- [ ] Timer System
+
+- [ ] Simple platformer example
 
 ### v0.4
 
-- [ ] Static Motion on Solid bodies
-- [ ] Attachment to model
-- [ ] First person Camera
-- [ ] Configurable window size
-- [ ] UI System
-- [ ] Postprocessing
-- [ ] Cleaner material usage
-- [ ] Simple platformer example
+- [ ] Selection System
+- [ ] Editor
 
 ### v0.5
 
-- [ ] Editor
-
-### v0.6
-
-- [ ] Pause engine when not in focus
+- [ ] Attachment to model
+- [ ] First person Camera
+- [ ] UI System
 - [ ] Make debug interactive
 - [ ] Entity Templates
-- [ ] Make camera configurable
-- [ ] Clean and simple way to define pos, size and quat
 - [ ] Toggle visibility for widget
+- [ ] Kinetic object for collision purpouse
 
 ### 1.0.0
 
+- [ ] Configurable window size
 - [ ] Documentation
 - [ ] Performance Monitoring
 - [ ] Plane geometry
@@ -112,6 +115,7 @@
 - [ ] Trigger Box
 - [ ] Levels
 - [ ] Update Animations
+- [ ] Sun and sky system
 - [ ] Soft Body Physics
 - [ ] Cloth Physics
 - [ ] Breakable objects
