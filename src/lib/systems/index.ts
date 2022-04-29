@@ -11,6 +11,7 @@ export { default as PhysicsSystem } from './physicsSystem';
 export { default as RenderSystem } from './renderSystem';
 export { default as StaticMotionSystem } from './staticMotionSystem';
 export { default as WidgetSystem } from './widgetSystem';
+export { default as TimerSystem } from './timerSystem';
 
 export { IterativeSystem, ReactionSystem } from 'tick-knock';
 export { default as SingleEntitySystem } from './singleEntitySystem';

@@ -11,6 +11,7 @@ import {
 } from "three";
 import Model from "../components/model";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { EffectComposer, RenderPass, Pass } from '../shadersAndPasses';
 
 export class CameraChangedEvent {}
 
@@ -38,6 +39,7 @@ export interface BackgroundOptions {
 }
 
 export default class RenderSystem extends ReactionSystem {
+  private composer: EffectComposer;
   private renderer: WebGLRenderer;
   private scene: Scene;
   /**
@@ -58,6 +60,7 @@ export default class RenderSystem extends ReactionSystem {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = PCFSoftShadowMap;
     this.scene = new Scene();
+    this.composer = new EffectComposer(this.renderer);
 
     this.setPerspectiveCamera({
       fov: 75,
@@ -87,6 +90,7 @@ export default class RenderSystem extends ReactionSystem {
       opts.near || 1000);
     this.camera.position.set(10, 10, 10);
     this.camera.lookAt(0, 0, 0);
+    this.composer.passes[0] = new RenderPass(this.scene, this.camera);
     this.dispatch(new CameraChangedEvent());
   }
 
@@ -105,7 +109,12 @@ export default class RenderSystem extends ReactionSystem {
     );
     this.camera.position.set(opts.position.x, opts.position.y, opts.position.z);
     this.camera.lookAt(opts.lookAt?.x || 0, opts.lookAt?.y || 0, opts.lookAt?.z || 0);
+    this.composer.passes[0] = new RenderPass(this.scene, this.camera);
     try { this.dispatch(new CameraChangedEvent()); } catch (e) { }
+  }
+
+  public addPostProcessing(pass: Pass) {
+    this.composer.addPass(pass);
   }
 
   public orbitControls() {
@@ -138,7 +147,7 @@ export default class RenderSystem extends ReactionSystem {
   }
 
   public update(): void {
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render();
   }
 
   protected entityAdded = ({ current }: EntitySnapshot) => {

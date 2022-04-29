@@ -22,6 +22,7 @@ import {
   FpsSystem,
   WidgetSystem,
   KeyboardInputSystem,
+  TimerSystem,
 } from '../systems';
 import {
   ErrorWidget,
@@ -30,6 +31,7 @@ import {
 import MaterialManager from '../managers/MaterialManager';
 import EntityManager from '../managers/EntityManager';
 import { DebugOptions } from './debugOptions';
+import { Pass } from '../surreal-engine.js';
 
 declare global {
   interface Window {
@@ -140,6 +142,9 @@ export default class Engine {
       this.ecs.addSystem(new FollowCameraSystem(), 20);
     }
 
+    // Scripting systems
+    this.ecs.addSystem(new TimerSystem(), 30);
+
     // Helper Systems
     if (this.showFps) {
       this.ecs.addSystem(new FpsSystem(this), 999);
@@ -201,6 +206,15 @@ export default class Engine {
    */
   public setBackground(opts: BackgroundOptions) {
     this.ecs.getSystem(RenderSystem)!.setBackground(opts);
+  }
+
+  /**
+   * Ads a post processing pass to the engine.
+   * @see {@link https://threejs.org/docs/?q=post#manual/en/introduction/How-to-use-post-processing|Post Processing}
+   * @param pass The post processing pass to add.
+   */
+  public addPostProcessing(pass: Pass) {
+    this.ecs.getSystem(RenderSystem)!.addPostProcessing(pass);
   }
 
   /**
