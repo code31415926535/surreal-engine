@@ -83,29 +83,30 @@
 - [ ] Move away from quaternion
 
 - [ ] Static Motion on Solid bodies
-- [ ] Scriptability
 
+## v0.3.1
+
+- [ ] Fix bugs with animated model
 - [ ] Simple platformer example
+
+## v0.3.2
+
+- [ ] Configurable window size
+- [ ] Pause, Rewind, Step
+- [ ] Performance Monitoring
 
 ### v0.4
 
 - [ ] Better Widgets
-- [ ] Selection System
-- [ ] Editor
-
-### v0.5
-
-- [ ] Pause, Rewind, Step
 - [ ] GUI System
-- [ ] Make debug interactive
 - [ ] Entity Templates
-- [ ] Kinetic object for collision purpouse
+- [ ] Selection System
+- [ ] Make debug interactive
+- [ ] Editor
 
 ### 1.0.0
 
-- [ ] Configurable window size
 - [ ] Documentation
-- [ ] Performance Monitoring
 - [ ] Plane geometry
 - [ ] Particles
 - [ ] Heightmaps
