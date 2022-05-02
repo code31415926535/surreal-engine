@@ -24,7 +24,6 @@ import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
-import AnimationController from "../controllers/animationController";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
@@ -129,16 +128,15 @@ export default class EntityBuilder {
   }
 
   public withAnimation = (opts: AnimationOptions): EntityBuilder => {
-    const ctrl = new AnimationController(this.entity);
+    const animation = new Animation(this.entity);
     opts.clips.forEach(clipName => {
       const clip = this.assets.getAnimation(clipName.clip);
       if (!clip) {
         throw new Error(`Animation ${clipName.clip} not found`);
       }
-      ctrl.addAnimation(clipName.name, clip);
+      animation.addAnimation(clipName.name, clip);
     });
-    ctrl.play(opts.initial);
-    this.entity.addComponent(new Animation(ctrl));
+    this.entity.addComponent(animation);
     return this;
   }
 

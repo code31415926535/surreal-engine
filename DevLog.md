@@ -82,18 +82,17 @@
 - [x] Cleaner material usage
 - [x] Move away from quaternion
 
-- [ ] Static Motion on Solid bodies
-
 ## v0.3.1
 
+- [ ] Configurable window size
+- [ ] Add a new shape
+- [ ] Static Motion on Solid bodies
 - [ ] Fix bugs with animated model
 - [ ] Simple platformer example
-- [ ] Add a new shape
 
 ## v0.3.2
 
 - [ ] Add a new shape
-- [ ] Configurable window size
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
 

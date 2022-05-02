@@ -21,8 +21,12 @@ export default class EntityManager {
     this.ecs.removeEntity(entity);
   }
 
-  public get(id: number): Entity | undefined {
-    return this.ecs.getEntityById(id);
+  public get(id: number): Entity {
+    const entity = this.ecs.getEntityById(id);
+    if (! entity) {
+      throw new Error(`Entity ${id} not found`);
+    }
+    return entity;
   }
 
    public updateWidget(id: number, elem: JSX.Element) {

@@ -1,4 +1,5 @@
 import {
+  Class,
   Engine as ECSEngine, System,
 } from 'tick-knock';
 import {
@@ -224,6 +225,17 @@ export default class Engine {
    */
   public registerSystem(system: System) {
     this.ecs.addSystem(system);
+  }
+
+  /**
+   * Get a system of the engine.
+   */
+  public getSystem<T extends System>(systemClass: Class<T>): T {
+    const sys = this.ecs.getSystem(systemClass);
+    if (! sys) {
+      throw new Error('System not found');
+    }
+    return sys;
   }
 
   /**

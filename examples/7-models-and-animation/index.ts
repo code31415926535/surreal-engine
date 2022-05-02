@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { quickStart, Euler, Vector3 } from "../../src/lib/surreal-engine";
+import { quickStart, Euler, Vector3, AnimationSystem } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
@@ -88,7 +88,7 @@ async function main() {
       pos: new Vector3(0, 1, 90),
     });
 
-    engine.creator.model({
+    const char = engine.creator.model({
       model: "character",
       size: new Vector3(2, 2, 2),
       pos: new Vector3(0, 0, 0),
@@ -106,7 +106,9 @@ async function main() {
       })
       .withBoundingBox()
       .withKeyboardMotion()
-      .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1));
+      .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1)).id;
+    const charAt = engine.manager.get(char);
+    engine.getSystem(AnimationSystem).play(charAt, "idle");
   });
 }
 
