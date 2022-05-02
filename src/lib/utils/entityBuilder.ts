@@ -3,6 +3,10 @@ import {
   Entity,
 } from 'tick-knock';
 import {
+  Euler,
+  Vector3,
+} from '../core/types';
+import {
   BoxGeometry,
   BufferGeometry,
   CylinderGeometry,
@@ -10,9 +14,9 @@ import {
   Object3D,
   CurvePath,
   SphereGeometry,
-  Vector3,
   Box3,
   Group,
+  Quaternion,
 } from "three";
 // @ts-ignore
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -27,17 +31,22 @@ import SurrealMaterial from "../core/surrealMaterial";
 import Animation from '../components/animation';
 import AssetManager from '../managers/AssetManager';
 
-// TODO: Pos Quat Size unify
-// TODO: Move to Vectory type
-
-export interface PosQuat {
-  pos?: { x: number, y: number, z: number };
-  quat?: { x: number, y: number, z: number, w: number };
+export interface PosRot {
+  pos?: Vector3;
+  rot?: Euler;
 }
 
-export interface RigidBodyOptions extends PosQuat {
+export interface PosRotSize extends PosRot {
+  size?: Vector3;
+}
+
+export interface Shadow {
+  castShadow?: boolean;
+  receiveShadow?: boolean;
+}
+
+export interface RigidBodyOptions extends PosRotSize {
   type: 'box' | 'sphere' | 'cylinder';
-  size: { x: number; y: number; z: number };
   mass?: number;
   restitution?: number;
   friction?: number;
@@ -45,20 +54,14 @@ export interface RigidBodyOptions extends PosQuat {
   angularDamping?: number;
 }
 
-export interface ShapeModelOptions extends PosQuat {
+export interface ShapeModelOptions extends PosRotSize, Shadow {
   type: 'box' | 'sphere' | 'cylinder';
-  size: { x: number; y: number; z: number };
   material: SurrealMaterial;
-  castShadow?: boolean;
-  receiveShadow?: boolean;
 }
 
-export interface Model3DOptions extends PosQuat {
+export interface Model3DOptions extends PosRotSize, Shadow {
   model: Object3D;
-  size?: { x: number; y: number; z: number };
-  offsetQuat?: { x: number; y: number; z: number; w: number };
-  castShadow?: boolean;
-  receiveShadow?: boolean;
+  offset?: PosRot;
 }
 
 export interface AnimationOptions {
@@ -186,22 +189,18 @@ export default class EntityBuilder {
   private buildRigidBodyFromBox = (box: Box3): Ammo.btRigidBody => {
     const opts: RigidBodyOptions = {
       type: 'box',
-      size: {
-        x: box.max.x - box.min.x,
-        y: box.max.y - box.min.y,
-        z: box.max.z - box.min.z,
-      },
-      pos: {
-        x: box.min.x + (box.max.x - box.min.x) / 2,
-        y: box.min.y + (box.max.y - box.min.y) / 2,
-        z: box.min.z + (box.max.z - box.min.z) / 2,
-      },
-      quat: {
-        x: 0,
-        y: 0,
-        z: 0,
-        w: 1,
-      },
+      size: new Vector3(
+        box.max.x - box.min.x,
+        box.max.y - box.min.y,
+        box.max.z - box.min.z,
+      ),
+      pos: new Vector3(
+        box.min.x + (box.max.x - box.min.x) / 2,
+        box.min.y + (box.max.y - box.min.y) / 2,
+        box.min.z + (box.max.z - box.min.z) / 2,
+      ),
+      // TODO: What about this?
+      rot: new Euler(0, 0, 0),
       // TODO: What about this?
       mass: 1,
     }
@@ -209,11 +208,13 @@ export default class EntityBuilder {
   }
 
   private buildRigidBody = (opts: RigidBodyOptions): Ammo.btRigidBody => {
-    const { pos, quat, mass, restitution } = opts;
+    const { pos, rot, mass, restitution } = opts;
     const transform = new window.Ammo.btTransform();
     transform.setIdentity();
     transform.setOrigin(new window.Ammo.btVector3(pos?.x || 0, pos?.y || 0, pos?.z || 0));
-    transform.setRotation(new window.Ammo.btQuaternion(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1));
+  
+    const quat = new Quaternion().setFromEuler(rot || new Euler());
+    transform.setRotation(new window.Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
     const motionState = new window.Ammo.btDefaultMotionState(transform);
   
     const shape = this.buildRigidBodyShape(opts);
@@ -242,13 +243,14 @@ export default class EntityBuilder {
     mesh.receiveShadow = opts.receiveShadow || false;
     
     mesh.position.set(opts.pos?.x || 0, opts.pos?.y || 0, opts.pos?.z || 0);
-    mesh.quaternion.set(opts.quat?.x || 0, opts.quat?.y || 0, opts.quat?.z || 0, opts.quat?.w || 1);
+    const quat = new Quaternion().setFromEuler(opts.rot || new Euler());
+    mesh.quaternion.set(quat.x, quat.y, quat.z, quat.w);
   
     return mesh;
   }
 
   private build3DModel = (opts: Model3DOptions): Object3D => {
-    const { model, pos, quat, size } = opts;
+    const { model, pos, rot, size } = opts;
     const copy: Object3D = clone(model);
     copy.traverse(child => {
       if ((child as Mesh).isMesh) {
@@ -259,19 +261,21 @@ export default class EntityBuilder {
     if (pos) {
       copy.position.set(pos?.x || 0, pos?.y || 0, pos?.z || 0);
     }
-    if (quat) {
-      copy.quaternion.set(quat?.x || 0, quat?.y || 0, quat?.z || 0, quat?.w || 1);
+    if (rot) {
+      const quat = new Quaternion().setFromEuler(rot || new Euler());
+      copy.quaternion.set(quat.x, quat.y, quat.z, quat.w);
     }
     if (size) {
       copy.scale.set(size?.x || 1, size?.y || 1, size?.z || 1);
     }
-    if (opts.offsetQuat) {
+    // TODO: Support pos offset
+    if (opts.offset?.rot) {
       const group = new Group();
       group.position.copy(copy.position);
       group.quaternion.copy(copy.quaternion);
       group.scale.copy(copy.scale);
       copy.position.set(0, 0, 0);
-      copy.quaternion.set(opts.offsetQuat.x, opts.offsetQuat.y, opts.offsetQuat.z, opts.offsetQuat.w);
+      copy.quaternion.setFromEuler(opts.offset.rot);
       copy.scale.set(1, 1, 1);
       group.add(copy);
       return group;
@@ -280,25 +284,27 @@ export default class EntityBuilder {
   }
 
   private buildGeometry = (opts: ShapeModelOptions): BufferGeometry => {
+    const size = opts.size || new Vector3(1, 1, 1);
     switch (opts.type) {
       case 'box':
-        return new BoxGeometry(opts.size.x, opts.size.y, opts.size.z);
+        return new BoxGeometry(size.x, size.y, size.z);
       case 'sphere':
-        return new SphereGeometry(opts.size.x / 2, 32, 32);
+        return new SphereGeometry(size.x / 2, 32, 32);
       case 'cylinder':
-        return new CylinderGeometry(opts.size.x, opts.size.y, opts.size.z);
+        return new CylinderGeometry(size.x, size.y, size.z);
       default:
         throw new Error(`Unknown shape type: ${opts.type}`);
     }
   }
 
   private buildRigidBodyShape = (opts: RigidBodyOptions): any => {
-    const btSize = new window.Ammo.btVector3(opts.size.x * 0.5, opts.size.y * 0.5, opts.size.z * 0.5);
+    const size = opts.size || new Vector3(1, 1, 1);
+    const btSize = new window.Ammo.btVector3(size.x * 0.5, size.y * 0.5, size.z * 0.5);
     switch (opts.type) {
       case 'box':
         return new window.Ammo.btBoxShape(btSize);
       case 'sphere':
-        return new window.Ammo.btSphereShape(opts.size.x * 0.5);
+        return new window.Ammo.btSphereShape(size.x * 0.5);
       case 'cylinder':
         return new window.Ammo.btCylinderShape(btSize);
       default:

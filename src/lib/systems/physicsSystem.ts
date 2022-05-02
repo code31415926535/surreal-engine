@@ -1,6 +1,7 @@
 import { EntitySnapshot, Query, ReactionSystem } from 'tick-knock';
 import Body from "../components/body";
 import Ammo from "ammojs-typed";
+import { Vector3 } from 'three';
 
 export default class PhysicsSystem extends ReactionSystem {
   private collisionConfiguration: Ammo.btDefaultCollisionConfiguration;
@@ -9,7 +10,7 @@ export default class PhysicsSystem extends ReactionSystem {
   private solver: Ammo.btSequentialImpulseConstraintSolver;
   private physicsWorld: Ammo.btDiscreteDynamicsWorld;
 
-  constructor(gravity: { x: number; y: number; z: number }) {
+  constructor(gravity: Vector3) {
     super(new Query(entity => entity.hasComponent(Body)));
     this.collisionConfiguration = new window.Ammo.btDefaultCollisionConfiguration();
     this.dispatcher = new window.Ammo.btCollisionDispatcher(this.collisionConfiguration);

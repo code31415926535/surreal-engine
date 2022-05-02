@@ -79,8 +79,8 @@
 - [x] Postprocessing
 - [x] Timer System
 
-- [ ] Cleaner material usage
-- [ ] Move away from quaternion
+- [x] Cleaner material usage
+- [x] Move away from quaternion
 
 - [ ] Static Motion on Solid bodies
 
@@ -88,14 +88,16 @@
 
 - [ ] Fix bugs with animated model
 - [ ] Simple platformer example
+- [ ] Add a new shape
 
 ## v0.3.2
 
+- [ ] Add a new shape
 - [ ] Configurable window size
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
 
-### v0.4
+## v0.4
 
 - [ ] Better Widgets
 - [ ] GUI System
@@ -104,7 +106,7 @@
 - [ ] Make debug interactive
 - [ ] Editor
 
-### 1.0.0
+## 1.0.0
 
 - [ ] Documentation
 - [ ] Plane geometry
@@ -112,11 +114,15 @@
 - [ ] Heightmaps
 - [ ] Terrain generation
 - [ ] Trigger Box
-- [ ] Levels
 - [ ] Update Animations
+- [ ] Merge physics props into a Vector like class
+
+## Future
+
+- [ ] Attachment to model
+- [ ] First person Camera
+- [ ] Levels
 - [ ] Sun and sky system
 - [ ] Soft Body Physics
 - [ ] Cloth Physics
 - [ ] Breakable objects
-- [ ] First person Camera
-- [ ] Attachment to model

@@ -1,10 +1,9 @@
 import '../../src/style.css';
-import { BasicDebug, Engine, InfoWidget } from "../../src/lib/surreal-engine";
+import { Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo', {
     showFps: true,
-    debug: BasicDebug,
   });
   await engine.init();
   engine.creator.widget(InfoWidget({
@@ -48,8 +47,8 @@ async function main() {
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 20,
     shadowAreaWidth: 20,
@@ -58,21 +57,21 @@ async function main() {
 
   // Ground
   engine.creator.box({
-    size: { x: 50, y: 1, z: 50 },
+    size: new Vector3(50, 1, 50),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial("floor"),
+    material: 'floor',
     rigid: true,
     receiveShadow: true,
   });
 
   // Character
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 10, y: 10, z: 10 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(10, 10, 10),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion().withOffsetCamera();
@@ -82,13 +81,13 @@ async function main() {
     for (let j = 0; j < 3; j++) {
       for (let k = 0; k < 3; k++) {
         engine.creator.box({
-          pos: { x: j, y: i, z: k },
-          size: { x: 1, y: 1, z: 1 },
+          pos: new Vector3(j, i, k),
+          size: new Vector3(1, 1, 1),
           mass: 0.2,
           restitution: 0.1,
           rigid: true,
           castShadow: true,
-          material: engine.materials.getMaterial('box'),
+          material: 'box',
         });
       }
     }

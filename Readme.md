@@ -27,21 +27,21 @@ engine.creator.ambientLight({
 
 // Create a big white square as our ground
 engine.creator.box({
-  size: { x: 25, y: 1, z: 25 },
+  size: new Vector3(25, 1, 25),
   mass: 0,
   restitution: 0.3,
-  material: engine.materials.getMaterial('white'),
+  material: 'white',
   rigid: true,
   receiveShadow: true,
 });
 
 // Create a magenta box that will fall down.
 engine.creator.box({
-  size: { x: 1, y: 1, z: 1 },
-  pos: { x: 0, y: 10, z: 0 },
+  size: new Vector3(1, 1, 1),
+  pos: new Vector3(0, 10, 0),
   mass: 0.5,
   restitution: 0.3,
-  material: engine.materials.getMaterial('magenta'),
+  material: 'magenta',
   rigid: true,
   castShadow: true,
 });
@@ -52,13 +52,13 @@ engine.start();
 Now, let's add a ball after 1 second has passed.
 
 ```ts
-setTimeout(() => {
+engine.creator.timer(() => {
   engine.creator.sphere({
     radius: 1,
-    pos: { x: 0, y: 10, z: 0 },
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   });
@@ -71,7 +71,7 @@ Now, for some fun, let's make our ball more bouncy.
     mass: 0.5,
 -   restitution: 0.3,
 +   restitution: 2.5,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
 ```
 
@@ -83,8 +83,8 @@ shadows. For that, we need a **directionLight**. So let's do that.
 engine.creator.directionalLight({
   color: '#ffffff',
   intensity: 1,
-  pos: { x: -10, y: 10, z: 10 },
-  target: { x: 0, y: 0, z: 0 },
+  pos: new Vector3(-10, 10, 10),
+  target: new Vector3(0, 0, 0),
   castShadow: true,
   shadowAreaHeight: 10,
   shadowAreaWidth: 10,
@@ -96,11 +96,11 @@ a character!
 
 ```ts
 engine.creator.box({
-  size: { x: 2, y: 2, z: 2 },
-  pos: { x: 5, y: 0, z: 5 },
+  size: new Vector3(2, 2, 2),
+  pos: new Vector3(5, 0, 5),
   mass: 0.5,
   restitution: 0.5,
-  material: engine.materials.getMaterial('red'),
+  material: 'red',
   rigid: true,
   castShadow: true,
 })
@@ -112,22 +112,23 @@ Now we have nice red box that we can control. Let's have some more fun. Let's sp
 so we never run out of balls.
 
 ```diff
-- setTimeout(() => {
-+ setInterval(() => {
+engine.creator.timer(() => {
   engine.creator.sphere({
     radius: 1,
-    pos: { x: 0, y: 10, z: 0 },
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 2.5,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   });
 - }, 1000);
-+ }, 5000);
++ }, 5000, true);
 ```
 
-Now we have quite a fun game already! Come back when `0.3.0` is ready for more cool features.
+Check out a simple platformer tutorial [here](./examples/game-1-platformer/index.ts). (Work in Progress)
+
+Alternatively take a look at the below examples to give you some ideas.
 
 ## Examples
 
@@ -137,6 +138,7 @@ Now we have quite a fun game already! Come back when `0.3.0` is ready for more c
 - [Camera](./examples/5-camera/index.ts)
 - [Textures and Skybox](./examples/6-textures-and-skybox/index.ts)
 - [Models and Animation](./examples/7-models-and-animation/index.ts)
+- [Postprocessing](./examples/8-postprocessing/index.ts)
 
 [npm]: https://img.shields.io/npm/v/surreal-engine
 [npm-url]: https://www.npmjs.com/package/surreal-engine

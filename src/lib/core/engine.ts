@@ -2,6 +2,7 @@ import {
   Engine as ECSEngine, System,
 } from 'tick-knock';
 import {
+  Vector3,
   WebGLRenderer,
 } from 'three';
 import AmmoType from 'ammojs-typed';
@@ -42,7 +43,7 @@ declare global {
 export interface EngineOpts {
   debug?: DebugOptions;
   showFps?: boolean;
-  gravity?: { x: number, y: number, z: number };
+  gravity?: Vector3;
   antialias?: boolean;
 }
 
@@ -55,7 +56,7 @@ export default class Engine {
    * 
    * @example
    * engine.creator.box({
-   *  size: { x: 25, y: 1, z: 25 },
+   *  size: new Vector3(1, 1, 1),
    *  mass: 0,
    *  restitution: 0.3,
    *  rigid: true,
@@ -69,7 +70,7 @@ export default class Engine {
    * Asset manager class. Use this to register and manage assets.
    * 
    * @example
-   * engine.assets.addTexture("floor", "textures/floor.png", { repeat: { x: 5, y: 5 } });
+   * engine.assets.addTexture("floor", "textures/floor.png" });
    * await engine.assets.load();
    * const material = new MeshPhongMaterial({map: engine.assets.getTexture("floor")});
    */
@@ -79,7 +80,7 @@ export default class Engine {
    * Material manager class. Use this to register and manage materials.
    * 
    * @example
-   * engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 5, y: 5 } });
+   * engine.materials.addTexturedMaterial("floor", { texture: "floor" });
    * const material = engine.materials.getMaterial("floor");
    */
   public materials!: MaterialManager;
@@ -102,7 +103,7 @@ export default class Engine {
   private debug: DebugOptions;
   private showFps: boolean;
   private physics: boolean;
-  private gravity: { x: number; y: number; z: number; };
+  private gravity: Vector3;
   private antialias: boolean;
 
   constructor(private containerQuery: string, opts?: EngineOpts) {
@@ -113,7 +114,7 @@ export default class Engine {
     this.debug = opts?.debug ?? {};
     this.showFps = opts?.showFps ?? false;
     this.physics = true;
-    this.gravity = opts?.gravity ?? { x: 0, y: -0.98, z: 0 };
+    this.gravity = opts?.gravity ?? new Vector3(0, -0.98, 0),
     this.antialias = opts?.antialias ?? true;
   }
 
@@ -173,9 +174,9 @@ export default class Engine {
         errorWidget = this.creator.widget(ErrorWidget({ error })).id;
       }
     });
-    this.creator = new EntityCreator(this.ecs, this.assets);
     this.manager = new EntityManager(this.ecs);
     this.materials = new MaterialManager(this.assets);
+    this.creator = new EntityCreator(this.ecs, this.assets, this.materials);
   }
 
   /**
