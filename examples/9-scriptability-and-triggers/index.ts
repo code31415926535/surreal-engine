@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { Engine } from "../../src/lib/surreal-engine";
+import { Engine, Vector3 } from "../../src/lib/surreal-engine";
 
 // TODO: Complete example
 async function main() {
@@ -30,8 +30,8 @@ async function main() {
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 20,
     shadowAreaWidth: 20,
@@ -40,19 +40,19 @@ async function main() {
 
   // Ground
   engine.creator.box({
-    size: { x: 50, y: 1, z: 50 },
+    size: new Vector3(50, 1, 50),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial("floor@square"),
+    material: 'e',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 5, y: 5, z: 5 },
-    pos: { x: 0, y: -1, z: 29.5 },
+    size: new Vector3(5, 5, 5),
+    pos: new Vector3(0, -1, 29.5),
     mass: 0,
-    material: engine.materials.getMaterial("floor@single"),
+    material: 'floor@single',
     friction: 0.9,
     rigid: true,
     receiveShadow: true,
@@ -60,23 +60,23 @@ async function main() {
 
   // Ground Target
   engine.creator.box({
-    size: { x: 50, y: 1, z: 50 },
-    pos: { x: 0, y: 1, z: 127.5 },
+    size: new Vector3(50, 1, 50),
+    pos: new Vector3(0, 1, 127.5),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial("floor@square"),
+    material: 'floor@square',
     rigid: true,
     receiveShadow: true,
   });
 
   // Character
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 0, y: 10, z: 0 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.3,
     friction: 0.9,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion()

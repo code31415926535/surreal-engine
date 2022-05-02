@@ -1,6 +1,5 @@
 import '../../src/style.css';
-import { quickStart } from "../../src/lib/surreal-engine";
-import { Euler, Quaternion, Vector3 } from 'three';
+import { quickStart, Euler, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
@@ -33,8 +32,8 @@ async function main() {
     engine.creator.directionalLight({
       color: '#ffffff',
       intensity: 1,
-      pos: { x: -12.5, y: 10, z: -12.5 },
-      target: { x: 0, y: 0, z: 0 },
+      pos: new Vector3(-12.5, 10, -12.5),
+      target: new Vector3(0, 0, 0),
       castShadow: true,
       shadowAreaHeight: 20,
       shadowAreaWidth: 20,
@@ -43,60 +42,59 @@ async function main() {
   
     // Ground
     engine.creator.box({
-      size: { x: 50, y: 1, z: 50 },
+      size: new Vector3(50, 1, 50),
       mass: 0,
       restitution: 0.3,
-      material: engine.materials.getMaterial("floor@square"),
+      material: 'floor@square',
       rigid: true,
       receiveShadow: true,
     });
     engine.creator.box({
-      pos: { x: 0, y: 0, z: 50 },
-      size: { x: 10, y: 1, z: 50 },
+      pos: new Vector3(0, 0, 50),
+      size: new Vector3(10, 1, 50),
       mass: 0,
       restitution: 0.3,
-      material: engine.materials.getMaterial("floor@row"),
+      material: 'floor@row',
       rigid: true,
       receiveShadow: true,
     });
     engine.creator.box({
-      pos: { x: 0, y: 0, z: 100 },
-      size: { x: 50, y: 1, z: 50 },
+      pos: new Vector3(0, 0, 100),
+      size: new Vector3(50, 1, 50),
       mass: 0,
       restitution: 0.3,
-      material: engine.materials.getMaterial("floor@square"),
+      material: 'floor@square',
       rigid: true,
       receiveShadow: true,
     })
   
     engine.creator.model({
       model: "knight_statue",
-      size: { x: 1, y: 1, z: 1 },
-      pos: { x: 10, y: 0.5, z: 11 },
+      size: new Vector3(1, 1, 1),
+      pos: new Vector3(10, 0.5, 11),
       castShadow: true,
     });
     engine.creator.model({
       model: "knight_statue",
-      size: { x: 1.2, y: 1.5, z: 1 },
-      pos: { x: -10, y: 0.5, z: 11 },
+      size: new Vector3(1.2, 1.5, 1),
+      pos: new Vector3(-10, 0.5, 11),
       castShadow: true,
     });
 
     // TODO: Very very slow
     engine.creator.model({
       model: "datsun",
-      size: { x: 3, y: 3, z: 3 },
-      pos: { x: 0, y: 1, z: 90 },
+      size: new Vector3(3, 3, 3),
+      pos: new Vector3(0, 1, 90),
     });
-
-    const euler = new Euler(0, Math.PI / 2, 0);
-    const q = new Quaternion().setFromEuler(euler);
 
     engine.creator.model({
       model: "character",
-      size: { x: 2, y: 2, z: 2 },
-      pos: { x: 0, y: 0, z: 0 },
-      offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
+      size: new Vector3(2, 2, 2),
+      pos: new Vector3(0, 0, 0),
+      offset: {
+        rot: new Euler(0, Math.PI / 2, 0),
+      },
       castShadow: true,
     })
       .withAnimation({

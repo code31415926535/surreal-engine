@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { BasicDebug, Engine, InfoWidget } from "../../src/lib/surreal-engine";
+import { BasicDebug, Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -23,54 +23,54 @@ async function main() {
   engine.creator.pointLight({
     color: '#ffffff',
     intensity: 0.6,
-    pos: { x: 0, y: 5, z: 0 },
+    pos: new Vector3(0, 5, 0),
   });
 
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -10, y: 10, z: 10 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-10, 10, 10),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 10,
     shadowAreaWidth: 10,
   });
 
   engine.creator.box({
-    size: { x: 25, y: 1, z: 25 },
+    size: new Vector3(25, 1, 25),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial('white'),
+    material: 'white',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 0, y: 10, z: 0 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('magenta'),
+    material: 'magenta',
     rigid: true,
     castShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: {x: 0.5, y: 15, z: 0},
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0.5, 15, 0),
     mass: 1,
     restitution: 0.3,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   });
 
   engine.creator.sphere({
     radius: 1,
-    pos: {x: 0, y: 20, z: 0},
+    pos: new Vector3(0, 20, 0),
     mass: 1,
     restitution: 0.3,
-    material: engine.materials.getMaterial('blue'),
+    material: 'blue',
     rigid: true,
     castShadow: true,
   });

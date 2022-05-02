@@ -1,13 +1,16 @@
 import { Engine as ECSEngine } from 'tick-knock';
-import { AmbientLight, DirectionalLight, Object3D, PointLight } from "three";
+import { AmbientLight, DirectionalLight, Object3D, PointLight, Vector3 } from "three";
 import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
 import AssetManager from './AssetManager';
 import Widget from '../components/widget';
 import { nanoid } from 'nanoid';
 import Timer from '../components/timer';
+import MaterialManager from './MaterialManager';
+import SurrealMaterial from '../core/surrealMaterial';
 
-interface ShapeOptions extends ShapeModelOptions, RigidBodyOptions {
+interface ShapeOptions extends Omit<ShapeModelOptions, "material">, RigidBodyOptions {
   rigid?: boolean;
+  material: string;
 }
 
 export interface BoxOptions extends Omit<ShapeOptions, "type"> {}
@@ -32,7 +35,7 @@ export interface AmbientLightOptions {
 }
 
 export interface PointLightOptions extends AmbientLightOptions {
-  pos: { x: number; y: number; z: number };
+  pos: Vector3;
   castShadow?: boolean;
   shadowResolution?: number;
   near?: number;
@@ -40,7 +43,7 @@ export interface PointLightOptions extends AmbientLightOptions {
 }
 
 export interface DirectionalLightOptions extends PointLightOptions {
-  target: { x: number; y: number; z: number };
+  target: Vector3;
   shadowAreaWidth?: number;
   shadowAreaHeight?: number;
 }
@@ -62,6 +65,7 @@ export default class EntityCreator {
   constructor(
     private ecs: ECSEngine,
     private assets: AssetManager,
+    private materials: MaterialManager,
   ) {}
 
   /**
@@ -118,7 +122,11 @@ export default class EntityCreator {
    */
   box(opts: BoxOptions): EntityBuilder {
     const builder = this.empty()
-      .withShapeModel({ ...opts, type: 'box' });
+      .withShapeModel({
+        ...opts,
+        type: 'box',
+        material: this.getMaterial(opts.material),
+      });
     
     if (opts.rigid) {
       builder.withRigidBody({ ...opts, type: 'box' });
@@ -136,10 +144,15 @@ export default class EntityCreator {
    */
   sphere(opts: SphereOptions): EntityBuilder {
     const builder = this.empty()
-      .withShapeModel({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
+      .withShapeModel({
+        ...opts,
+        type: 'sphere',
+        size: new Vector3(opts.radius, opts.radius, opts.radius),
+        material: this.getMaterial(opts.material),
+      });
     
     if (opts.rigid) {
-      builder.withRigidBody({ ...opts, type: 'sphere', size: { x: opts.radius, y: opts.radius, z: opts.radius } });
+      builder.withRigidBody({ ...opts, type: 'sphere', size: new Vector3(opts.radius, opts.radius, opts.radius) });
     }
 
     return builder;
@@ -204,5 +217,13 @@ export default class EntityCreator {
 
   timer(callback: () => void, interval: number, repeat: boolean): EntityBuilder {
     return this.empty().with(new Timer(callback, interval, repeat));
+  }
+
+  private getMaterial(name: string): SurrealMaterial {
+    const material = this.materials.getMaterial(name);
+    if (!material) {
+      throw new Error(`Material ${material} not found`);
+    }
+    return material;
   }
 }

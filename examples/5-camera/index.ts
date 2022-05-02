@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { Engine, InfoWidget } from "../../src/lib/surreal-engine";
+import { Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo');
@@ -9,7 +9,7 @@ async function main() {
   // });
   engine.setPerspectiveCamera({
     fov: 60,
-    position: { x: 10, y: 10, z: 10 },
+    position: new Vector3(10, 10, 10),
   });
 
   engine.setBackground({
@@ -23,41 +23,41 @@ async function main() {
   const size = 12;
   for (let i = 0; i < 10; i++) {
     engine.creator.box({
-      pos: { x: -10 - size / 2 - i * (size + 3), y: i + 2, z: 0 },
-      size: { x: size, y: 1, z: size },
+      pos: new Vector3(-10 - size / 2 - i * (size + 3), i + 2, 0),
+      size: new Vector3(size, 1, size),
       mass: 0,
       restitution: 0.3,
-      material: engine.materials.getMaterial('red'),
+      material: 'red',
       rigid: true,
       receiveShadow: true,
     });
   }
 
   engine.creator.box({
-    size: { x: 50, y: 1, z: 50 },
-    pos: { x: -10 - size / 2 - 10 * (size + 3), y: -100, z: 0 },
+    size: new Vector3(50, 1, 50),
+    pos: new Vector3(-10 - size / 2 - 10 * (size + 3), -100, 0),
     mass: 0,
     restitution: 0.9,
-    material: engine.materials.getMaterial('blue'),
+    material: 'blue',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 20, y: 1, z: 80 },
+    size: new Vector3(20, 1, 80),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial('red'),
+    material: 'red',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 0, y: 10, z: 0 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.1,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion({
@@ -67,10 +67,10 @@ async function main() {
 
   engine.creator.sphere({
     radius: 1,
-    pos: { x: 5, y: 10, z: 5 },
+    pos: new Vector3(5, 10, 5),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('blue'),
+    material: 'blue',
     rigid: true,
     castShadow: true,
   });
@@ -78,8 +78,8 @@ async function main() {
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 20,
     shadowAreaWidth: 20,

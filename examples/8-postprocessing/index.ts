@@ -1,6 +1,5 @@
 import '../../src/style.css';
-import { quickStart, UnrealBloomPass, GlitchPass } from "../../src/lib/surreal-engine";
-import { Euler, Quaternion, Vector2, Vector3 } from 'three';
+import { quickStart, UnrealBloomPass, GlitchPass, Euler, Vector2, Vector3 } from "../../src/lib/surreal-engine";
 
 // TODO: Complete with full movement kit
 quickStart(
@@ -31,8 +30,8 @@ quickStart(
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 20,
     shadowAreaWidth: 20,
@@ -41,22 +40,21 @@ quickStart(
 
   // Ground
   engine.creator.box({
-    size: { x: 50, y: 1, z: 50 },
+    size: new Vector3(50, 1, 50),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial("floor@square"),
+    material: 'floor@square',
     rigid: true,
     receiveShadow: true,
   });
 
-  const euler = new Euler(0, Math.PI / 2, 0);
-  const q = new Quaternion().setFromEuler(euler);
-
   engine.creator.model({
     model: "character",
-    size: { x: 2, y: 2, z: 2 },
-    pos: { x: 0, y: 0, z: 0 },
-    offsetQuat: { x: q.x, y: q.y, z: q.z, w: q.w },
+    size: new Vector3(2, 2, 2),
+    pos: new Vector3(0, 0, 0),
+    offset: {
+      rot: new Euler(0, Math.PI / 2, 0),
+    },
     castShadow: true,
   })
     .withAnimation({
@@ -72,11 +70,11 @@ quickStart(
 
   engine.creator.timer(() => {
     engine.creator.box({
-      size: { x: 0.5, y: 0.5, z: 0.5 },
-      pos: { x: Math.random() * 10, y: 15, z: Math.random() * 10 },
+      size: new Vector3(0.5, 0.5, 0.5),
+      pos: new Vector3(Math.random() * 10, 15, Math.random() * 10),
       mass: 0.25,
       // TODO: Cooler material here
-      material: engine.materials.getMaterial("black"),
+      material: 'black',
       rigid: true,
       castShadow: true,
     });

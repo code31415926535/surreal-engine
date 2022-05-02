@@ -18,20 +18,20 @@ async function main() {
   }));
 
   engine.creator.box({
-    size: { x: 25, y: 1, z: 25 },
+    size: new Vector3(25, 1, 25),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial('red'),
+    material: 'red',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 0, y: 10, z: 0 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   });
@@ -45,8 +45,8 @@ async function main() {
   engine.creator.directionalLight({
     color: '#ffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
   }).withStaticMotion({
     path: curve,

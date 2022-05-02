@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { BasicDebug, Engine, InfoWidget } from "../../src/lib/surreal-engine";
+import { BasicDebug, Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo', {
@@ -16,20 +16,20 @@ async function main() {
   }));
 
   engine.creator.box({
-    size: { x: 25, y: 1, z: 25 },
+    size: new Vector3(25, 1, 25),
     mass: 0,
     restitution: 0.3,
-    material: engine.materials.getMaterial('red'),
+    material: 'red',
     rigid: true,
     receiveShadow: true,
   });
 
   engine.creator.box({
-    size: { x: 1, y: 1, z: 1 },
-    pos: { x: 0, y: 10, z: 0 },
+    size: new Vector3(1, 1, 1),
+    pos: new Vector3(0, 10, 0),
     mass: 0.5,
     restitution: 0.3,
-    material: engine.materials.getMaterial('yellow'),
+    material: 'yellow',
     rigid: true,
     castShadow: true,
   }).withKeyboardMotion();
@@ -38,26 +38,26 @@ async function main() {
   for (let i = 0; i < 4; i++) {
     for (let j = 0; j < 8; j++) {
       engine.creator.box({
-        pos: { x: j, y: i, z: -3 },
-        size: { x: 1, y: 1, z: 1 },
+        pos: new Vector3(j, i, -3),
+        size: new Vector3(1, 1, 1),
         mass: 0.2,
         restitution: 0.1,
         rigid: true,
         castShadow: true,
-        material: engine.materials.getMaterial('box'),
+        material: 'box',
       });
     }
   }
 
   engine.creator.sphere({
     radius: 1,
-    pos: { x: 4, y: 15, z: 5 },
+    pos: new Vector3(4, 15, 5),
     mass: 0.2,
     restitution: 0.6,
     friction: 0.5,
     rigid: true,
     castShadow: true,
-    material: engine.materials.getMaterial('box'),
+    material: 'box',
     linearDamping: 0.2,
     angularDamping: 0.2,
   });
@@ -65,8 +65,8 @@ async function main() {
   engine.creator.directionalLight({
     color: '0xffffff',
     intensity: 1,
-    pos: { x: -12.5, y: 10, z: -12.5 },
-    target: { x: 0, y: 0, z: 0 },
+    pos: new Vector3(-12.5, 10, -12.5),
+    target: new Vector3(0, 0, 0),
     castShadow: true,
     shadowAreaHeight: 20,
     shadowAreaWidth: 20,
