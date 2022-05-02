@@ -1,10 +1,9 @@
 import '../../src/style.css';
-import { BasicDebug, Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
+import { Engine, InfoWidget, Vector3 } from "../../src/lib/surreal-engine";
 
 async function main() {
   const engine = new Engine('#demo', {
     showFps: true,
-    debug: BasicDebug,
   });
   await engine.init();
   engine.creator.widget(InfoWidget({

@@ -52,7 +52,7 @@ engine.start();
 Now, let's add a ball after 1 second has passed.
 
 ```ts
-setTimeout(() => {
+engine.creator.timer(() => {
   engine.creator.sphere({
     radius: 1,
     pos: new Vector3(0, 10, 0),
@@ -112,8 +112,7 @@ Now we have nice red box that we can control. Let's have some more fun. Let's sp
 so we never run out of balls.
 
 ```diff
-- setTimeout(() => {
-+ setInterval(() => {
+engine.creator.timer(() => {
   engine.creator.sphere({
     radius: 1,
     pos: new Vector3(0, 10, 0),
@@ -124,10 +123,10 @@ so we never run out of balls.
     castShadow: true,
   });
 - }, 1000);
-+ }, 5000);
++ }, 5000, true);
 ```
 
-Check out a simple platformer tutorial [here](./examples/game-1-platformer/index.ts).
+Check out a simple platformer tutorial [here](./examples/game-1-platformer/index.ts). (Work in Progress)
 
 Alternatively take a look at the below examples to give you some ideas.
 
