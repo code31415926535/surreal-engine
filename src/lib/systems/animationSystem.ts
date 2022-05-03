@@ -1,4 +1,4 @@
-import { Query, Entity, IterativeSystem } from 'tick-knock';
+import { Query, Entity, IterativeSystem, EntitySnapshot } from 'tick-knock';
 import Animation from '../components/animation';
 
 export class SurrealAnimationEvent {
@@ -13,6 +13,15 @@ export default class AnimationSystem extends IterativeSystem {
   public init() {
     this.engine.subscribe(SurrealAnimationEvent, (event: SurrealAnimationEvent) => {
       event.entity.get(Animation)!.handle(event.action);
+    });
+  }
+
+  protected entityAdded = ({ current }: EntitySnapshot) => {
+    current.get(Animation)!.mixer.addEventListener("finished", () => {
+      this.dispatch(new SurrealAnimationEvent(current, "finished"));
+    });
+    current.get(Animation)!.mixer.addEventListener("loop", () => {
+      this.dispatch(new SurrealAnimationEvent(current, "loop"));
     });
   }
 

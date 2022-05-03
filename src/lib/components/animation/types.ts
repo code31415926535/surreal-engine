@@ -7,6 +7,10 @@ export type AnimationState = {
   handler: AnimationEventHandler;
 }
 
+export interface AnimationStateOptions {
+  noLoop?: boolean;
+}
+
 export type AnimationStateTransition = (prevState: AnimationState, nextState: AnimationState) => void;
 
 export type AnimationEventHandler = (

@@ -27,7 +27,7 @@ import StaticMotion from "../components/staticMotion";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
-import Animation, { AnimationEventHandler } from '../components/animation';
+import Animation, { AnimationEventHandler, AnimationStateOptions } from '../components/animation';
 import AssetManager from '../managers/AssetManager';
 
 export interface PosRot {
@@ -68,6 +68,7 @@ export interface AnimationOptions {
   states: {
     name: string;
     clip: string;
+    opts?: AnimationStateOptions;
     handler: AnimationEventHandler;
   }[],
 }
@@ -85,6 +86,7 @@ export interface StaticMoitonOptions {
 export interface KeyboardMotionOptions {
   speed?: number;
   rotation?: number;
+  jump?: number;
 }
 
 export default class EntityBuilder {
@@ -135,7 +137,7 @@ export default class EntityBuilder {
       if (!clip) {
         throw new Error(`Animation ${state.clip} not found`);
       }
-      animation.addState(state.name, clip, state.handler);
+      animation.addState(state.name, clip, state.handler, state.opts);
     });
     animation.setState(opts.initial);
     this.entity.addComponent(animation);
@@ -143,7 +145,7 @@ export default class EntityBuilder {
   }
 
   public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
-    this.entity.addComponent(new KeyboardMotion(opts?.speed, opts?.rotation));
+    this.entity.addComponent(new KeyboardMotion(opts?.speed, opts?.rotation, opts?.jump));
     return this;
   }
 

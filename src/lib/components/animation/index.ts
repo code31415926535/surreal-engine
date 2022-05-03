@@ -1,7 +1,9 @@
-import { AnimationClip, AnimationMixer } from "three";
+import { AnimationClip, AnimationMixer, LoopOnce } from "three";
 import { Entity } from "tick-knock";
 import Model from "../model";
-import type { AnimationState, AnimationEventHandler, AnimationStateTransition } from "./types";
+import type {
+  AnimationState, AnimationEventHandler, AnimationStateTransition, AnimationStateOptions,
+} from "./types";
 
 export default class Animation {
   public readonly mixer: AnimationMixer;
@@ -16,8 +18,11 @@ export default class Animation {
     this.currentState = '';
   }
 
-  public addState(name: string, clip: AnimationClip, handler: AnimationEventHandler) {
+  public addState(name: string, clip: AnimationClip, handler: AnimationEventHandler, opts?: AnimationStateOptions) {
     const action = this.mixer.clipAction(clip);
+    if (opts && opts.noLoop) {
+      action.setLoop(LoopOnce, 0);
+    }
     this.states[name] = {
       name,
       clip,
@@ -50,5 +55,5 @@ export default class Animation {
   }
 }
 
-export { AnimationState, AnimationEventHandler, AnimationStateTransition };
-export { CrossFadeTransition } from './transitions';
+export { AnimationState, AnimationEventHandler, AnimationStateTransition, AnimationStateOptions };
+export { CrossFadeTransition, InstantTransition } from './transitions';

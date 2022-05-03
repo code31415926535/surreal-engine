@@ -48,10 +48,10 @@ export default class KeyboardMovementSystem extends SingleEntitySystem {
   }
 
   protected updateEntity(entity: Entity): void {
-    const keyboardInput = entity.get(KeyboardMotion)!;
+    const keyboardMotion = entity.get(KeyboardMotion)!;
     const body = entity.get(Body)!;
 
-    const { speed, rotation } = keyboardInput;
+    const { speed, rotation, jump } = keyboardMotion;
 
     const bodyPosition = body.position
     const bodyQuaternion = body.quaternion;
@@ -96,7 +96,7 @@ export default class KeyboardMovementSystem extends SingleEntitySystem {
     const physicsSystem = this.engine.getSystem(PhysicsSystem)!;
     if (this.input.jump && !this.isAirborne) {
       this.isAirborne = true;
-      physicsSystem.applyForce(body.body, 0, 10, 0);
+      physicsSystem.applyForce(body.body, 0, 10 * jump, 0);
       this.dispatch(new SurrealAnimationEvent(entity, 'jump'));
     }
 
