@@ -1,7 +1,6 @@
 import '../../src/style.css';
-import { quickStart, UnrealBloomPass, GlitchPass, Euler, Vector2, Vector3 } from "../../src/lib/surreal-engine";
+import { quickStart, UnrealBloomPass, GlitchPass, Euler, Vector2, Vector3, CrossFadeTransition } from "../../src/lib/surreal-engine";
 
-// TODO: Complete with full movement kit
 quickStart(
   '#demo', 
   { showFps: true },
@@ -59,13 +58,49 @@ quickStart(
   })
     .withAnimation({
       initial: "idle",
-      clips: [{
+      states: [{
         name: "idle",
-        clip: "character@Idle",
-      }]      
+        clip: "hero@idle",
+        handler: (action, _, setState) => {
+          if (action === 'run') {
+            setState('run', CrossFadeTransition(0.5));
+          } else if (action === 'jump') {
+            setState('jump', CrossFadeTransition(0.2));
+          }
+        },
+      }, {
+        name: "run",
+        clip: "hero@run",
+        handler: (action, _, setState) => {
+          if (action === 'idle') {
+            setState('idle', CrossFadeTransition(0.5));
+          } else if (action === 'jump') {
+            setState('jump', CrossFadeTransition(0.3));
+          }
+        },
+      }, {
+        name: "jump",
+        clip: "hero@air",
+        handler: (action, _, setState) => {
+          if (action === "land") {
+            setState("land", CrossFadeTransition(0.2));
+          }
+        }
+      }, {
+        name: "land",
+        clip: "hero@land",
+        opts: {
+          noLoop: true,
+        },
+        handler: (action, _, setState) => {
+          if (action === "finished") {
+            setState("idle", CrossFadeTransition(0.2));
+          }
+        }
+      }],
     })
     .withBoundingBox()
-    .withKeyboardMotion()
+    .withKeyboardMotion({ speed: 1.5, jump: 2.5 })
     .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1));
 
   engine.creator.timer(() => {
