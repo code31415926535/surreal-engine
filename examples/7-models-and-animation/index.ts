@@ -1,5 +1,5 @@
 import '../../src/style.css';
-import { quickStart, Euler, Vector3 } from "../../src/lib/surreal-engine";
+import { quickStart, Euler, Vector3, CrossFadeTransition } from "../../src/lib/surreal-engine";
 
 async function main() {
   quickStart(
@@ -18,7 +18,7 @@ async function main() {
         "textures/vz_techno_up.png",
       ]);
       assets.addModel("knight_statue", "models/knight_statue.glb");
-      assets.addModel("character", "models/test-char.glb");
+      assets.addModel("hero", "models/hero.glb");
       assets.addModel("datsun", "models/free_datsun_280z/scene.gltf");
   },
   (engine) => {
@@ -27,7 +27,14 @@ async function main() {
     });
     engine.materials.addTexturedMaterial("floor@square", { texture: "floor", repeat: { x: 5, y: 5 } });
     engine.materials.addTexturedMaterial("floor@row", { texture: "floor", repeat: { x: 1, y: 5 } });
-  
+
+    engine.assets.clipAnimation("hero@All", "hero@idle", 0, 301);
+    engine.assets.clipAnimation("hero@All", "hero@run", 302, 321);
+    engine.assets.clipAnimation("hero@All", "hero@idle2", 323, 443);
+    engine.assets.clipAnimation("hero@All", "hero@jump", 445, 450);
+    engine.assets.clipAnimation("hero@All", "hero@land", 454, 486);
+    engine.assets.clipAnimation("hero@All", "hero@air", 488, 509);
+
     // Lighting
     engine.creator.directionalLight({
       color: '#ffffff',
@@ -81,15 +88,8 @@ async function main() {
       castShadow: true,
     });
 
-    // TODO: Very very slow
     engine.creator.model({
-      model: "datsun",
-      size: new Vector3(3, 3, 3),
-      pos: new Vector3(0, 1, 90),
-    });
-
-    engine.creator.model({
-      model: "character",
+      model: "hero",
       size: new Vector3(2, 2, 2),
       pos: new Vector3(0, 0, 0),
       offset: {
@@ -99,13 +99,49 @@ async function main() {
     })
       .withAnimation({
         initial: "idle",
-        clips: [{
+        states: [{
           name: "idle",
-          clip: "character@Idle",
-        }]      
+          clip: "hero@idle",
+          handler: (action, _, setState) => {
+            if (action === 'run') {
+              setState('run', CrossFadeTransition(0.5));
+            } else if (action === 'jump') {
+              setState('jump', CrossFadeTransition(0.2));
+            }
+          },
+        }, {
+          name: "run",
+          clip: "hero@run",
+          handler: (action, _, setState) => {
+            if (action === 'idle') {
+              setState('idle', CrossFadeTransition(0.5));
+            } else if (action === 'jump') {
+              setState('jump', CrossFadeTransition(0.3));
+            }
+          },
+        }, {
+          name: "jump",
+          clip: "hero@air",
+          handler: (action, _, setState) => {
+            if (action === "land") {
+              setState("land", CrossFadeTransition(0.2));
+            }
+          }
+        }, {
+          name: "land",
+          clip: "hero@land",
+          opts: {
+            noLoop: true,
+          },
+          handler: (action, _, setState) => {
+            if (action === "finished") {
+              setState("idle", CrossFadeTransition(0.2));
+            }
+          }
+        }],
       })
       .withBoundingBox()
-      .withKeyboardMotion()
+      .withKeyboardMotion({ speed: 3, jump: 5 })
       .withThirdPersonCamera(new Vector3(4, 2, 0), new Vector3(-10, 5, 1));
   });
 }

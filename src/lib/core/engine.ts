@@ -1,4 +1,5 @@
 import {
+  Class,
   Engine as ECSEngine, System,
 } from 'tick-knock';
 import {
@@ -32,7 +33,7 @@ import {
 import MaterialManager from '../managers/MaterialManager';
 import EntityManager from '../managers/EntityManager';
 import { DebugOptions } from './debugOptions';
-import { Pass } from '../surreal-engine.js';
+import { Pass } from '../shadersAndPasses';
 
 declare global {
   interface Window {
@@ -227,9 +228,21 @@ export default class Engine {
   }
 
   /**
+   * Get a system of the engine.
+   */
+  public getSystem<T extends System>(systemClass: Class<T>): T {
+    const sys = this.ecs.getSystem(systemClass);
+    if (! sys) {
+      throw new Error('System not found');
+    }
+    return sys;
+  }
+
+  /**
    * Start the engine.
    */
   public start() {
+    this.ecs.getSystem(AnimationSystem)!.init();
     if (this.showFps) {
       this.ecs.getSystem(FpsSystem)!.init();
     }

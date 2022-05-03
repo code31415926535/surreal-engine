@@ -74,7 +74,7 @@
 - [x] Event System
 - [x] Updated Motion System
 - [x] Make camera configurable
-- [ ] More complex animation system
+- [x] More complex animation system
 
 - [x] Postprocessing
 - [x] Timer System
@@ -82,43 +82,37 @@
 - [x] Cleaner material usage
 - [x] Move away from quaternion
 
+## v0.4 - First real release
+
 - [ ] Static Motion on Solid bodies
-
-## v0.3.1
-
-- [ ] Fix bugs with animated model
 - [ ] Simple platformer example
-- [ ] Add a new shape
-
-## v0.3.2
-
-- [ ] Add a new shape
-- [ ] Configurable window size
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
-
-## v0.4
-
 - [ ] Better Widgets
-- [ ] GUI System
-- [ ] Entity Templates
 - [ ] Selection System
-- [ ] Make debug interactive
+- [ ] Motion System should be optional
+
+## v0.5
+
 - [ ] Editor
-
-## 1.0.0
-
+- [ ] GUI System
+- [ ] Audio System
+- [ ] Collision System
 - [ ] Documentation
-- [ ] Plane geometry
 - [ ] Particles
+- [ ] Merge physics props into a Vector like class
+- [ ] Plane geometry
 - [ ] Heightmaps
 - [ ] Terrain generation
-- [ ] Trigger Box
-- [ ] Update Animations
-- [ ] Merge physics props into a Vector like class
 
 ## Future
 
+- [ ] Configurable window size
+- [ ] Trigger Box
+- [ ] Update Animations
+- [ ] Entity Templates
+- [ ] Make debug interactive
+- [ ] Add new shapes
 - [ ] Attachment to model
 - [ ] First person Camera
 - [ ] Levels

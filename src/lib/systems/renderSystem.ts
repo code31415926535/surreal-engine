@@ -55,7 +55,8 @@ export default class RenderSystem extends ReactionSystem {
       antialias,
       canvas,
     });
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    // TODO: Use window.devicePixelRatio and make it configurable
+    this.renderer.setPixelRatio(1);
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = PCFSoftShadowMap;

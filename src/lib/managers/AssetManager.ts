@@ -1,4 +1,4 @@
-import { AnimationClip, LoadingManager, Object3D, Texture } from "three";
+import { AnimationClip, AnimationUtils, LoadingManager, Object3D, Texture } from "three";
 import ModelLoader from "../utils/model";
 import TextureLoader from "../utils/texture";
 
@@ -80,6 +80,14 @@ export default class AssetManager {
 
   public getModel(name: string): Object3D {
     return this.models[name];
+  }
+
+  public clipAnimation(animationName: string, clipName: string, start: number, end: number) {
+    const anim = this.getAnimation(animationName);
+    if (!anim) {
+      throw new Error(`Animation ${animationName} does not exist`);
+    }
+    this.animations[clipName] = AnimationUtils.subclip(anim, clipName, start, end);
   }
 
   public getAnimation(name: string): AnimationClip | undefined {

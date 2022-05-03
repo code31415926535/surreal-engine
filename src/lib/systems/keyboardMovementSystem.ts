@@ -5,7 +5,9 @@ import KeyboardMotion from "../components/keyboardMotion";
 import PhysicsSystem from './physicsSystem';
 import SingleEntitySystem from './singleEntitySystem';
 import { KeyboardStateChangeEvent } from './keyboardInputSystem';
+import { SurrealAnimationEvent } from './animationSystem';
 
+// TODO: Clean this up a bit
 export default class KeyboardMovementSystem extends SingleEntitySystem {
   private wasFalling = false;
   private isAirborne: boolean = false;
@@ -46,10 +48,10 @@ export default class KeyboardMovementSystem extends SingleEntitySystem {
   }
 
   protected updateEntity(entity: Entity): void {
-    const keyboardInput = entity.get(KeyboardMotion)!;
+    const keyboardMotion = entity.get(KeyboardMotion)!;
     const body = entity.get(Body)!;
 
-    const { speed, rotation } = keyboardInput;
+    const { speed, rotation, jump } = keyboardMotion;
 
     const bodyPosition = body.position
     const bodyQuaternion = body.quaternion;
@@ -60,6 +62,7 @@ export default class KeyboardMovementSystem extends SingleEntitySystem {
     }
     if (!isFalling && this.wasFalling) {
       this.isAirborne = false;
+      this.dispatch(new SurrealAnimationEvent(entity, 'land'));
     }
     this.wasFalling = isFalling;
 
@@ -93,11 +96,17 @@ export default class KeyboardMovementSystem extends SingleEntitySystem {
     const physicsSystem = this.engine.getSystem(PhysicsSystem)!;
     if (this.input.jump && !this.isAirborne) {
       this.isAirborne = true;
-      physicsSystem.applyForce(body.body, 0, 10, 0);
+      physicsSystem.applyForce(body.body, 0, 10 * jump, 0);
+      this.dispatch(new SurrealAnimationEvent(entity, 'jump'));
     }
 
     if (this.input.moved && !this.input.jump && !this.isAirborne) {
       physicsSystem.moveBody(body.body, velocity.x, velocity.y, velocity.z);
+      this.dispatch(new SurrealAnimationEvent(entity, 'run'));
+    }
+
+    if (!this.input.moved && !this.input.jump && !this.isAirborne) {
+      this.dispatch(new SurrealAnimationEvent(entity, 'idle'));
     }
 
     physicsSystem.rotateBody(body.body, quaternion.x, quaternion.y, quaternion.z);

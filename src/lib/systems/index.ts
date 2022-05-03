@@ -1,17 +1,32 @@
-export { default as AnimationSystem } from './animationSystem';
-export { default as DebugSystem } from './debugSystem';
-export { default as FollowCameraSystem } from './followCameraSystem';
-export { default as FpsSystem } from './fpsSystem';
+import AnimationSystem, { SurrealAnimationEvent } from './animationSystem';
+import DebugSystem from './debugSystem';
+import FollowCameraSystem from './followCameraSystem';
+import FpsSystem from './fpsSystem';
+import KeyboardInputSystem, { KeyboardStateChangeEvent } from './keyboardInputSystem';
+import KeyboardMovementSystem from './keyboardMovementSystem';
+import PhysicsRendererSyncSystem from './physicsRendererSyncSystem';
+import PhysicsSystem from './physicsSystem';
+import RenderSystem, { CameraChangedEvent } from './renderSystem';
+import StaticMotionSystem from './staticMotionSystem';
+import WidgetSystem from './widgetSystem';
+import TimerSystem from './timerSystem';
+
 export {
-  default as KeyboardInputSystem, KeyboardStateChangeEvent,
-} from './keyboardInputSystem';
-export { default as KeyboardMovementSystem } from './keyboardMovementSystem';
-export { default as PhysicsRendererSyncSystem } from './physicsRendererSyncSystem';
-export { default as PhysicsSystem } from './physicsSystem';
-export { default as RenderSystem } from './renderSystem';
-export { default as StaticMotionSystem } from './staticMotionSystem';
-export { default as WidgetSystem } from './widgetSystem';
-export { default as TimerSystem } from './timerSystem';
+  AnimationSystem, SurrealAnimationEvent,
+  DebugSystem,
+  FollowCameraSystem,
+  FpsSystem,
+  KeyboardMovementSystem,
+  KeyboardInputSystem, KeyboardStateChangeEvent,
+  PhysicsRendererSyncSystem,
+  PhysicsSystem,
+  RenderSystem, CameraChangedEvent,
+  StaticMotionSystem,
+  WidgetSystem,
+  TimerSystem,
+};
 
 export { IterativeSystem, ReactionSystem } from 'tick-knock';
 export { default as SingleEntitySystem } from './singleEntitySystem';
+
+// export type SurrealSystemConstructor;

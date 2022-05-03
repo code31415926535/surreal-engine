@@ -24,11 +24,10 @@ import Ammo from "ammojs-typed";
 import Model from "../components/model";
 import Body from "../components/body";
 import StaticMotion from "../components/staticMotion";
-import AnimationController from "../controllers/animationController";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
-import Animation from '../components/animation';
+import Animation, { AnimationEventHandler, AnimationStateOptions } from '../components/animation';
 import AssetManager from '../managers/AssetManager';
 
 export interface PosRot {
@@ -66,10 +65,12 @@ export interface Model3DOptions extends PosRotSize, Shadow {
 
 export interface AnimationOptions {
   initial: string;
-  clips: [{
+  states: {
     name: string;
     clip: string;
-  }]
+    opts?: AnimationStateOptions;
+    handler: AnimationEventHandler;
+  }[],
 }
 
 export interface Object3DOptions {
@@ -85,6 +86,7 @@ export interface StaticMoitonOptions {
 export interface KeyboardMotionOptions {
   speed?: number;
   rotation?: number;
+  jump?: number;
 }
 
 export default class EntityBuilder {
@@ -129,21 +131,21 @@ export default class EntityBuilder {
   }
 
   public withAnimation = (opts: AnimationOptions): EntityBuilder => {
-    const ctrl = new AnimationController(this.entity);
-    opts.clips.forEach(clipName => {
-      const clip = this.assets.getAnimation(clipName.clip);
+    const animation = new Animation(this.entity);
+    opts.states.forEach(state => {
+      const clip = this.assets.getAnimation(state.clip);
       if (!clip) {
-        throw new Error(`Animation ${clipName.clip} not found`);
+        throw new Error(`Animation ${state.clip} not found`);
       }
-      ctrl.addAnimation(clipName.name, clip);
+      animation.addState(state.name, clip, state.handler, state.opts);
     });
-    ctrl.play(opts.initial);
-    this.entity.addComponent(new Animation(ctrl));
+    animation.setState(opts.initial);
+    this.entity.addComponent(animation);
     return this;
   }
 
   public withKeyboardMotion = (opts?: KeyboardMotionOptions): EntityBuilder => {
-    this.entity.addComponent(new KeyboardMotion(opts?.speed, opts?.rotation));
+    this.entity.addComponent(new KeyboardMotion(opts?.speed, opts?.rotation, opts?.jump));
     return this;
   }
 
