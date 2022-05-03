@@ -3,7 +3,8 @@ import { quickStart } from "./core/quickStart";
 export * from './core/debugOptions';
 export * from './core/types';
 
-export * from "./shadersAndPasses";
+export * from './components';
+export * from './shadersAndPasses';
 export * from './systems';
 export * from './widgets';
 

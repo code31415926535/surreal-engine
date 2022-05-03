@@ -11,21 +11,6 @@ interface ModelData {
 export default class ModelLoader {
   constructor(private manager: LoadingManager) {}
 
-  // TODO: Support this
-  public async loadAnimation(path: string): Promise<AnimationClip> {
-    const extension = path.split(".").pop();
-    switch (extension) {
-      case "fbx":
-        const group = await this.loadFbx(path);
-        return group.animations[0];
-      case "dae":
-        const dae = await this.loadCollada(path);
-        return dae.animations[0];
-      default:
-        throw new Error(`Unsupported file type: ${extension}`);
-    }
-  }
-
   public async load(path: string): Promise<ModelData> {
     const extension = path.split(".").pop();
     switch (extension) {

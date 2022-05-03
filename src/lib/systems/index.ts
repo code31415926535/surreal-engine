@@ -1,4 +1,4 @@
-import AnimationSystem from './animationSystem';
+import AnimationSystem, { SurrealAnimationEvent } from './animationSystem';
 import DebugSystem from './debugSystem';
 import FollowCameraSystem from './followCameraSystem';
 import FpsSystem from './fpsSystem';
@@ -12,7 +12,7 @@ import WidgetSystem from './widgetSystem';
 import TimerSystem from './timerSystem';
 
 export {
-  AnimationSystem,
+  AnimationSystem, SurrealAnimationEvent,
   DebugSystem,
   FollowCameraSystem,
   FpsSystem,

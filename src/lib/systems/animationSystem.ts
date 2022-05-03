@@ -1,23 +1,19 @@
 import { Query, Entity, IterativeSystem } from 'tick-knock';
 import Animation from '../components/animation';
 
+export class SurrealAnimationEvent {
+  constructor(public entity: Entity, public action: string) {}
+}
+
 export default class AnimationSystem extends IterativeSystem {
   constructor() {
     super(new Query(entity => entity.hasAll(Animation)));
   }
 
-  public play(entity: Entity, animationName: string) {
-    const animation = entity.get(Animation)!;
-    const { action } = animation.animations[animationName];
-    action.time = 0.0;
-    action.setEffectiveTimeScale(1);
-    action.setEffectiveWeight(1);
-    action.enabled = true;
-    if (animation.prevAnimation) {
-      animation.prevAnimation.crossFadeTo(action, 0.5, true);
-    }
-    action.play();
-    animation.prevAnimation = action;
+  public init() {
+    this.engine.subscribe(SurrealAnimationEvent, (event: SurrealAnimationEvent) => {
+      event.entity.get(Animation)!.handle(event.action);
+    });
   }
 
   protected updateEntity(entity: Entity, delta: number): void {

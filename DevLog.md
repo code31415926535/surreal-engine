@@ -85,39 +85,43 @@
 ## v0.3.1
 
 - [ ] Configurable window size
-- [ ] Add a new shape
 - [ ] Static Motion on Solid bodies
-- [ ] Fix bugs with animated model
 - [ ] Simple platformer example
 
 ## v0.3.2
 
-- [ ] Add a new shape
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
+- [ ] Better Widgets
+- [ ] Selection System
 
 ## v0.4
 
-- [ ] Better Widgets
 - [ ] GUI System
-- [ ] Entity Templates
-- [ ] Selection System
-- [ ] Make debug interactive
+- [ ] Audio System
 - [ ] Editor
 
 ## 1.0.0
 
+- [ ] Collision System
 - [ ] Documentation
-- [ ] Plane geometry
 - [ ] Particles
+- [ ] Merge physics props into a Vector like class
+
+## v1.1.0
+
+- [ ] Plane geometry
 - [ ] Heightmaps
 - [ ] Terrain generation
-- [ ] Trigger Box
-- [ ] Update Animations
-- [ ] Merge physics props into a Vector like class
 
 ## Future
 
+- [ ] Motion System should be optional
+- [ ] Trigger Box
+- [ ] Update Animations
+- [ ] Entity Templates
+- [ ] Make debug interactive
+- [ ] Add new shapes
 - [ ] Attachment to model
 - [ ] First person Camera
 - [ ] Levels

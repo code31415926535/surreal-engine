@@ -33,7 +33,7 @@ import {
 import MaterialManager from '../managers/MaterialManager';
 import EntityManager from '../managers/EntityManager';
 import { DebugOptions } from './debugOptions';
-import { Pass } from '../surreal-engine.js';
+import { Pass } from '../shadersAndPasses';
 
 declare global {
   interface Window {
@@ -242,6 +242,7 @@ export default class Engine {
    * Start the engine.
    */
   public start() {
+    this.ecs.getSystem(AnimationSystem)!.init();
     if (this.showFps) {
       this.ecs.getSystem(FpsSystem)!.init();
     }

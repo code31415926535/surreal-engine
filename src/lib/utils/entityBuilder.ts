@@ -27,7 +27,7 @@ import StaticMotion from "../components/staticMotion";
 import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
-import Animation from '../components/animation';
+import Animation, { AnimationEventHandler } from '../components/animation';
 import AssetManager from '../managers/AssetManager';
 
 export interface PosRot {
@@ -65,10 +65,11 @@ export interface Model3DOptions extends PosRotSize, Shadow {
 
 export interface AnimationOptions {
   initial: string;
-  clips: [{
+  states: {
     name: string;
     clip: string;
-  }]
+    handler: AnimationEventHandler;
+  }[],
 }
 
 export interface Object3DOptions {
@@ -129,13 +130,14 @@ export default class EntityBuilder {
 
   public withAnimation = (opts: AnimationOptions): EntityBuilder => {
     const animation = new Animation(this.entity);
-    opts.clips.forEach(clipName => {
-      const clip = this.assets.getAnimation(clipName.clip);
+    opts.states.forEach(state => {
+      const clip = this.assets.getAnimation(state.clip);
       if (!clip) {
-        throw new Error(`Animation ${clipName.clip} not found`);
+        throw new Error(`Animation ${state.clip} not found`);
       }
-      animation.addAnimation(clipName.name, clip);
+      animation.addState(state.name, clip, state.handler);
     });
+    animation.setState(opts.initial);
     this.entity.addComponent(animation);
     return this;
   }
