@@ -1,5 +1,7 @@
 import '../../src/style.css';
-import { quickStart, UnrealBloomPass, GlitchPass, Euler, Vector2, Vector3, CrossFadeTransition } from "../../src/lib/surreal-engine";
+import {
+  quickStart, UnrealBloomPass, GlitchPass, Euler, Vector2, Vector3, CrossFadeTransition,
+} from "../../src/lib/surreal-engine";
 
 quickStart(
   '#demo', 
@@ -16,7 +18,7 @@ quickStart(
       "textures/vz_techno_right.png",
       "textures/vz_techno_up.png",
     ]);
-    assets.addModel("character", "models/test-char.glb");
+    assets.addModel("hero", "models/hero.glb");
 },
 (engine) => {
   engine.setBackground({
@@ -24,6 +26,13 @@ quickStart(
   });
   engine.materials.addTexturedMaterial("floor@square", { texture: "floor", repeat: { x: 5, y: 5 } });
   engine.materials.addTexturedMaterial("floor@row", { texture: "floor", repeat: { x: 1, y: 5 } });
+
+  engine.assets.clipAnimation("hero@All", "hero@idle", 0, 301);
+  engine.assets.clipAnimation("hero@All", "hero@run", 302, 321);
+  engine.assets.clipAnimation("hero@All", "hero@idle2", 323, 443);
+  engine.assets.clipAnimation("hero@All", "hero@jump", 445, 450);
+  engine.assets.clipAnimation("hero@All", "hero@land", 454, 486);
+  engine.assets.clipAnimation("hero@All", "hero@air", 488, 509);
 
   // Lighting
   engine.creator.directionalLight({
@@ -48,7 +57,7 @@ quickStart(
   });
 
   engine.creator.model({
-    model: "character",
+    model: "hero",
     size: new Vector3(2, 2, 2),
     pos: new Vector3(0, 0, 0),
     offset: {

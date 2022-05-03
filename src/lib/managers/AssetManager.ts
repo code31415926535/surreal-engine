@@ -74,11 +74,11 @@ export default class AssetManager {
     return !!this.textures[name];
   }
 
-  public getTexture(name: string): Texture {
+  public getTexture(name: string): Texture | undefined {
     return this.textures[name];
   }
 
-  public getModel(name: string): Object3D {
+  public getModel(name: string): Object3D | undefined {
     return this.models[name];
   }
 

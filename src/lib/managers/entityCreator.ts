@@ -106,7 +106,9 @@ export default class EntityCreator {
    */
   model(opts: ModelOptions): EntityBuilder {
     const obj = this.assets.getModel(opts.model);
-    // obj.geometry.computeBoundingBox();
+    if (!obj) {
+      throw new Error(`Model ${opts.model} not found`);
+    }
     return this.empty().with3DModel({
       ...opts,
       model: obj,

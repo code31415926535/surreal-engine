@@ -12,7 +12,9 @@ export default class AnimationSystem extends IterativeSystem {
 
   public init() {
     this.engine.subscribe(SurrealAnimationEvent, (event: SurrealAnimationEvent) => {
-      event.entity.get(Animation)!.handle(event.action);
+      if (event.entity.has(Animation)) {
+        event.entity.get(Animation)!.handle(event.action);
+      }
     });
   }
 

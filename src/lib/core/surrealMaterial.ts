@@ -4,7 +4,7 @@ export interface SurrealMaterialOpts {
   type: 'real';
   color?: string;
   textures?: {
-    map: Texture;
+    map?: Texture;
     normalMap?: Texture;
     aoMap?: Texture;
     bumpMap?: Texture;

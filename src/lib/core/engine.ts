@@ -178,6 +178,14 @@ export default class Engine {
     this.manager = new EntityManager(this.ecs);
     this.materials = new MaterialManager(this.assets);
     this.creator = new EntityCreator(this.ecs, this.assets, this.materials);
+
+    this.ecs.getSystem(AnimationSystem)!.init();
+    if (this.showFps) {
+      this.ecs.getSystem(FpsSystem)!.init();
+    }
+    if (this.debug) {
+      this.ecs.getSystem(DebugSystem)!.init();
+    }
   }
 
   /**
@@ -242,14 +250,15 @@ export default class Engine {
    * Start the engine.
    */
   public start() {
-    this.ecs.getSystem(AnimationSystem)!.init();
-    if (this.showFps) {
-      this.ecs.getSystem(FpsSystem)!.init();
-    }
-    if (this.debug) {
-      this.ecs.getSystem(DebugSystem)!.init();
-    }
     this.execute();
+  }
+
+  /**
+   * Execute one frame of the engine.
+   */
+  public step(fps: number) {
+    const frame = 1000 / fps;
+    this.ecs.update(frame);
   }
 
   private execute() {

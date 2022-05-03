@@ -1,4 +1,4 @@
-# Surreal Engine (WIP)
+# Surreal Engine
 
 [![NPM Package][npm]][npm-url]
 
@@ -15,7 +15,7 @@ entity creator, create two boxes: one for the ground, and one for the falling bo
 
 ```ts
 // Create a new instance of the engine with debug on
-const engine = new Engine('#root', { debug: true });
+const engine = new Engine('#root', { debug: BasicDebug });
 // Engine must be initialized before we can start adding components
 await engine.init();
 
@@ -62,7 +62,7 @@ engine.creator.timer(() => {
     rigid: true,
     castShadow: true,
   });
-}, 1000);
+}, 1000, false);
 ```
 
 Now, for some fun, let's make our ball more bouncy.
@@ -122,7 +122,7 @@ engine.creator.timer(() => {
     rigid: true,
     castShadow: true,
   });
-- }, 1000);
+- }, 1000, false);
 + }, 5000, true);
 ```
 
