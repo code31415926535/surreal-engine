@@ -17,6 +17,8 @@ import {
   Box3,
   Group,
   Quaternion,
+  PlaneGeometry,
+  Vector2,
 } from "three";
 // @ts-ignore
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils';
@@ -28,7 +30,7 @@ import KeyboardMotion from "../components/keyboardMotion";
 import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 import Animation, { AnimationEventHandler, AnimationStateOptions } from '../components/animation';
-import AssetManager from '../managers/AssetManager';
+import AssetManager from './AssetManager';
 
 export interface PosRot {
   pos?: Vector3;
@@ -55,6 +57,12 @@ export interface RigidBodyOptions extends PosRotSize {
 
 export interface ShapeModelOptions extends PosRotSize, Shadow {
   type: 'box' | 'sphere' | 'cylinder';
+  material: SurrealMaterial;
+}
+
+export interface PlaneOptions extends Omit<PosRotSize, 'size'>, Shadow {
+  size: Vector2;
+  segments: Vector2;
   material: SurrealMaterial;
 }
 
@@ -122,6 +130,17 @@ export default class EntityBuilder {
 
   public withShapeModel = (opts: ShapeModelOptions): EntityBuilder => {
     this.entity.addComponent(new Model(this.buildShapeModel(opts)));
+    return this;
+  }
+
+  // TODO: This is very bad
+  public withPlane = (opts: PlaneOptions): EntityBuilder => {
+    this.entity.addComponent(new Model(this.buildPlaneModel(opts)));
+    return this;
+  }
+
+  public withPlaneRigidBody = (opts: PlaneOptions): EntityBuilder => {
+    this.entity.addComponent(new Body(this.buildPlaneRigidBody(opts)));
     return this;
   }
 
@@ -237,6 +256,62 @@ export default class EntityBuilder {
     return body;
   }
 
+  // TODO: Build mesh method
+  private buildPlaneModel = (opts: PlaneOptions) => {
+    const geometry = new PlaneGeometry(
+      opts.size?.x || 1,
+      opts.size?.y || 1,
+      opts.segments?.x || 1,
+      opts.segments?.y || 1,
+    );
+    const surrealMaterial = opts.material;
+    const mesh = new Mesh(geometry, surrealMaterial.material);
+    mesh.castShadow = opts.castShadow || false;
+    mesh.receiveShadow = opts.receiveShadow || false;
+    mesh.setRotationFromEuler(new Euler(-Math.PI / 2, 0, 0));
+
+    const group = new Group();
+    group.add(mesh);
+
+    group.position.set(opts.pos?.x || 0, opts.pos?.y || 0, opts.pos?.z || 0);
+    group.rotation.set(opts.rot?.x || 0, opts.rot?.y || 0, opts.rot?.z || 0);
+
+    return group;
+  }
+
+  // TODO: Clean up
+  private buildPlaneRigidBody = (opts: PlaneOptions) => {
+    const { pos, rot } = opts;
+    const mass = 0;
+    const transform = new window.Ammo.btTransform();
+    transform.setIdentity();
+    transform.setOrigin(new window.Ammo.btVector3(pos?.x || 0, pos?.y || 0, pos?.z || 0));
+
+    const quat = new Quaternion().setFromEuler(rot || new Euler());
+    transform.setRotation(new window.Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
+    const motionState = new window.Ammo.btDefaultMotionState(transform);
+  
+    const shape = this.buildRigidBodyShape({
+      type: 'box',
+      size: new Vector3(opts.size.x || 1, 0, opts.size.y || 1)
+    });
+    shape.setMargin(0.05);
+  
+    const inertia = new window.Ammo.btVector3(0, 0, 0);
+    if (mass && mass > 0) {
+      shape.calculateLocalInertia(mass, inertia);
+    }
+  
+    const info = new window.Ammo.btRigidBodyConstructionInfo(mass || 0, motionState, shape, inertia);
+    const body: Ammo.btRigidBody = new window.Ammo.btRigidBody(info);
+    // TODO: Do these make sense?
+    // body.setRestitution(restitution || 0);
+    // body.setFriction(opts.friction || 0.1);
+    // body.setDamping(opts.linearDamping || 0.1, opts.angularDamping || 0.1);
+    body.setActivationState(4);
+    return body;
+  }
+
   private buildShapeModel = (opts: ShapeModelOptions) => {
     const geometry = this.buildGeometry(opts);
     const surrealMaterial = opts.material;
@@ -245,9 +320,7 @@ export default class EntityBuilder {
     mesh.receiveShadow = opts.receiveShadow || false;
     
     mesh.position.set(opts.pos?.x || 0, opts.pos?.y || 0, opts.pos?.z || 0);
-    const quat = new Quaternion().setFromEuler(opts.rot || new Euler());
-    mesh.quaternion.set(quat.x, quat.y, quat.z, quat.w);
-  
+    mesh.rotation.set(opts.rot?.x || 0, opts.rot?.y || 0, opts.rot?.z || 0);
     return mesh;
   }
 

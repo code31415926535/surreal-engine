@@ -84,31 +84,39 @@
 
 ## v0.4 - First real release
 
-- [ ] Static Motion on Solid bodies
-- [ ] Simple platformer example
+- [ ] Better Widgets
+- [ ] GUI System
+
+- [ ] Mouse Motion System
+- [ ] Motion System should be a plugin
+- [ ] Cleaner movement
+- [ ] Fix screen resize with ortographic cam
+- [ ] Fix character
+
+- [x] Plane geometry
+- [ ] Heightmaps
+- [ ] Tilemaps
+- [ ] Refactor entity builder
+
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
-- [ ] Better Widgets
-- [ ] Selection System
-- [ ] Motion System should be optional
 
 ## v0.5
 
+- [ ] Simple platformer example
 - [ ] Editor
-- [ ] GUI System
 - [ ] Audio System
 - [ ] Collision System
 - [ ] Documentation
 - [ ] Particles
 - [ ] Merge physics props into a Vector like class
-- [ ] Plane geometry
-- [ ] Heightmaps
+- [ ] Trigger Box
 - [ ] Terrain generation
 
 ## Future
 
+- [ ] Static Motion on Solid bodies
 - [ ] Configurable window size
-- [ ] Trigger Box
 - [ ] Update Animations
 - [ ] Entity Templates
 - [ ] Make debug interactive

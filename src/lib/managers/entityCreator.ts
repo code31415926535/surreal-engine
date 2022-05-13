@@ -1,6 +1,6 @@
 import { Engine as ECSEngine } from 'tick-knock';
 import { AmbientLight, DirectionalLight, Object3D, PointLight, Vector3 } from "three";
-import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions } from "../utils/entityBuilder";
+import EntityBuilder, { ShapeModelOptions, RigidBodyOptions, Object3DOptions, Model3DOptions, PlaneOptions as BuilderPlaneOptions } from "./entityBuilder";
 import AssetManager from './AssetManager';
 import Widget from '../components/widget';
 import { nanoid } from 'nanoid';
@@ -9,6 +9,11 @@ import MaterialManager from './MaterialManager';
 import SurrealMaterial from '../core/surrealMaterial';
 
 interface ShapeOptions extends Omit<ShapeModelOptions, "material">, RigidBodyOptions {
+  rigid?: boolean;
+  material: string;
+}
+
+interface PlaneOptions extends Omit<BuilderPlaneOptions, "material"> {
   rigid?: boolean;
   material: string;
 }
@@ -113,6 +118,21 @@ export default class EntityCreator {
       ...opts,
       model: obj,
     });
+  }
+
+  plane(opts: PlaneOptions): EntityBuilder {
+    const builder = this.empty()
+      .withPlane({
+        ...opts,
+        material: this.getMaterial(opts.material),
+      });
+    
+    // TODO: Fix this up
+    if (opts.rigid) {
+      builder.withPlaneRigidBody({...opts, material: this.getMaterial(opts.material)});
+    }
+
+    return builder;
   }
 
   /**
