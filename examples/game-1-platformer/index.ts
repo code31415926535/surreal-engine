@@ -1,3 +1,4 @@
+import '../../src/style.css';
 import { quickStart } from "../../src/lib/surreal-engine";
 
 quickStart(
