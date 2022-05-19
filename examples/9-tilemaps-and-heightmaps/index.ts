@@ -3,14 +3,20 @@ import {
   Euler,
   quickStart, Vector2, Vector3,
 } from "../../src/lib/surreal-engine";
+// TODO: Proper import here
+import { BumpHeightmapGenerator, Heightmap } from '../../src/lib/modules/heightmap';
 
 quickStart(
   '#demo', 
-  { showFps: true },
+  { showFps: true, debug: { orbitControls: true } },
   (assets) => {
     assets.setBasePath("/assets/");
+    assets.addTexture("floor", "textures/floor.png");
+    assets.addTexture("floor@bump", "textures/floor_bump.png");
 },
 (engine) => {
+  engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 5, y: 5 } });
+
   // Lighting
   engine.creator.directionalLight({
     color: '#ffffff',
@@ -29,8 +35,13 @@ quickStart(
     rot: new Euler(0, 0, 0),
     size: new Vector2(100, 100),
     segments: new Vector2(100, 100),
-    material: 'blue',
+    material: 'floor',
     rigid: true,
+    receiveShadow: true,
+    heightmap: new Heightmap(100, 100, 10, new BumpHeightmapGenerator(
+      new Vector2(50, 50),
+      50,
+    )),
   });
 
   engine.creator.box({

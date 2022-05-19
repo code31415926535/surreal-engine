@@ -31,6 +31,7 @@ import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 import Animation, { AnimationEventHandler, AnimationStateOptions } from '../components/animation';
 import AssetManager from './AssetManager';
+import { Heightmap } from '../modules/heightmap/heightmap';
 
 export interface PosRot {
   pos?: Vector3;
@@ -64,6 +65,7 @@ export interface PlaneOptions extends Omit<PosRotSize, 'size'>, Shadow {
   size: Vector2;
   segments: Vector2;
   material: SurrealMaterial;
+  heightmap?: Heightmap;
 }
 
 export interface Model3DOptions extends PosRotSize, Shadow {
@@ -264,6 +266,11 @@ export default class EntityBuilder {
       opts.segments?.x || 1,
       opts.segments?.y || 1,
     );
+
+    if (opts.heightmap) {
+      opts.heightmap.applyTo(geometry);
+    }
+
     const surrealMaterial = opts.material;
     const mesh = new Mesh(geometry, surrealMaterial.material);
     mesh.castShadow = opts.castShadow || false;

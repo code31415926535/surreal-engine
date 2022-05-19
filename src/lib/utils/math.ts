@@ -1,0 +1,1 @@
+export const sat = (x: number): number => Math.min(Math.max(x, 0), 1);

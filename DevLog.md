@@ -94,9 +94,9 @@
 - [ ] Fix character
 
 - [x] Plane geometry
-- [ ] Heightmaps
-- [ ] Tilemaps
+- [x] Heightmaps
 - [ ] Refactor entity builder
+- [ ] Tilemaps
 
 - [ ] Pause, Rewind, Step
 - [ ] Performance Monitoring
@@ -128,3 +128,4 @@
 - [ ] Soft Body Physics
 - [ ] Cloth Physics
 - [ ] Breakable objects
+- [ ] Portals
