@@ -9,7 +9,7 @@ class Heightmap {
     private generator: HeightmapGenerator,
   ) {}
 
-  applyTo(geometry: PlaneGeometry) {
+  applyToGeometry(geometry: PlaneGeometry) {
     const vertices = geometry.attributes.position.array;
     for ( let i = 0, j = 0, l = this.width * this.height; i < l; i ++, j += 3 ) {
       // @ts-ignore

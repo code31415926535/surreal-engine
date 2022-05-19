@@ -4,7 +4,7 @@ import {
   quickStart, Vector2, Vector3,
 } from "../../src/lib/surreal-engine";
 // TODO: Proper import here
-import { BumpHeightmapGenerator, Heightmap } from '../../src/lib/modules/heightmap';
+import { Heightmap, PerlinNoiseGenerator } from '../../src/lib/modules/heightmap';
 
 quickStart(
   '#demo', 
@@ -38,10 +38,7 @@ quickStart(
     material: 'floor',
     rigid: true,
     receiveShadow: true,
-    heightmap: new Heightmap(100, 100, 10, new BumpHeightmapGenerator(
-      new Vector2(50, 50),
-      50,
-    )),
+    heightmap: new Heightmap(100, 100, 10, new PerlinNoiseGenerator(50)),
   });
 
   engine.creator.box({

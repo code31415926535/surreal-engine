@@ -31,7 +31,7 @@ import FollowCamera from '../components/followCamera';
 import SurrealMaterial from "../core/surrealMaterial";
 import Animation, { AnimationEventHandler, AnimationStateOptions } from '../components/animation';
 import AssetManager from './AssetManager';
-import { Heightmap } from '../modules/heightmap/heightmap';
+import { Heightmap } from '../modules/heightmap';
 
 export interface PosRot {
   pos?: Vector3;
@@ -268,7 +268,7 @@ export default class EntityBuilder {
     );
 
     if (opts.heightmap) {
-      opts.heightmap.applyTo(geometry);
+      opts.heightmap.applyToGeometry(geometry);
     }
 
     const surrealMaterial = opts.material;

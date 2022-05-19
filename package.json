@@ -49,6 +49,7 @@
     "react-dom": "^18.1.0"
   },
   "devDependencies": {
+    "@types/noisejs": "^0.0.28",
     "@types/react": "^18.0.7",
     "@types/react-dom": "^18.0.0",
     "@types/three": "^0.139.0",
@@ -58,6 +59,7 @@
   "dependencies": {
     "ammojs-typed": "^1.0.6",
     "nanoid": "^3.3.3",
+    "noisejs": "^2.1.0",
     "three": "^0.139.2",
     "tick-knock": "^4.0.2"
   }
