@@ -298,7 +298,9 @@ export default class EntityBuilder {
     transform.setRotation(new window.Ammo.btQuaternion(quat.x, quat.y, quat.z, quat.w));
     const motionState = new window.Ammo.btDefaultMotionState(transform);
   
-    const shape = this.buildRigidBodyShape({
+    const shape = opts.heightmap
+    ? opts.heightmap.createRigidShape(opts.size?.width || 1, opts.size?.height || 1)
+    : this.buildRigidBodyShape({
       type: 'box',
       size: new Vector3(opts.size.x || 1, 0, opts.size.y || 1)
     });

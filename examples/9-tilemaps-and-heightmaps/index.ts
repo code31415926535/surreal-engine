@@ -15,7 +15,7 @@ quickStart(
     assets.addTexture("floor@bump", "textures/floor_bump.png");
 },
 (engine) => {
-  engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 5, y: 5 } });
+  engine.materials.addTexturedMaterial("floor", { texture: "floor", repeat: { x: 25, y: 25 } });
 
   // Lighting
   engine.creator.directionalLight({
@@ -38,7 +38,7 @@ quickStart(
     material: 'floor',
     rigid: true,
     receiveShadow: true,
-    heightmap: new Heightmap(100, 100, 10, new PerlinNoiseGenerator(50)),
+    heightmap: new Heightmap(100, 100, 15, new PerlinNoiseGenerator(50)),
   });
 
   engine.creator.box({

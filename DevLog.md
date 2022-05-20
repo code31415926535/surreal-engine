@@ -95,6 +95,8 @@
 
 - [x] Plane geometry
 - [x] Heightmaps
+- [x] Perlin noise
+- [ ] Combine multiple perlin noises
 - [ ] Refactor entity builder
 - [ ] Tilemaps
 
